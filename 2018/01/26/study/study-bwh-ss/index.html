@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="yzbzz.github.io">
   <title>shadowsocks多用户配置 | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言之前一篇文章，我们讲了使用搬瓦工+ShadowsocksX进行科学上网，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
+  <meta name="description" content="前言之前一篇文章，我们讲了合适懒人的搬瓦工+ShadowsocksX教程，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
 <meta name="keywords" content="study">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shadowsocks多用户配置">
 <meta property="og:url" content="yzbzz.github.io/2018/01/26/study/study-bwh-ss/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
-<meta property="og:description" content="前言之前一篇文章，我们讲了使用搬瓦工+ShadowsocksX进行科学上网，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
+<meta property="og:description" content="前言之前一篇文章，我们讲了合适懒人的搬瓦工+ShadowsocksX教程，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-30T06:55:29.025Z">
+<meta property="og:updated_time" content="2018-02-26T06:26:25.815Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shadowsocks多用户配置">
-<meta name="twitter:description" content="前言之前一篇文章，我们讲了使用搬瓦工+ShadowsocksX进行科学上网，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
+<meta name="twitter:description" content="前言之前一篇文章，我们讲了合适懒人的搬瓦工+ShadowsocksX教程，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
   
@@ -217,8 +217,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前一篇文章，我们讲了<a href="/2018/01/25/study/study-bwh/">使用搬瓦工+ShadowsocksX进行科学上网</a>，我们使用的是<code>搬瓦工</code>自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装<code>shadowsocks</code>，配置单用户和多用户。</p>
-<p>如何进入服务器: <a href="/2018/01/30/study/study-centenos-ssh/">使用SSH客户端(Termius)连接服务器</a></p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前一篇文章，我们讲了<a href="/2018/02/26/study/study-bwh-ssr/">合适懒人的搬瓦工+ShadowsocksX教程</a>，我们使用的是<code>搬瓦工</code>自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装<code>shadowsocks</code>，配置单用户和多用户。</p>
+<p>如何进入服务器: <a href="/2018/01/30/study/study-centos-ssh/">使用SSH客户端(Termius)连接服务器</a></p>
 <a id="more"></a>
 <h3 id="shadowsocks服务器配置"><a href="#shadowsocks服务器配置" class="headerlink" title="shadowsocks服务器配置"></a>shadowsocks服务器配置</h3><p>这里我们安装的是python版本，首先进入官网:<a href="https://github.com/shadowsocks/shadowsocks/tree/master" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks/tree/master</a></p>
 <p>进入后拖动页面，找到自己的服务器版本，我们这里以<code>CentOS</code>为例:</p>
@@ -380,8 +380,8 @@
     </a>
   
   
-    <a href="/2018/01/25/study/study-bwh/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">使用搬瓦工+ShadowsocksX进行科学上网</div>
+    <a href="/2018/01/25/study/Centenos/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux</div>
       <i class="icon-circle-right"></i>
     </a>
   

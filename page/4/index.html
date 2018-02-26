@@ -197,6 +197,85 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-fe/react-native-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/22/fe/react-native-view/">react-native-view</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/22/fe/react-native-view/" class="archive-article-date">
+  	<time datetime="2016-08-22T08:22:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>最基本的构建UI视图的容器，<code>View</code> 支持flexbox、style、一些触摸事件和访问性控制，<code>View</code>直接映射到<code>native</code>视图，不管在什么平台，不管它是UIView，<div>，android.view，等等…</div></p>
+<p><code>View</code>设计成嵌套其它视图，可以有0到任何类型的children</p>
+<blockquote>
+<p>View的设计初衷是和StyleSheet搭配使用，这样可以使代码更清晰并且获得更高的性能。尽管内联样式也同样可以使用</p>
+</blockquote>
+<h3 id="合成触摸事件"><a href="#合成触摸事件" class="headerlink" title="合成触摸事件"></a>合成触摸事件</h3><h3 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h3><h4 id="style"><a href="#style" class="headerlink" title="style"></a>style</h4><p><code>backfaceVisibility</code> ReactPropTypes.oneOf([‘visible’, ‘hidden’])<br><code>backgroundColor</code> color<br><code>borderBottomColor</code> color<br><code>borderBottomLeftRadius</code> ReactPropTypes.number<br><code>borderBottomRightRadius</code> ReactPropTypes.number<br><code>borderBottomWidth</code> ReactPropTypes.number<br><code>borderColor</code> color<br><code>borderLeftColor</code> color<br><code>borderLeftWidth</code> ReactPropTypes.number<br><code>borderRadius</code> ReactPropTypes.number<br><code>borderRightColor</code> color<br><code>borderRightWidth</code> ReactPropTypes.number<br><code>borderStyle</code> ReactPropTypes.oneOf([‘solid’, ‘dotted’, ‘dashed’])<br><code>borderTopColor</code> color<br><code>borderTopLeftRadius</code> ReactPropTypes.number<br><code>borderTopRightRadius</code> ReactPropTypes.number<br><code>borderTopWidth</code> ReactPropTypes.number<br><code>borderWidth</code> ReactPropTypes.number<br><code>opacity</code> ReactPropTypes.number<br><code>overflow</code> ReactPropTypes.oneOf([‘visible’, ‘hidden’])</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">fe</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/08/22/fe/react-native-view/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-study/hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -417,87 +496,6 @@
 
 
   
-    <article id="post-ios/swift-record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/22/ios/swift-record/">swift-record</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/22/ios/swift-record/" class="archive-article-date">
-  	<time datetime="2016-06-22T07:03:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="extension"><a href="#extension" class="headerlink" title="extension"></a>extension</h3><p>声明一个扩展使用关键字<code>extension</code></p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SomeType</span></span>&#123;</span><br><span class="line">  <span class="comment">//加到SomeType的新功能写到这里</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="indirect"><a href="#indirect" class="headerlink" title="indirect"></a>indirect</h3><p>使用indirect来标识一个枚举是可以递归调用的</p>
-<h3 id="required"><a href="#required" class="headerlink" title="required"></a>required</h3><p>在类的构造器前添加<code>required</code>修饰符表明所有该类的子类都必须实现该构造器，在子类重写父类的必要构造器时，必须在子类的构造器前也添加<code>required</code>修饰符，这是为了保证继承链上子类的构造器也是必要构造器。在重写父类的必要构造器时，不需要添加<code>override</code>修饰符</p>
-<h3 id="mutating"><a href="#mutating" class="headerlink" title="mutating"></a>mutating</h3><p>一般情况下，值类型的属性不能在它的实例方法中被修改，<code>mutating</code>使得方法可以从方法内部改变它的属性；并且它做的任何改变在方法结束时还会保留在原始结构中。方法还可以给它隐含的<code>self</code>属性赋值一个全新的实例，这个新实例在方法结束后将替换原来的实例。要使用<code>mutating</code>方法，将关键字<code>mutating</code>放到方法的<code>func</code>关键字之前就可以了</p>
-<h3 id="unowned"><a href="#unowned" class="headerlink" title="unowned"></a>unowned</h3><p>使用<code>unowned</code>标识无主引用</p>
-<h3 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h3><p>使用<code>weak</code>标识弱引用</p>
-<h3 id="类型属性"><a href="#类型属性" class="headerlink" title="类型属性"></a>类型属性</h3><p>在结构体和枚举中可以使用<code>static</code>来修饰静态变量，在类中可以使用<code>static</code>和<code>class</code>来修饰，使用<code>class</code>修饰来允许子类重写父类的实现方法</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/22/ios/swift-record/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-ios/ios-stanford" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -554,6 +552,87 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/06/22/ios/ios-stanford/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ios/swift-record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/22/ios/swift-record/">swift-record</a>
+    </h1>
+  
+
+        
+        <a href="/2016/06/22/ios/swift-record/" class="archive-article-date">
+  	<time datetime="2016-06-22T07:03:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="extension"><a href="#extension" class="headerlink" title="extension"></a>extension</h3><p>声明一个扩展使用关键字<code>extension</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SomeType</span></span>&#123;</span><br><span class="line">  <span class="comment">//加到SomeType的新功能写到这里</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="indirect"><a href="#indirect" class="headerlink" title="indirect"></a>indirect</h3><p>使用indirect来标识一个枚举是可以递归调用的</p>
+<h3 id="required"><a href="#required" class="headerlink" title="required"></a>required</h3><p>在类的构造器前添加<code>required</code>修饰符表明所有该类的子类都必须实现该构造器，在子类重写父类的必要构造器时，必须在子类的构造器前也添加<code>required</code>修饰符，这是为了保证继承链上子类的构造器也是必要构造器。在重写父类的必要构造器时，不需要添加<code>override</code>修饰符</p>
+<h3 id="mutating"><a href="#mutating" class="headerlink" title="mutating"></a>mutating</h3><p>一般情况下，值类型的属性不能在它的实例方法中被修改，<code>mutating</code>使得方法可以从方法内部改变它的属性；并且它做的任何改变在方法结束时还会保留在原始结构中。方法还可以给它隐含的<code>self</code>属性赋值一个全新的实例，这个新实例在方法结束后将替换原来的实例。要使用<code>mutating</code>方法，将关键字<code>mutating</code>放到方法的<code>func</code>关键字之前就可以了</p>
+<h3 id="unowned"><a href="#unowned" class="headerlink" title="unowned"></a>unowned</h3><p>使用<code>unowned</code>标识无主引用</p>
+<h3 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h3><p>使用<code>weak</code>标识弱引用</p>
+<h3 id="类型属性"><a href="#类型属性" class="headerlink" title="类型属性"></a>类型属性</h3><p>在结构体和枚举中可以使用<code>static</code>来修饰静态变量，在类中可以使用<code>static</code>和<code>class</code>来修饰，使用<code>class</code>修饰来允许子类重写父类的实现方法</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/06/22/ios/swift-record/">展开全文 >></a>
         </p>
       
 
@@ -1130,92 +1209,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/05/21/ios/swift-basic/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-java/java8-stream" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/19/java/java8-stream/">Stream</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/19/java/java8-stream/" class="archive-article-date">
-  	<time datetime="2016-05-19T06:52:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>本篇会介绍Steam类中的一组方法，每个方法都对应集合上的一种操作</p>
-<h2 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h2><p>定义一个集合</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; numbers = Arrays.asList(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);</span><br></pre></td></tr></table></figure>
-<p>外部迭代</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用for循环</span></span><br><span class="line"><span class="keyword">for</span> (String number : numbers) &#123;</span><br><span class="line">    System.out.println(number);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 迭代器</span></span><br><span class="line">Iterator&lt;String&gt; iterator = numbers.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">    String number = iterator.next();</span><br><span class="line">    System.out.println(number);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>内部迭代（Stream）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numbers.stream().forEach(action -&gt; System.out.println(action));</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2016/05/19/java/java8-stream/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">stream</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/19/java/java8-stream/">展开全文 >></a>
         </p>
       
 
