@@ -6,20 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="yzbzz.github.io">
-  <title>swift-life-cycle | Yzbzz&#39;s Blog</title>
+  <title>使用Android Studio模板节省开发时间 | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="IOS生命周期    IOS Android      viewWillAppear onCreate    viewDidAppear onResume    viewWillDisapper onPause    viewDidApper onStop">
-<meta name="keywords" content="ios">
+  <meta name="description" content="前言使用模板能大大减少写重复代码的时间。Android Studio内置三种样式的模板    模板 适用范围     Live Templates 代码块   File and Code Templates 创建单个文件   Plugin Templates 整个工程    Plugin Templates比较复杂，本文主要讲解前二个：Live Templates、File and Code Te">
+<meta name="keywords" content="android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="swift-life-cycle">
-<meta property="og:url" content="yzbzz.github.io/2016/06/30/ios/swift-life-cycle/index.html">
+<meta property="og:title" content="使用Android Studio模板节省开发时间">
+<meta property="og:url" content="yzbzz.github.io/2018/03/05/android/android-studio-templates/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
-<meta property="og:description" content="IOS生命周期    IOS Android      viewWillAppear onCreate    viewDidAppear onResume    viewWillDisapper onPause    viewDidApper onStop">
+<meta property="og:description" content="前言使用模板能大大减少写重复代码的时间。Android Studio内置三种样式的模板    模板 适用范围     Live Templates 代码块   File and Code Templates 创建单个文件   Plugin Templates 整个工程    Plugin Templates比较复杂，本文主要讲解前二个：Live Templates、File and Code Te">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2016-12-23T08:48:13.000Z">
+<meta property="og:image" content="/img/android/android-studio-live-templates-toast.jpg">
+<meta property="og:image" content="/img/android/android-studio-live-templates.jpg">
+<meta property="og:image" content="/img/android/android-studio-live-templates-add.jpg">
+<meta property="og:image" content="/img/android/android-studio-live-templates-add-detail.jpg">
+<meta property="og:image" content="/img/android/android-studio-live-templates-add-complete.jpg">
+<meta property="og:image" content="/img/android/android-studio-live-templates-add-show.jpg">
+<meta property="og:image" content="/img/android/android-stuido-file-templates.jpg">
+<meta property="og:image" content="/img/android/androd-studio-file-templates-add.jpg">
+<meta property="og:image" content="/img/android/android-studio-file-tempates-add-complete.jpg">
+<meta property="og:image" content="/img/android/android-studio-file-templates-add-show.jpg">
+<meta property="og:image" content="/img/android/android-studio-file-templates-show.jpg">
+<meta property="og:updated_time" content="2018-03-06T08:03:53.527Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="swift-life-cycle">
-<meta name="twitter:description" content="IOS生命周期    IOS Android      viewWillAppear onCreate    viewDidAppear onResume    viewWillDisapper onPause    viewDidApper onStop">
+<meta name="twitter:title" content="使用Android Studio模板节省开发时间">
+<meta name="twitter:description" content="前言使用模板能大大减少写重复代码的时间。Android Studio内置三种样式的模板    模板 适用范围     Live Templates 代码块   File and Code Templates 创建单个文件   Plugin Templates 整个工程    Plugin Templates比较复杂，本文主要讲解前二个：Live Templates、File and Code Te">
+<meta name="twitter:image" content="/img/android/android-studio-live-templates-toast.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
   
@@ -67,6 +79,8 @@
 				<li><a href="/tags/fe">FE前端</a></li>
 	        
 				<li><a href="/tags/apple">MAC OS</a></li>
+	        
+				<li><a href="/tags/life">学习生活</a></li>
 	        
 				<li><a href="/tags/read">读书笔记</a></li>
 	        
@@ -146,6 +160,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -166,23 +182,25 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 11.11111111111111%"><a href="/tags/android">Android</a></li>
+					<li style="width: 10%"><a href="/tags/android">Android</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/tags/ios">IOS</a></li>
+					<li style="width: 10%"><a href="/tags/ios">IOS</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/tags/java">Java</a></li>
+					<li style="width: 10%"><a href="/tags/java">Java</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/tags/fe">FE前端</a></li>
+					<li style="width: 10%"><a href="/tags/fe">FE前端</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/tags/apple">MAC OS</a></li>
+					<li style="width: 10%"><a href="/tags/apple">MAC OS</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/tags/read">读书笔记</a></li>
+					<li style="width: 10%"><a href="/tags/life">学习生活</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/tags/blog">博客地址</a></li>
+					<li style="width: 10%"><a href="/tags/read">读书笔记</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/tags/study">安装配置</a></li>
+					<li style="width: 10%"><a href="/tags/blog">博客地址</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/tags/hole">踩过的坑</a></li>
+					<li style="width: 10%"><a href="/tags/study">安装配置</a></li>
+		        
+					<li style="width: 10%"><a href="/tags/hole">踩过的坑</a></li>
 		        
 				</ul>
 			</nav>
@@ -197,57 +215,102 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-ios/swift-life-cycle" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-android/android-studio-templates" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      swift-life-cycle
+      使用Android Studio模板节省开发时间
     </h1>
   
 
         
-        <a href="/2016/06/30/ios/swift-life-cycle/" class="archive-article-date">
-  	<time datetime="2016-06-30T09:08:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-30</time>
+        <a href="/2018/03/05/android/android-studio-templates/" class="archive-article-date">
+  	<time datetime="2018-03-05T09:42:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="IOS生命周期"><a href="#IOS生命周期" class="headerlink" title="IOS生命周期"></a>IOS生命周期</h3><table>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>使用模板能大大减少写重复代码的时间。Android Studio内置三种样式的模板</p>
+<table>
 <thead>
 <tr>
-<th></th>
-<th style="text-align:center">IOS</th>
-<th style="text-align:center">Android</th>
+<th>模板</th>
+<th>适用范围</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
-<td style="text-align:center">viewWillAppear</td>
-<td style="text-align:center">onCreate</td>
+<td>Live Templates</td>
+<td>代码块</td>
 </tr>
 <tr>
-<td></td>
-<td style="text-align:center">viewDidAppear</td>
-<td style="text-align:center">onResume</td>
+<td>File and Code Templates</td>
+<td>创建单个文件</td>
 </tr>
 <tr>
-<td></td>
-<td style="text-align:center">viewWillDisapper</td>
-<td style="text-align:center">onPause</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">viewDidApper</td>
-<td style="text-align:center">onStop</td>
+<td>Plugin Templates</td>
+<td>整个工程</td>
 </tr>
 </tbody>
 </table>
+<p>Plugin Templates比较复杂，本文主要讲解前二个：Live Templates、File and Code Templates</p>
+<a id="more"></a>
+<h3 id="Live-Templates"><a href="#Live-Templates" class="headerlink" title="Live Templates"></a>Live Templates</h3><p><strong>什么是<code>Live Templates</code>呢</strong></p>
+<p><code>Live Templates</code>就是把一些常用的代码块封装成几个快捷的字母，比如<code>abc</code>，当我们输入<code>abc</code>时，会自动生成封装好的代码。</p>
+<p>以Toast为例，平时我们会这样写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Toast.makeText(context, <span class="string">""</span>, Toast.LENGTH_SHORT).show();</span><br></pre></td></tr></table></figure>
+<p>每当要显示Toast时，都要敲上面的代码，很麻烦。细心的同学会发现，当输入Toast时，会在提示栏显示一些快捷的操作</p>
+<p><img src="/img/android/android-studio-live-templates-toast.jpg" alt="android-studio-live-templates-toast"></p>
+<p>我们点击第二项，会自动生成下面的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Toast.makeText(mContext, <span class="string">""</span>, Toast.LENGTH_SHORT).show();</span><br></pre></td></tr></table></figure>
+<p>第二项中的Toast就是AndroidStudio内置的<code>Live Templates</code></p>
+<p>以<code>mac</code> 为例，可以通过下面的方式进入到<code>Live Templates</code></p>
+<p>Android Studio -&gt; Preferences -&gt; Editor -&gt; Live Templates</p>
+<p><img src="/img/android/android-studio-live-templates.jpg" alt="android-studio-live-templates"></p>
+<p>从图中，我们可以看到AndroidStudio已经内置了一些模板，点开<code>Android</code>栏，会看到一些常用的<code>Live Templates</code>，其中包含我们上面提到的<code>Toast</code>。</p>
+<p>当然，我们也可以定义自己的<code>Live Templates</code>，下面我们来封装一个<code>AlertDialog</code></p>
+<p><img src="/img/android/android-studio-live-templates-add.jpg" alt="android-studio-live-templates-add"></p>
+<p>点击右边的<code>+</code>号，选择<code>Template Group…</code>新建一个组，组名我们这里填写<code>UI</code>，完成后会在左侧列表显示我们刚刚新建的<code>UI</code>组，选中<code>UI</code>，再次点击右侧的<code>+</code>号，这里我们选择<code>Live Templates</code></p>
+<p><img src="/img/android/android-studio-live-templates-add-detail.jpg" alt="android-studio-live-templates-add-detail"></p>
+<p><code>Abbreviation</code>栏填写你要设置的快捷字母，这里我们填写<code>showDialog</code>，<code>Description</code>填写一个描述，这里我们填<code>显示AlertDialog</code>。</p>
+<p><code>Template Text</code>栏填写你要封装的代码块</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">AlertDialog.Builder builder = <span class="keyword">new</span> AlertDialog.Builder($context$);</span><br><span class="line">builder.setTitle(<span class="string">""</span>);</span><br><span class="line">builder.setMessage(<span class="string">""</span>);</span><br><span class="line">builder.setNegativeButton(<span class="string">""</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">builder.setPositiveButton(<span class="string">""</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">builder.create().show();</span><br></pre></td></tr></table></figure>
+<p>下面蓝色的<code>Define</code>，点开选择<code>Java</code>，如下图：</p>
+<p><img src="/img/android/android-studio-live-templates-add-complete.jpg" alt="android-studio-live-templates-add-complete"></p>
+<p>点击完成，我们的<code>Live Templates</code>就生成好啦，我们来试试在代码中输入<code>showDialog</code></p>
+<p><img src="/img/android/android-studio-live-templates-add-show.jpg" alt="android-studio-live-templates-add-show"></p>
+<p>点击提示栏的第一个，就会自动生成我们封装好的<code>AlertDialog</code>代码，是不是很方便呢^^</p>
+<h3 id="File-and-Code-Templates"><a href="#File-and-Code-Templates" class="headerlink" title="File and Code Templates"></a>File and Code Templates</h3><p>我们点击<code>File -&gt; New</code>的时候，会在右侧显示一些快捷项，供我们快速的创建文件</p>
+<p><img src="/img/android/android-stuido-file-templates.jpg" alt="android-stuido-file-templates"></p>
+<p>有时候我们希望可以定义自己的<code>Templates</code>，用于快速生成相应文件，比如<code>RecycleView</code>的<code>Adapter</code>文件，很多都是差不多的格式。</p>
+<p>以<code>mac</code> 为例，可以通过下面的方式进入到<code>File and Code Templates</code></p>
+<p>Android Studio -&gt; Preferences -&gt; Editor -&gt;File and Code Templates</p>
+<p>File -&gt; New -&gt; Edit File Templates</p>
+<p><img src="/img/android/androd-studio-file-templates-add.jpg" alt="android-studio-file-templates-add"></p>
+<p>选中<code>Files</code>标签页，点击<code>+</code>号，<code>Name</code>栏输入<code>RVAdapter</code>，下面的输入框输入以下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#if ($&#123;PACKAGE_NAME&#125; &amp;&amp; $&#123;PACKAGE_NAME&#125; != "")package $&#123;PACKAGE_NAME&#125;;#end</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.widget.RecyclerView;</span><br><span class="line"><span class="keyword">import</span> android.view.LayoutInflater;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.view.ViewGroup;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line">#parse("File Header.java")</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> $</span>&#123;NAME&#125; extends RecyclerView.Adapter&lt;$&#123;VIEWHOLDER_CLASS&#125;&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Context context;</span><br><span class="line">    <span class="keyword">private</span> List&lt;$&#123;ITEM_CLASS&#125;&gt; items;</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">public</span> $&#123;NAME&#125;(List&lt;$&#123;ITEM_CLASS&#125;&gt; items, Context context) &#123;</span><br><span class="line">        <span class="keyword">this</span>.items = items;</span><br><span class="line">        <span class="keyword">this</span>.context = context;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> $&#123;VIEWHOLDER_CLASS&#125; onCreateViewHolder(ViewGroup parent,</span><br><span class="line">                                             <span class="keyword">int</span> viewType) &#123;</span><br><span class="line">        View v = LayoutInflater.from(parent.getContext())</span><br><span class="line">                .inflate(R.layout.$&#123;LAYOUT_RES_ID&#125;, parent, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> $&#123;VIEWHOLDER_CLASS&#125;(v);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">($&#123;VIEWHOLDER_CLASS&#125; holder, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        $&#123;ITEM_CLASS&#125; item = items.get(position);</span><br><span class="line">        <span class="comment">//TODO Fill in your logic for binding the view.</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (items == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> items.size();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> $</span>&#123;VIEWHOLDER_CLASS&#125; extends RecyclerView.ViewHolder &#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MyViewHolder</span><span class="params">(View itemView)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(itemView);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>点击<code>OK</code>，我们的<code>Templates</code>就创建好。</p>
+<p>接下来，我们点击<code>File -&gt; New</code>，就会出现我们创建好的<code>File Templates</code>项</p>
+<p><img src="/img/android/android-studio-file-tempates-add-complete.jpg" alt="android-studio-file-tempates-add-complete"></p>
+<p>点击它，会出现下面的对话框</p>
+<p><img src="/img/android/android-studio-file-templates-add-show.jpg" alt="android-studio-file-templates-add-show"></p>
+<ul>
+<li>File name：填写你要创建的Adapter名称，例：TestRvAdapter</li>
+<li>VIEWHOLDER CLASS：填写你要创建的ViewHolder，例：MyViewHolder</li>
+<li>ITEM CLASS：填写你数据的类型，例: String</li>
+<li>LAYOUT RES ID：填写你的布局文件名称，例：acitivity_main</li>
+</ul>
+<p>填写完成，我们的文件就生成好啦 </p>
+<p><img src="/img/android/android-studio-file-templates-show.jpg" alt="android-studio-file-templates-show"></p>
+<p>OK，大功造成 ，是不是会节约很多时间呢^^</p>
+<blockquote>
+<p>参考文章： <a href="https://riggaroo.co.za/custom-file-templates-android-studio/" target="_blank" rel="noopener">How to create your own file template in Android Studio</a></p>
+</blockquote>
 
       
 
@@ -292,7 +355,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
         		</li>
       		
 		</ul>
@@ -348,7 +411,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:yzbzz.github.io/2016/06/30/ios/swift-life-cycle/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:yzbzz.github.io/2018/03/05/android/android-studio-templates/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -362,18 +425,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/08/22/study/hexo/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/06/android/android-ui-rv/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          hexo
+          RecyclerView
         
       </div>
     </a>
   
   
-    <a href="/2016/06/22/ios/ios-stanford/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">What&#39;s in iOS?</div>
+    <a href="/2018/03/02/android/kotlin-operator/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Kotlin操作符重载</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -507,7 +570,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -523,14 +594,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -539,19 +602,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
             
             <div class="clearfix"></div>
