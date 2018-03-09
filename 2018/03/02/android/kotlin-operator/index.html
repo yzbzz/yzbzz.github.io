@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="yzbzz.github.io">
   <title>Kotlin操作符重载 | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="操作符重载一元操作符   表达式 对应函数     +a a.unaryPlus()   -a a.unaryMinus()   !a a.not()   ++a, a++ a.inc()   –a, a– a.dec()    示例： 123456data class Point(val x: Int, val y: Int)operator fun Point.unaryMinus() = P">
+  <meta name="description" content="操作符重载一元操作符   表达式 对应函数     +a a.unaryPlus()   -a a.unaryMinus()   !a a.not()   ++a, a++ a.inc()   –a, a– a.dec()">
 <meta name="keywords" content="android,kotlin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin操作符重载">
 <meta property="og:url" content="yzbzz.github.io/2018/03/02/android/kotlin-operator/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
-<meta property="og:description" content="操作符重载一元操作符   表达式 对应函数     +a a.unaryPlus()   -a a.unaryMinus()   !a a.not()   ++a, a++ a.inc()   –a, a– a.dec()    示例： 123456data class Point(val x: Int, val y: Int)operator fun Point.unaryMinus() = P">
+<meta property="og:description" content="操作符重载一元操作符   表达式 对应函数     +a a.unaryPlus()   -a a.unaryMinus()   !a a.not()   ++a, a++ a.inc()   –a, a– a.dec()">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-08T08:51:46.285Z">
+<meta property="og:updated_time" content="2018-03-08T09:02:35.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin操作符重载">
-<meta name="twitter:description" content="操作符重载一元操作符   表达式 对应函数     +a a.unaryPlus()   -a a.unaryMinus()   !a a.not()   ++a, a++ a.inc()   –a, a– a.dec()    示例： 123456data class Point(val x: Int, val y: Int)operator fun Point.unaryMinus() = P">
+<meta name="twitter:description" content="操作符重载一元操作符   表达式 对应函数     +a a.unaryPlus()   -a a.unaryMinus()   !a a.not()   ++a, a++ a.inc()   –a, a– a.dec()">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
   
@@ -253,6 +253,7 @@
 </tr>
 </tbody>
 </table>
+<a id="more"></a>
 <p>示例：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span></span>(<span class="keyword">val</span> x: <span class="built_in">Int</span>, <span class="keyword">val</span> y: <span class="built_in">Int</span>)</span><br><span class="line"><span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> Point.<span class="title">unaryMinus</span><span class="params">()</span></span> = Point(-x, -y)</span><br><span class="line"><span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> Point.<span class="title">inc</span><span class="params">()</span></span> = Point(x + <span class="number">1</span>, y + <span class="number">1</span>)</span><br><span class="line"><span class="keyword">var</span> p = Point(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line">println(-p) <span class="comment">// Point(x=10, y=-20)</span></span><br><span class="line">println(++p) <span class="comment">// Point(x=11, y=21)</span></span><br></pre></td></tr></table></figure>
 <h4 id="二元操作符"><a href="#二元操作符" class="headerlink" title="二元操作符"></a>二元操作符</h4><table>
@@ -505,6 +506,11 @@
 <p>所有的比较都转换为对 <code>compareTo</code> 的调用，这个函数需要返回 <code>Int</code> 值</p>
 <p>示例：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> firstName: String, <span class="keyword">val</span> lastName: String): Comparable&lt;Person&gt; &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">compareTo</span><span class="params">(other: <span class="type">Person</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> compareValuesBy(<span class="keyword">this</span>, other, Person::lastName, Person::firstName)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> p1 = Person(<span class="string">"Alice"</span>, <span class="string">"Smith"</span>)</span><br><span class="line"><span class="keyword">val</span> p2 = Person(<span class="string">"Bob"</span>, <span class="string">"Johnson"</span>)</span><br><span class="line">println(p1 &lt; p2) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参考资料：</p>
+<p><a href="https://www.manning.com/books/kotlin-in-action" target="_blank" rel="noopener">Kotlin in Action</a></p>
+<p><a href="http://kotlinlang.org/docs/reference/operator-overloading.html#assignments" target="_blank" rel="noopener">Operator overloading</a></p>
+</blockquote>
 
       
 
@@ -772,15 +778,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -800,15 +806,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">

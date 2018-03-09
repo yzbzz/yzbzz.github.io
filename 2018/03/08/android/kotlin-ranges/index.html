@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="yzbzz.github.io">
-  <title>Kotlin区间的约定 | Yzbzz&#39;s Blog</title>
+  <title>Kotlin区间 | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="区间in的约定 123// 1..5 范围是闭区间 [1,5]if (i in 1..5) ==&amp;gt; if (i &amp;gt;= 1 &amp;amp;&amp;amp; i &amp;lt;=5)if (i !in 1..5) ==&amp;gt; if (i &amp;lt;= 1 &amp;amp;&amp;amp; i &amp;gt;=5) downTo的约定 1234567// 正序for (i in 1..5) // 倒序for (i in 5.">
+  <meta name="description" content="区间rangeTo..操作符实际上调用的是rangeTo函数，一般与in和in联用  1start..end -&amp;gt; start.rangeTo(end) 整型区间（IntRange、 LongRange、 CharRange）可以迭代。 编译器会无额外开销的将它们转换为类似 Java 的基于索引的 for-循环">
 <meta name="keywords" content="android,kotlin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kotlin区间的约定">
+<meta property="og:title" content="Kotlin区间">
 <meta property="og:url" content="yzbzz.github.io/2018/03/08/android/kotlin-ranges/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
-<meta property="og:description" content="区间in的约定 123// 1..5 范围是闭区间 [1,5]if (i in 1..5) ==&amp;gt; if (i &amp;gt;= 1 &amp;amp;&amp;amp; i &amp;lt;=5)if (i !in 1..5) ==&amp;gt; if (i &amp;lt;= 1 &amp;amp;&amp;amp; i &amp;gt;=5) downTo的约定 1234567// 正序for (i in 1..5) // 倒序for (i in 5.">
+<meta property="og:description" content="区间rangeTo..操作符实际上调用的是rangeTo函数，一般与in和in联用  1start..end -&amp;gt; start.rangeTo(end) 整型区间（IntRange、 LongRange、 CharRange）可以迭代。 编译器会无额外开销的将它们转换为类似 Java 的基于索引的 for-循环">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-08T08:49:07.355Z">
+<meta property="og:updated_time" content="2018-03-09T07:47:27.326Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kotlin区间的约定">
-<meta name="twitter:description" content="区间in的约定 123// 1..5 范围是闭区间 [1,5]if (i in 1..5) ==&amp;gt; if (i &amp;gt;= 1 &amp;amp;&amp;amp; i &amp;lt;=5)if (i !in 1..5) ==&amp;gt; if (i &amp;lt;= 1 &amp;amp;&amp;amp; i &amp;gt;=5) downTo的约定 1234567// 正序for (i in 1..5) // 倒序for (i in 5.">
+<meta name="twitter:title" content="Kotlin区间">
+<meta name="twitter:description" content="区间rangeTo..操作符实际上调用的是rangeTo函数，一般与in和in联用  1start..end -&amp;gt; start.rangeTo(end) 整型区间（IntRange、 LongRange、 CharRange）可以迭代。 编译器会无额外开销的将它们转换为类似 Java 的基于索引的 for-循环">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
   
@@ -210,7 +210,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Kotlin区间的约定
+      Kotlin区间
     </h1>
   
 
@@ -223,14 +223,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="区间"><a href="#区间" class="headerlink" title="区间"></a>区间</h3><p><strong>in的约定</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1..5 范围是闭区间 [1,5]</span></span><br><span class="line"><span class="keyword">if</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.5</span>) ==&gt; <span class="keyword">if</span> (i &gt;= <span class="number">1</span> &amp;&amp; i &lt;=<span class="number">5</span>)</span><br><span class="line"><span class="keyword">if</span> (i !<span class="keyword">in</span> <span class="number">1.</span><span class="number">.5</span>) ==&gt; <span class="keyword">if</span> (i &lt;= <span class="number">1</span> &amp;&amp; i &gt;=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
-<p><strong>downTo的约定</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正序</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.5</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment">// 倒序</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">5.</span><span class="number">.1</span>) <span class="comment">// 不支持这种写法，什么都不输出</span></span><br><span class="line">==&gt;</span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">5</span> downTo <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p><strong>step的约定</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正序</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.5</span> step <span class="number">2</span>) ==&gt; <span class="keyword">for</span> (i = <span class="number">1</span>; i&lt;=<span class="number">5</span> ; i+=<span class="number">2</span>)</span><br><span class="line"><span class="comment">//倒序</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> downTo <span class="number">5</span> step <span class="number">2</span>) ==&gt; <span class="keyword">for</span> (i = <span class="number">5</span>;i &gt;= <span class="number">1</span>;i-=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-<p><strong>rangeTo的约定</strong></p>
+        <h3 id="区间"><a href="#区间" class="headerlink" title="区间"></a>区间</h3><h4 id="rangeTo"><a href="#rangeTo" class="headerlink" title="rangeTo"></a>rangeTo</h4><p><code>..</code>操作符实际上调用的是<code>rangeTo</code>函数，一般与<code>in</code>和<code>in</code>联用 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start..end -&gt; start.rangeTo(end)</span><br></pre></td></tr></table></figure>
+<p>整型区间（<code>IntRange</code>、 <code>LongRange</code>、 <code>CharRange</code>）可以迭代。 编译器会无额外开销的将它们转换为类似 Java 的基于索引的 <em>for</em>-循环</p>
+<a id="more"></a>
+<h4 id="in-闭区间"><a href="#in-闭区间" class="headerlink" title="in(闭区间)"></a>in(闭区间)</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1..5 范围是闭区间 [1,5]</span></span><br><span class="line"><span class="keyword">if</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.5</span>) ==&gt; <span class="keyword">if</span> (i &gt;= <span class="number">1</span> &amp;&amp; i &lt;=<span class="number">5</span>)</span><br><span class="line"><span class="keyword">if</span> (i !<span class="keyword">in</span> <span class="number">1.</span><span class="number">.5</span>) ==&gt; <span class="keyword">if</span> (i &lt;= <span class="number">1</span> &amp;&amp; i &gt;=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="downTo"><a href="#downTo" class="headerlink" title="downTo"></a>downTo</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正序</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.5</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment">// 倒序</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">5.</span><span class="number">.1</span>) <span class="comment">// 不支持这种写法，什么都不输出</span></span><br><span class="line">==&gt;</span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">5</span> downTo <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="step"><a href="#step" class="headerlink" title="step"></a>step</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正序</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.5</span> step <span class="number">2</span>) ==&gt; <span class="keyword">for</span> (i = <span class="number">1</span>; i&lt;=<span class="number">5</span> ; i+=<span class="number">2</span>)</span><br><span class="line"><span class="comment">//倒序</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> downTo <span class="number">5</span> step <span class="number">2</span>) ==&gt; <span class="keyword">for</span> (i = <span class="number">5</span>;i &gt;= <span class="number">1</span>;i-=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="until-左闭右开区间"><a href="#until-左闭右开区间" class="headerlink" title="until(左闭右开区间)"></a>until(左闭右开区间)</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 until 5 范围是闭区间 [1,5)</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span> until <span class="number">5</span>) println(i)</span><br><span class="line"><span class="comment">// 1234</span></span><br></pre></td></tr></table></figure>
+<h4 id="reversed"><a href="#reversed" class="headerlink" title="reversed"></a>reversed</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">println(list.reversed()) <span class="comment">// [3, 2, 1]</span></span><br></pre></td></tr></table></figure>
+<h4 id="last"><a href="#last" class="headerlink" title="last"></a>last</h4><p>返回数列的 <code>last</code> 值可能与原始数列的 <code>last</code> 值不同，以便保持不变式 <code>(last - first) % step == 0</code> 成立</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1.</span><span class="number">.12</span> step <span class="number">2</span>).last == <span class="number">11</span>  <span class="comment">// 值为 [1, 3, 5, 7, 9, 11] 的数列</span></span><br><span class="line">(<span class="number">1.</span><span class="number">.12</span> step <span class="number">3</span>).last == <span class="number">10</span>  <span class="comment">// 值为 [1, 4, 7, 10] 的数列</span></span><br><span class="line">(<span class="number">1.</span><span class="number">.12</span> step <span class="number">4</span>).last == <span class="number">9</span>   <span class="comment">// 值为 [1, 5, 9] 的数列</span></span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -347,6 +351,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/03/09/android/kotlin-delegation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          kotlin委托
+        
+      </div>
+    </a>
   
   
     <a href="/2018/03/06/android/android-ui-rv/" id="article-nav-older" class="article-nav-link-wrap">
@@ -488,15 +501,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -516,15 +529,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
