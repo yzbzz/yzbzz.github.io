@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="操作符重载一元操作符   表达式 对应函数     +a a.unaryPlus()   -a a.unaryMinus()   !a a.not()   ++a, a++ a.inc()   –a, a– a.dec()">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-08T09:02:35.057Z">
+<meta property="og:updated_time" content="2018-03-13T10:03:16.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin操作符重载">
 <meta name="twitter:description" content="操作符重载一元操作符   表达式 对应函数     +a a.unaryPlus()   -a a.unaryMinus()   !a a.not()   ++a, a++ a.inc()   –a, a– a.dec()">
@@ -445,38 +445,6 @@
 <p>这个 <code>==</code> 操作符有些特殊：它被翻译成一个复杂的表达式，用于筛选 <code>null</code> 值。 <code>null == null</code> 总是 true，对于非空的 <code>x</code>，<code>x == null</code> 总是 false 而不会调用 <code>x.equals()</code>。</p>
 <p>示例：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span></span>(<span class="keyword">val</span> x: <span class="built_in">Int</span>, <span class="keyword">val</span> y: <span class="built_in">Int</span>) &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">equals</span><span class="params">(obj: <span class="type">Any</span>?)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (obj === <span class="keyword">this</span>) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        <span class="keyword">if</span> (obj !<span class="keyword">is</span> Point) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">return</span> obj.x == x &amp;&amp; obj.y == y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">println(Point(<span class="number">10</span>, <span class="number">20</span>) == Point(<span class="number">10</span>, <span class="number">20</span>)) <span class="comment">// true</span></span><br><span class="line">println(Point(<span class="number">10</span>, <span class="number">20</span>) != Point(<span class="number">5</span>, <span class="number">5</span>)) <span class="comment">// true</span></span><br><span class="line">println(<span class="literal">null</span> == Point(<span class="number">1</span>, <span class="number">2</span>)) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>表达式</th>
-<th>函数名</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>+a</td>
-<td>unaryPlus</td>
-</tr>
-<tr>
-<td>-a</td>
-<td>unaryMinus</td>
-</tr>
-<tr>
-<td>!a</td>
-<td>not</td>
-</tr>
-<tr>
-<td>++a, a++</td>
-<td>inc</td>
-</tr>
-<tr>
-<td>—a, a–</td>
-<td>dec</td>
-</tr>
-</tbody>
-</table>
-<p>示例：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> Point.<span class="title">unaryMinus</span><span class="params">()</span></span>: Point &#123;</span><br><span class="line">    <span class="keyword">return</span> Point(-x, -y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> p = Point(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line">println(-p) <span class="comment">// Point(x=10, y=-20)</span></span><br></pre></td></tr></table></figure>
 <h4 id="比较操作符-compareTo"><a href="#比较操作符-compareTo" class="headerlink" title="比较操作符(compareTo)"></a>比较操作符(compareTo)</h4><table>
 <thead>
 <tr>
@@ -778,10 +746,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
@@ -794,7 +758,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hole</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -803,10 +775,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">stream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -20,7 +20,7 @@
 <meta property="og:image" content="/img/study/jenkins/jenkins_install_plugin_first.jpg">
 <meta property="og:image" content="/img/study/jenkins/jenkins_install_setting.jpg">
 <meta property="og:image" content="/img/study/jenkins/jenkins_install_complete.jpg">
-<meta property="og:updated_time" content="2018-01-30T07:16:33.382Z">
+<meta property="og:updated_time" content="2018-03-13T06:20:12.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用CentOS7安装配置Jenkins">
 <meta name="twitter:description" content="安装JavaJenkins依赖Java，如果你的系统没有安装的话，需要先安装Java，已安装的话，可以忽略。使用以下命令 安装Java 1yum install java 查看Java版本 1java -version">
@@ -239,19 +239,13 @@
 <p>如果你显示的是类似以下的界面</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java version <span class="string">"1.5.0"</span> </span><br><span class="line">gij (GNU libgcj) version <span class="number">4.3</span><span class="number">.3</span></span><br></pre></td></tr></table></figure>
 <p>你需要先删除<code>Java</code>，重新安装<code>OpenJDK</code>，因为CentOS的系统，如果<code>java</code>版本是<code>GCJ</code>的版本，会导致Jenkins不工作(<a href="https://issues.jenkins-ci.org/browse/JENKINS-743" target="_blank" rel="noopener">https://issues.jenkins-ci.org/browse/JENKINS-743</a>)</p>
-<h5 id="使用如下命令"><a href="#使用如下命令" class="headerlink" title="使用如下命令"></a>使用如下命令</h5><ol>
-<li><strong>先删除旧的<code>java</code></strong></li>
-</ol>
+<h5 id="使用如下命令"><a href="#使用如下命令" class="headerlink" title="使用如下命令"></a>使用如下命令</h5><p>1、<strong>先删除旧的<code>java</code></strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove java</span><br></pre></td></tr></table></figure>
-<ol>
-<li><strong>查看<code>OpenJDK</code>版本</strong></li>
-</ol>
+<p>2、<strong>查看<code>OpenJDK</code>版本</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum search openjdk</span><br></pre></td></tr></table></figure>
 <p>显示如下界面</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">java<span class="number">-1.8</span><span class="number">.0</span>-openjdk.i686 : OpenJDK Runtime Environment</span><br><span class="line">java<span class="number">-1.8</span><span class="number">.0</span>-openjdk.x86_64 : OpenJDK Runtime Environment</span><br><span class="line">java<span class="number">-1.8</span><span class="number">.0</span>-openjdk-accessibility.i686 : OpenJDK accessibility connector</span><br><span class="line">java<span class="number">-1.8</span><span class="number">.0</span>-openjdk-accessibility.x86_64 : OpenJDK accessibility connector</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<ol>
-<li><strong>安装<code>OpenJDK</code></strong></li>
-</ol>
+<p>3、<strong>安装<code>OpenJDK</code></strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install java<span class="number">-1.8</span><span class="number">.0</span>-openJDK</span><br></pre></td></tr></table></figure>
 <h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>如果你需要使用<code>git</code>，使用以下命令进行安装(-y表示所有安装时的确认项都选y)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y git</span><br></pre></td></tr></table></figure>
@@ -559,10 +553,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
@@ -575,7 +565,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hole</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -584,10 +582,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">stream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">

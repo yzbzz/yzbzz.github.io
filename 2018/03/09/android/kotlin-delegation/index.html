@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="yzbzz.github.io">
-  <title>kotlin委托 | Yzbzz&#39;s Blog</title>
+  <title>Kotlin委托 | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="类委托创建一个类Derived，实例Base接口，并将其所有公共方法委托给指定的对象。 1234567891011121314interface Base &amp;#123;    fun print()&amp;#125;class BaseImpl(val x: Int) : Base &amp;#123;    override fun print() &amp;#123; print(x) &amp;#125;&amp;#125;cl">
 <meta name="keywords" content="android,kotlin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kotlin委托">
+<meta property="og:title" content="Kotlin委托">
 <meta property="og:url" content="yzbzz.github.io/2018/03/09/android/kotlin-delegation/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="类委托创建一个类Derived，实例Base接口，并将其所有公共方法委托给指定的对象。 1234567891011121314interface Base &amp;#123;    fun print()&amp;#125;class BaseImpl(val x: Int) : Base &amp;#123;    override fun print() &amp;#123; print(x) &amp;#125;&amp;#125;cl">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-09T07:47:55.077Z">
+<meta property="og:updated_time" content="2018-03-13T11:27:00.339Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kotlin委托">
+<meta name="twitter:title" content="Kotlin委托">
 <meta name="twitter:description" content="类委托创建一个类Derived，实例Base接口，并将其所有公共方法委托给指定的对象。 1234567891011121314interface Base &amp;#123;    fun print()&amp;#125;class BaseImpl(val x: Int) : Base &amp;#123;    override fun print() &amp;#123; print(x) &amp;#125;&amp;#125;cl">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
@@ -210,7 +210,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      kotlin委托
+      Kotlin委托
     </h1>
   
 
@@ -246,7 +246,7 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String) &#123;</span><br><span class="line">    <span class="keyword">val</span> emails <span class="keyword">by</span> lazy &#123; loadEmails(<span class="keyword">this</span>) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>lazy</code>函数返回一个对象，该对象具有一个名为<code>getValue</code>且签名正确的方法，因此可以把它与<code>by</code>关键字一起使用来创建一个委托属性。<code>lazy</code>的参数是一个<code>lambda</code>，可以调用它来初始化这个值。默认情况下，<code>lazy</code>函数是线程安全的，如里需要，可以设置其他选项来告诉它要使用哪个锁，或者完全避开同步，如果该类永远不会在多线程环境中使用</p>
 <h4 id="实例委托属性"><a href="#实例委托属性" class="headerlink" title="实例委托属性"></a>实例委托属性</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String, age: <span class="built_in">Int</span>, salary: <span class="built_in">Int</span>): PropertyChangeAware() &#123;</span><br><span class="line">    <span class="keyword">var</span> age: <span class="built_in">Int</span> <span class="keyword">by</span> Delegates.observable(<span class="number">0</span>) &#123;</span><br><span class="line">        prop, old, new -&gt;</span><br><span class="line">        println(<span class="string">"<span class="variable">$old</span> -&gt; <span class="variable">$new</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> name: String <span class="keyword">by</span> Delegates.observable(<span class="string">"&lt;no name&gt;"</span>) &#123;</span><br><span class="line">        prop, old, new -&gt;</span><br><span class="line">        println(<span class="string">"<span class="variable">$old</span> -&gt; <span class="variable">$new</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果你想能够截获一个赋值并否决它，可以使用<code>vetoable</code>代替<code>observable</code></p>
+<p>如果你想能够截获一个赋值并做一些条件判断，可以使用<code>vetoable</code>代替<code>observable</code></p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String, age: <span class="built_in">Int</span>, salary: <span class="built_in">Int</span>): PropertyChangeAware() &#123;</span><br><span class="line">    <span class="keyword">var</span> age: <span class="built_in">Int</span> <span class="keyword">by</span> Delegates.observable(<span class="number">0</span>) &#123;</span><br><span class="line">        prop, old, new -&gt;</span><br><span class="line">        new &gt; old</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>把属性储存在Map中</strong></p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> map: Map&lt;String, Any?) &#123;</span><br><span class="line">    <span class="keyword">val</span> name: String <span class="keyword">by</span> map</span><br><span class="line">    <span class="keyword">val</span> age: <span class="built_in">Int</span> <span class="keyword">by</span> map</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 属性的名称自动用作map中的键</span></span><br><span class="line"><span class="keyword">val</span> person = Person(mapOf(<span class="string">"name"</span> to <span class="string">"John Doe"</span>, <span class="string">"age"</span> to <span class="number">25</span>))</span><br><span class="line">person.name</span><br><span class="line">person.age</span><br></pre></td></tr></table></figure>
@@ -519,10 +519,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
@@ -535,7 +531,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hole</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -544,10 +548,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">stream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -203,6 +203,427 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-android/kotlin-collections" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/14/android/kotlin-collections/">Kotlin集合与操作符</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/14/android/kotlin-collections/" class="archive-article-date">
+  	<time datetime="2018-03-14T02:06:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>kotlin的集合分为不可变集合和可变集合</p>
+<p>Kotlin 的 <code>List&lt;out T&gt;</code> 只提供只读操作如 <code>size</code>、<code>get</code>等的接口。和 Java 类似，它继承自 <code>Collection&lt;T&gt;</code> 进而继承自 <code>Iterable&lt;T&gt;</code>。改变 list 的方法是由 <code>MutableList&lt;T&gt;</code> 加入的。这一模式同样适用于 <code>Set&lt;out T&gt;/MutableSet&lt;T&gt;</code> 及 <code>Map&lt;K, out V&gt;/MutableMap&lt;K, V&gt;</code>。详见下表</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">不可变</th>
+<th>可变</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Iterable</td>
+<td>MutableIterable</td>
+</tr>
+<tr>
+<td style="text-align:left">Collection</td>
+<td>MutableCollection</td>
+</tr>
+<tr>
+<td style="text-align:left">List</td>
+<td>MutableList</td>
+</tr>
+<tr>
+<td style="text-align:left">Set</td>
+<td>MutableSet</td>
+</tr>
+<tr>
+<td style="text-align:left">Map</td>
+<td>MutableMap</td>
+</tr>
+</tbody>
+</table>
+<p><code>List</code>和<code>Set</code>的基本用法</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numbers: MutableList&lt;<span class="built_in">Int</span>&gt; = mutableListOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="keyword">val</span> readOnlyView: List&lt;<span class="built_in">Int</span>&gt; = numbers</span><br><span class="line">println(numbers)        <span class="comment">// 输出 "[1, 2, 3]"</span></span><br><span class="line">numbers.add(<span class="number">4</span>)</span><br><span class="line">println(readOnlyView)   <span class="comment">// 输出 "[1, 2, 3, 4]"</span></span><br><span class="line">readOnlyView.clear()    <span class="comment">// -&gt; 不能编译</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> strings = hashSetOf(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"c"</span>)</span><br><span class="line">assert(strings.size == <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="总数操作符"><a href="#总数操作符" class="headerlink" title="总数操作符"></a>总数操作符</h3><p><strong>any</strong></p>
+<p>只要有一个元素符合判断条件，则返回<code>true</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.any &#123; it % <span class="number">2</span> == <span class="number">0</span>&#125; <span class="comment">// true</span></span><br><span class="line">list.any &#123; it &gt; <span class="number">10</span> &#125; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p><strong>all</strong></p>
+<p>只有全部的元素符合判断条件，则返回<code>true</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.all &#123; it &lt; <span class="number">10</span> &#125; <span class="comment">// true</span></span><br><span class="line">list.all &#123; it % <span class="number">2</span> == <span class="number">0</span>&#125; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p><strong>count</strong></p>
+<p>返回符合判断条件的元素总数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.count &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p><strong>fold</strong></p>
+<p>给定一个初始值，在初始值的基础上，通过给定的函数来累计所有元素。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.fold(<span class="number">4</span>) &#123; total, next -&gt; total + next &#125; <span class="comment">// 4+1+2+3+4+5+6 = 25</span></span><br><span class="line">list.fold(<span class="number">4</span>) &#123; total, next -&gt; total * next &#125; <span class="comment">// 4*1*2*3*4*5*6 = 2880</span></span><br></pre></td></tr></table></figure>
+<p><strong>foldRight</strong></p>
+<p>与<code>fold</code>一样，只是顺序是从最后一项到第一项</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.foldRight(<span class="number">4</span>) &#123; total, next -&gt; total + next &#125; <span class="comment">// 25</span></span><br></pre></td></tr></table></figure>
+<p><strong>forEach</strong></p>
+<p>遍历的所有的元素，并执行给定的操作</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.forEach &#123; println(it) &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>forEachIndexed</strong></p>
+<p>与<code>forEach</code>类似，但是我们同时可以得到元素的<code>index</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.forEachIndexed &#123; (index, value) -&gt; println(<span class="string">"position <span class="variable">$index</span> contains a <span class="variable">$value</span>"</span>) &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>max/min</strong></p>
+<p>返回最大/最小的一项，如果没有则返回<code>null</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.max() <span class="comment">// 6</span></span><br><span class="line">list.min() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p><strong>maxBy/minBy</strong></p>
+<p>根据给定的函数返回最大/最小的一项，如果没有则返回<code>null</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.maxbBy &#123; -it &#125; <span class="comment">// 1</span></span><br><span class="line">list.minBy &#123; -it &#125; <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+<p><strong>none</strong></p>
+<p>如果没有任何元素与给定的函数匹配，则返回<code>true</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.none &#123; it % <span class="number">7</span> == <span class="number">0</span> &#125; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p><strong>reduce</strong></p>
+<p>和<code>fold</code>一样，但是没有一个初始值。通过给定的函数来累计所有元素</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.reduce &#123; total, next -&gt; total + next &#125; <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
+<p><strong>reduceRight</strong></p>
+<p>和<code>reduce</code>一样，但是顺序是从最后一项到第一项</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.reduceRight &#123; total, next -&gt; total + next &#125; <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
+<p><strong>sum</strong></p>
+<p>返回所有元素的和</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.sum() <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
+<p><strong>sumBy</strong></p>
+<p>返回所有元素通过给定的函数转换之后的数据总和</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.sumBy &#123; it % <span class="number">2</span> &#125; <span class="comment">// 3</span></span><br><span class="line">list.sumBy &#123; it + <span class="number">1</span> &#125; <span class="comment">// 27</span></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kotlin</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/14/android/kotlin-collections/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-android/kotlin-extensions" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/13/android/kotlin-extensions/">Kotlin扩展</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/13/android/kotlin-extensions/" class="archive-article-date">
+  	<time datetime="2018-03-13T03:36:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/13/android/kotlin-extensions/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-android/kotlin-annotations" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/android/kotlin-annotations/">Kotlin注解</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/12/android/kotlin-annotations/" class="archive-article-date">
+  	<time datetime="2018-03-12T03:44:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>关于注解可以参考以面文章：</p>
+<p><a href="http://blog.csdn.net/briblue/article/details/73824058" target="_blank" rel="noopener"> 秒懂，Java 注解 （Annotation）你可以这样学</a></p>
+        
+          <a class="article-more-a" href="/2018/03/12/android/kotlin-annotations/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kotlin</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/12/android/kotlin-annotations/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-android/kotlin-reflection" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/android/kotlin-reflection/">Kotlin反射</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/12/android/kotlin-reflection/" class="archive-article-date">
+  	<time datetime="2018-03-12T03:18:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><p>在<code>Java</code>平台，使用反向功能需要单独的Jar包<code>(kotlin-reflect.jar)</code>。使用<code>Android Studio</code>开发<code>Kotlin</code>项目，会自动引入<code>kotlin-reflect.jar</code></p>
+<h3 id="类引用"><a href="#类引用" class="headerlink" title="类引用"></a>类引用</h3><p>最基本的反射功能是获取kotlin类的运行时引用</p>
+<p>以下示例为<code>Java</code>、<code>Kotlin</code>的实现</p>
+<p>Java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;?&gt; myClass = MyClass.class;</span><br><span class="line">Class&lt;?&gt; myClass = Class.forName(<span class="string">"packageName.MyClass"</span>)</span><br></pre></td></tr></table></figure>
+<p>kotlin(如果调用的类是java类，需要添加<code>.java</code>后缀)</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引用kotlin类</span></span><br><span class="line"><span class="keyword">val</span> c = MyClass::<span class="class"><span class="keyword">class</span></span></span><br><span class="line"><span class="comment">// 引用java类</span></span><br><span class="line"><span class="keyword">val</span> c = MyClass::<span class="class"><span class="keyword">class</span>.<span class="title">java</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="绑定的类引用"><a href="#绑定的类引用" class="headerlink" title="绑定的类引用"></a>绑定的类引用</h3><p>我们可以使用<code>::class</code>语法获取对象的精确类的引用</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">Fruit</span></span>()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Apple</span>: <span class="type">Fruit</span></span>()</span><br><span class="line"><span class="keyword">val</span> fruit: Fruit = Apple()</span><br><span class="line">println(<span class="string">"fruit type is <span class="subst">$&#123;fruit::class.qualifiedName&#125;</span>"</span>) <span class="comment">// fruit type is Apple</span></span><br></pre></td></tr></table></figure>
+<h3 id="函数引用"><a href="#函数引用" class="headerlink" title="函数引用"></a>函数引用</h3><p>可以通过下面的方式获取到函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span></span>(<span class="keyword">var</span> x: <span class="built_in">Int</span>, <span class="keyword">var</span> y: <span class="built_in">Int</span>) &#123;</span><br><span class="line">	<span class="function"><span class="keyword">fun</span> <span class="title">getPointX</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> x</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">fun</span> <span class="title">printPointY</span><span class="params">()</span></span> &#123;</span><br><span class="line">		println(y)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第一种：可以使用::操作符获取函数</span></span><br><span class="line"><span class="keyword">val</span> getX = Point::getPointX</span><br><span class="line"><span class="keyword">val</span> getY = Point::printPointY</span><br><span class="line"><span class="keyword">val</span> p = Point(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">println(getX.invoke(p))</span><br><span class="line">getY.invoke(Point(<span class="number">3</span>, <span class="number">4</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种：使用Java的反射方式</span></span><br><span class="line"><span class="keyword">val</span> getX = Point::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>.<span class="title">getMethod</span></span>(<span class="string">"getPointX"</span>)</span><br><span class="line">print(getX.invoke(Point(<span class="number">2</span>, <span class="number">3</span>)))</span><br></pre></td></tr></table></figure>
+<p>我们可以使用<code>::</code>操作符把一个函数作为值传递给另一个函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">isOdd</span><span class="params">(x: <span class="type">Int</span>)</span></span> = x % <span class="number">2</span> != <span class="number">0</span></span><br><span class="line"><span class="keyword">val</span> numbers = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">println(numbers.filter(::isOdd)) <span class="comment">// 输出 [1, 3]</span></span><br></pre></td></tr></table></figure>
+<p>这里 <code>::isOdd</code> 是函数类型 <code>(Int) -&gt; Boolean</code> 的一个值</p>
+<p><code>::</code>也可以用于重载函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">isOdd</span><span class="params">(x: <span class="type">Int</span>)</span></span> = x % <span class="number">2</span> != <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">isOdd</span><span class="params">(s: <span class="type">String</span>)</span></span> = s == <span class="string">"brillig"</span> || s == <span class="string">"slithy"</span> || s == <span class="string">"tove"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> numbers = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">println(numbers.filter(::isOdd)) <span class="comment">// refers to isOdd(x: Int)</span></span><br></pre></td></tr></table></figure>
+<p>或者，你也可以赋值给变量</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> predicate: (String) -&gt; <span class="built_in">Boolean</span> = ::isOdd   <span class="comment">// 引用到 isOdd(x: String)</span></span><br></pre></td></tr></table></figure>
+<p>如果我们需要使用一个类的成员，或者一个扩展函数，它需要是限定的。例如：<code>String::toCharArray</code>为<code>String</code>类提供的扩展函数:<code>String.() -&gt; CharArray</code></p>
+<h3 id="函数组合"><a href="#函数组合" class="headerlink" title="函数组合"></a>函数组合</h3><p>考虑下面的函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;A, B, C&gt;</span> <span class="title">compose</span><span class="params">(f: (<span class="type">B</span>)</span></span> -&gt; C, g: (A) -&gt; B): (A) -&gt; C &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; x -&gt; f(g(x)) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它返回传递给它的两个函数的组合：<code>compose(f, g) = f(g(*))</code>。现在你可以这样调用它</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">length</span><span class="params">(s: <span class="type">String</span>)</span></span> = s.length</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> oddLength = compose(::isOdd, ::length)</span><br><span class="line"><span class="keyword">val</span> strings = listOf(<span class="string">"a"</span>, <span class="string">"ab"</span>, <span class="string">"abc"</span>)</span><br><span class="line"></span><br><span class="line">println(strings.filter(oddLength)) <span class="comment">// Prints "[a, abc]"</span></span><br></pre></td></tr></table></figure>
+<h3 id="属性引用"><a href="#属性引用" class="headerlink" title="属性引用"></a>属性引用</h3><p>我们可以使用<code>::</code>来访问属性</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> x = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> y = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    println(::x.<span class="keyword">get</span>()) <span class="comment">// prints "1"</span></span><br><span class="line">    println(::x.name)  <span class="comment">// prints "x"</span></span><br><span class="line">    </span><br><span class="line">    ::y.<span class="keyword">set</span>(<span class="number">2</span>)</span><br><span class="line">    println(y) <span class="comment">// 输出 "2"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于<code>val</code>，表达式<code>::x</code>返回<code>KProperty&lt;Int&gt;</code>类型的值，我们可以使用<code>get()</code>来取值，也可以直接使用<code>name</code>来取值。</p>
+<p>对于<code>var</code>，表达式<code>::y</code>返回 <code>KMutableProperty</code>类型的值，提供<code>get()/set()</code>供我们调用</p>
+</blockquote>
+<p>在没有参数的函数中，也可以使用属性引用：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> strs = listOf(<span class="string">"a"</span>, <span class="string">"bc"</span>, <span class="string">"def"</span>)</span><br><span class="line">println(strs.map(String::length)) <span class="comment">// prints [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+<p>访问类的成员属性</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>(<span class="keyword">val</span> p: <span class="built_in">Int</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> prop = A::p</span><br><span class="line">    println(prop.<span class="keyword">get</span>(A(<span class="number">1</span>))) <span class="comment">// prints "1"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于扩展属性</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> String.lastChar: <span class="built_in">Char</span></span><br><span class="line">    <span class="keyword">get</span>() = <span class="keyword">this</span>[length - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    println(String::lastChar.<span class="keyword">get</span>(<span class="string">"abc"</span>)) <span class="comment">// prints "c"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="与Java反射的互操作性"><a href="#与Java反射的互操作性" class="headerlink" title="与Java反射的互操作性"></a>与Java反射的互操作性</h3><p> 例如，要查找一个用作 Kotlin 属性 getter 的 幕后字段或 Java方法，可以这样写</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> kotlin.reflect.jvm.*</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>(<span class="keyword">val</span> p: <span class="built_in">Int</span>)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    println(A::p.javaGetter) <span class="comment">// prints "public final int A.getP()"</span></span><br><span class="line">    println(A::p.javaField)  <span class="comment">// prints "private final int A.p"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获取对应于<code>Java</code>的<code>Kotlin</code>类，使用<code>.kotlin</code>扩展属性</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getKClass</span><span class="params">(o: <span class="type">Any</span>)</span></span>: KClass&lt;Any&gt; = o.javaClass.kotlin</span><br></pre></td></tr></table></figure>
+<h3 id="构造函数引用"><a href="#构造函数引用" class="headerlink" title="构造函数引用"></a>构造函数引用</h3><p>可以使用<code>::</code>操作符来引用构造函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">function</span><span class="params">(factory: ()</span></span> -&gt; Foo) &#123;</span><br><span class="line">    <span class="keyword">val</span> x: Foo = factory()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function(::Foo)</span><br></pre></td></tr></table></figure>
+<h3 id="绑定函数和属性引用"><a href="#绑定函数和属性引用" class="headerlink" title="绑定函数和属性引用"></a>绑定函数和属性引用</h3><p>您可以引用特定对象的实例方法:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numberRegex = <span class="string">"\\d+"</span>.toRegex()</span><br><span class="line">println(numberRegex.matches(<span class="string">"29"</span>)) <span class="comment">// prints "true"</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">val</span> isNumber = numberRegex::matches</span><br><span class="line">println(isNumber(<span class="string">"29"</span>)) <span class="comment">// prints "true"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> strings = listOf(<span class="string">"abc"</span>, <span class="string">"124"</span>, <span class="string">"a70"</span>)</span><br><span class="line">println(strings.filter(numberRegex::matches)) <span class="comment">// 输出“[124]”</span></span><br></pre></td></tr></table></figure>
+<p>你也可以进行赋值操作</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> isNumber: (CharSequence) -&gt; <span class="built_in">Boolean</span> = numberRegex::matches</span><br><span class="line"><span class="keyword">val</span> matches: (Regex, CharSequence) -&gt; <span class="built_in">Boolean</span> = Regex::matches</span><br></pre></td></tr></table></figure>
+<p>属性引用也可以被绑定:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> prop = <span class="string">"abc"</span>::length</span><br><span class="line">println(prop.<span class="keyword">get</span>())   <span class="comment">// prints "3"</span></span><br></pre></td></tr></table></figure>
+<p>无需显式指定 <code>this</code> 作为接收者：<code>this::foo</code> 与 <code>::foo</code> 是等价的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kotlin</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/12/android/kotlin-reflection/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-flutter/flutter-started" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -272,7 +693,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/09/android/kotlin-delegation/">kotlin委托</a>
+      <a class="article-title" href="/2018/03/09/android/kotlin-delegation/">Kotlin委托</a>
     </h1>
   
 
@@ -437,7 +858,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/06/android/android-ui-rv/">RecyclerView</a>
+      <a class="article-title" href="/2018/03/06/android/android-ui-rv/">RecyclerView添加快速滚动</a>
     </h1>
   
 
@@ -452,7 +873,7 @@
       
         <h3 id="RecyclerView快速滚动"><a href="#RecyclerView快速滚动" class="headerlink" title="RecyclerView快速滚动"></a>RecyclerView快速滚动</h3><p>使用<code>ListView</code>实现快速滚动只需要添加一行代码就可以了</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">listView.setFastScrollEnabled(<span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
-<p>在<code>RecyclerView</code>中，并没有提供快速滚动的API。但是现在在Android Support Library 26，官方终于提供了。让我们开始吧。</p>
+<p>在<code>RecyclerView</code>中，之前官方并没有提供快速滚动的API。但是现在在Android Support Library 26，官方终于提供了。让我们开始吧。</p>
         
           <a class="article-more-a" href="/2018/03/06/android/android-ui-rv/#more">more >></a>
         
@@ -716,339 +1137,6 @@
 
 
   
-    <article id="post-Untitled" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/02/Untitled/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-android/kotlin-class" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/02/android/kotlin-class/">Kotlin类与对象</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/02/android/kotlin-class/" class="archive-article-date">
-  	<time datetime="2018-03-02T03:12:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="声明和初始化类"><a href="#声明和初始化类" class="headerlink" title="声明和初始化类"></a>声明和初始化类</h3><h4 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">constructor</span> </span>(_nickname: String) &#123;</span><br><span class="line">    <span class="keyword">val</span> nickname: String</span><br><span class="line">    init &#123;</span><br><span class="line">        nickname = _nickname</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>和<code>java</code>不同，在<code>java</code>中，初始化代码是写在构造方法里面的，而<code>kotlin</code>是写在<code>init</code>方法里。</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2018/03/02/android/kotlin-class/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kotlin</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/02/android/kotlin-class/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-life/life-flag-2018" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/26/life/life-flag-2018/">2018，遇见更好的自己</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/26/life/life-flag-2018/" class="archive-article-date">
-  	<time datetime="2018-02-26T06:50:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>时间过的好快，转眼就到了而立之年。去年一年太颓废了，今年一定要重拾心情，做更好的自己。<br>先定个小目标^^</p>
-<h3 id="2018愿望清单"><a href="#2018愿望清单" class="headerlink" title="2018愿望清单"></a>2018愿望清单</h3><p>1、精读5本编程书籍，编写20篇技术文章</p>
-<p>​    已完成6篇</p>
-<p>2、练字，练完2本楷书字帖，2本行楷字帖</p>
-<p>3、读完<code>English in Use</code>初级、中级、高级</p>
-<p>4、每周花费2小时学习音乐</p>
-<p>5、每周花费2小时学习PS/AI/AE</p>
-<p>6、学习IOS，能独立开发小APP</p>
-<p>7、跑步100天</p>
-<p>8、吃草1个月</p>
-<p>9、200天左右，每天锻炼30分钟</p>
-<p>10、去电影院看2场电影</p>
-<p>11、存款10W+</p>
-<p>12、买套属于自己的房子</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">life</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/26/life/life-flag-2018/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/study-bwh-ssr" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/26/study/study-bwh-ssr/">合适懒人的搬瓦工+ShadowsocksX教程</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/26/study/study-bwh-ssr/" class="archive-article-date">
-  	<time datetime="2018-02-26T06:09:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>建议大家自行安装shadowsocks(可以配置单、多用户)，传送门：<a href="http://localhost:4000/2018/01/26/study/study-bwh-ss/" target="_blank" rel="noopener">shadowsocks多用户配置</a>，不喜欢折腾的，可以继续往下看</strong></p>
-<h3 id="VPS服务器搭建"><a href="#VPS服务器搭建" class="headerlink" title="VPS服务器搭建"></a>VPS服务器搭建</h3><p>通过之前一篇文章<a href="/2018/01/25/study/study-bwh/">多图详解搬瓦工(Bandwagon)购买流程</a>，我们已经完成了VPS的购买，接下来我们开始搭建自己的服务器</p>
-<p>我们先回到首页，点击<code>Client Area</code>，<code>Client Area</code>会出现在下面2个地方</p>
-<p><img src="/img/study/bwh_home_client_area_top.jpg" alt="bwh_home_client_area_top"></p>
-<p><img src="/img/study/bwh_home_client_ares.jpg" alt="bwh_home_client_ares"></p>
-<p>点击后进入到下面的界面</p>
-<p><img src="/img/study/bwh_home_services.jpg" alt="bwh_home_services"></p>
-<p>依次点击<code>Services</code> -&gt; <code>My Services</code>，进入到下面的界面</p>
-<p><img src="/img/study/bwh_home_services_detail.jpg" alt="bwh_home_services_detail"></p>
-<p>这里我们点击<code>KiwiVM Control Panel</code>进入到服务器控制面版。进入到服务器控制面版后，先把服务停掉(待会要重装系统)。</p>
-<p><img src="/img/study/bwh_kiwi_main.jpg" alt="bwh_kiwi_main"></p>
-<p>搬瓦工提供无限次重装系统，这里我们先把服务停掉，重装一下系统。停掉服务后，点击左侧的<code>ShadowsocksR Server</code>，进入到<code>ShadowsocksR Server</code>界面，查看一下支持的<code>系统版本</code></p>
-<p><img src="/img/study/bwh_kiwi_ss.jpg" alt="bwh_kiwi_ss"></p>
-<p>从图中，我们可以看过，<code>ShadowsocksR Server</code>只支持<code>Centos 6 (32 or 64 bit)</code>的系统 ，所以我们需要重装一个<code>Centos 6 (32 or 64 bit)</code>的系统。</p>
-<p>点击左边的<code>Install new OS</code>，选择<code>centos-6-x86_64-bbr</code>，进行重装系统</p>
-<p><img src="/img/study/bwh_kiwi_new_os.jpg" alt="bwh_kiwi_new_os"></p>
-<p>点击<code>reload</code>，进行重装系统 ，同时会进入下面的界面</p>
-<p><img src="/img/study/bwh_kiwi_new_os_info.jpg" alt="bwh_kiwi_new_os_info"></p>
-<p>这里的<code>端口</code>和<code>服务器密码</code>需要记下来，方便以后使用ssh连接服务器使用</p>
-<p>如何进入服务器: <a href="/2018/01/30/study/study-centenos-ssh/">使用SSH客户端(Termius)连接服务器</a></p>
-<p>稍等一会，刷新页面，点击左侧的<code>Main controls</code>，出现下面的界面，表示系统安装成功</p>
-<p><img src="/img/study/bwh_kiwi_main_new.jpg" alt="bwh_kiwi_main_new"></p>
-<p>接下来，我们要安装<code>ShadowsocksX</code>服务</p>
-<h3 id="ShadowsocksX服务安装"><a href="#ShadowsocksX服务安装" class="headerlink" title="ShadowsocksX服务安装"></a>ShadowsocksX服务安装</h3><p>点击左侧的<code>ShadowsocksR Server</code></p>
-<p><img src="/img/study/bwh_kiwi_ss_install.jpg" alt="bwh_kiwi_ss_install"></p>
-<p>等待安装完成，出现下面界面，表示安装成功</p>
-<p><img src="/img/study/bwh_kiwi_ss_completed.jpg" alt="bwh_kiwi_ss_completed"></p>
-<p>点击<code>Go back</code>，进入详情页，拖到到页面到<code>Step 2</code>。不要关闭这个界面，后面会用到</p>
-<p><img src="/img/study/bwh_kiwi_ss_info.jpg" alt="bwh_kiwi_ss_info"></p>
-<p>至此，我们的ShadowsocksX服务安装完成，接下来，我们需要安装<code>ShadowsocksX</code>客户端</p>
-<h3 id="ShadowsocksX客户端安装"><a href="#ShadowsocksX客户端安装" class="headerlink" title="ShadowsocksX客户端安装"></a>ShadowsocksX客户端安装</h3><p>这里以<code>Mac OS</code>系统为例，其它平台可以参考下面文章</p>
-<h5 id="Mac平台"><a href="#Mac平台" class="headerlink" title="Mac平台"></a>Mac平台</h5><p>点击<a href="https://github.com/shadowsocks/shadowsocks-iOS/wiki/Shadowsocks-for-OSX-Help" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks-iOS/wiki/Shadowsocks-for-OSX-Help</a></p>
-<p><img src="/img/study/bwh_ss_mac_os.jpg" alt="bwh_ss_mac_os"></p>
-<p>点击图中标示的链接，会进入到一个下载页，点击<code>Download</code>开始下载，下载完成后安装，安装成功后，打开<code>ShadowsocksX</code>，打开后，会在菜单出现一个<code>纸飞机图标</code>，点击它</p>
-<p><img src="/img/study/bwh_ss_client.jpg" alt="bwh_ss_client"></p>
-<p>因为我之前配过2个服务器，所以上面会显示2条记录。点击<code>打开服务器设定</code></p>
-<p><img src="/img/study/bwh_kiwi_all.jpg" alt="bwh_kiwi_all"></p>
-<p>照着填就可以了，填完点击<code>确定</code>。大功告成，可以科学上网啦！(依然上不了的，可以把客户端软件关了，再重开)</p>
-<p><img src="/img/study/bwh_ss_complete.jpg" alt="bwh_ss_complete"></p>
-<h5 id="Windows平台"><a href="#Windows平台" class="headerlink" title="Windows平台"></a>Windows平台</h5><p>点击<a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks-windows/releases</a></p>
-<p><img src="/img/study/bwh_ss_windows.jpg" alt="bwh_ss_windows"></p>
-<h5 id="其它平台"><a href="#其它平台" class="headerlink" title="其它平台"></a>其它平台</h5><p>地址：<a href="https://github.com/shadowsocks?page=1" target="_blank" rel="noopener">https://github.com/shadowsocks?page=1</a></p>
-<p>自己慢慢找吧(^^)</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/26/study/study-bwh-ssr/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1158,10 +1246,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
@@ -1174,7 +1258,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hole</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1183,10 +1275,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">stream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
