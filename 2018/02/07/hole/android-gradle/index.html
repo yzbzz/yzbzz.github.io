@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="yzbzz.github.io">
   <title>android-gradle | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Failed to open zip file 当我们编译项目时，有时会出现 1234Error:Failed to open zip file.Gradle&amp;apos;s dependency cache may be corrupt (this sometimes occurs after a network connection timeout.)Re-download dependenci">
+  <meta name="description" content="解决Kotlin和DataBinding冲突 Unresolved reference: databinding 在主工程的build.gradle文件添加下面一行 123dependencies &amp;#123;    kapt &amp;quot;com.android.databinding:compiler:3.0.0&amp;quot;&amp;#125; Failed to open zip file 当我们编译">
 <meta name="keywords" content="hole">
 <meta property="og:type" content="article">
 <meta property="og:title" content="android-gradle">
 <meta property="og:url" content="yzbzz.github.io/2018/02/07/hole/android-gradle/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
-<meta property="og:description" content="Failed to open zip file 当我们编译项目时，有时会出现 1234Error:Failed to open zip file.Gradle&amp;apos;s dependency cache may be corrupt (this sometimes occurs after a network connection timeout.)Re-download dependenci">
+<meta property="og:description" content="解决Kotlin和DataBinding冲突 Unresolved reference: databinding 在主工程的build.gradle文件添加下面一行 123dependencies &amp;#123;    kapt &amp;quot;com.android.databinding:compiler:3.0.0&amp;quot;&amp;#125; Failed to open zip file 当我们编译">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/img/hole/hole-gradle-dists.jpg">
-<meta property="og:updated_time" content="2018-02-08T08:55:29.351Z">
+<meta property="og:updated_time" content="2018-03-21T07:40:37.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android-gradle">
-<meta name="twitter:description" content="Failed to open zip file 当我们编译项目时，有时会出现 1234Error:Failed to open zip file.Gradle&amp;apos;s dependency cache may be corrupt (this sometimes occurs after a network connection timeout.)Re-download dependenci">
+<meta name="twitter:description" content="解决Kotlin和DataBinding冲突 Unresolved reference: databinding 在主工程的build.gradle文件添加下面一行 123dependencies &amp;#123;    kapt &amp;quot;com.android.databinding:compiler:3.0.0&amp;quot;&amp;#125; Failed to open zip file 当我们编译">
 <meta name="twitter:image" content="/img/hole/hole-gradle-dists.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
@@ -225,7 +225,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>Failed to open zip file</strong></p>
+        <p><strong>解决Kotlin和DataBinding冲突 Unresolved reference: databinding</strong></p>
+<p>在主工程的<code>build.gradle</code>文件添加下面一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    kapt &quot;com.android.databinding:compiler:3.0.0&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Failed to open zip file</strong></p>
 <p>当我们编译项目时，有时会出现</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Error:Failed to open zip file.</span><br><span class="line">Gradle&apos;s dependency cache may be corrupt (this sometimes occurs after a network connection timeout.)</span><br><span class="line">Re-download dependencies and sync project (requires network)</span><br><span class="line">Re-download dependencies and sync project (requires network)</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -539,11 +542,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -551,7 +554,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
             
             <div class="clearfix"></div>

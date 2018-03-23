@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="前言之前一篇文章，我们讲了合适懒人的搬瓦工+ShadowsocksX教程，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-26T06:26:25.815Z">
+<meta property="og:updated_time" content="2018-03-23T07:33:59.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shadowsocks多用户配置">
 <meta name="twitter:description" content="前言之前一篇文章，我们讲了合适懒人的搬瓦工+ShadowsocksX教程，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
@@ -236,31 +236,29 @@
 <p><strong>第二步</strong>，按<code>i</code>键进入编辑模式，当按下<code>i</code>时，这时左下角会显示 <code>INSERT</code>字样，表示当前处于编辑模式。输入以下内容(因为是命令行模式，所以大家可以先使用文本编辑器，写好下面的文字，然后复制一下，贴到你的命令行)</p>
 <p><strong>单用户配置</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"server"</span>:<span class="string">"my_server_ip"</span>,</span><br><span class="line">    <span class="string">"server_port"</span>:<span class="number">8388</span>,</span><br><span class="line">    <span class="string">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="string">"local_port"</span>:<span class="number">1080</span>,</span><br><span class="line">    <span class="string">"password"</span>:<span class="string">"mypassword"</span>,</span><br><span class="line">    <span class="string">"timeout"</span>:<span class="number">300</span>,</span><br><span class="line">    <span class="string">"method"</span>:<span class="string">"rc4-md5"</span>,</span><br><span class="line">    <span class="string">"fast_open"</span>: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>多用户配置</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"server"</span>:<span class="string">"my_server_ip"</span>,</span><br><span class="line">    <span class="string">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="string">"local_port"</span>:<span class="number">1080</span>,</span><br><span class="line">    <span class="string">"port_password"</span>:&#123;</span><br><span class="line">    	<span class="string">"端口1"</span>:<span class="string">"密码1"</span>,</span><br><span class="line">    	<span class="string">"端口2"</span>:<span class="string">"密码2"</span>,</span><br><span class="line">    	<span class="string">"端口3"</span>:<span class="string">"密码3"</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"timeout"</span>:<span class="number">600</span>,</span><br><span class="line">    <span class="string">"method"</span>:<span class="string">"rc4-md5"</span>,</span><br><span class="line">  	<span class="string">"fast_open"</span>: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>单用户：<ul>
-<li><code>my_server_ip</code>填你的服务器地址</li>
-<li>8388填你的端口(自定义的，可能不更改，保留8388)</li>
-<li><code>mypassword</code>填写你要设置的密码</li>
-</ul>
-</li>
-<li>多用户<ul>
-<li><code>my_server_ip</code>填你的服务器地址</li>
-<li><code>端口1、密码1</code>填你要分配给客户端的端口和密码，比如’8388’:”123456”，后面的端口、密码同理</li>
-</ul>
-</li>
-</ul>
 <blockquote>
-<p>注意<code>method</code>一栏，默认是<code>aes-256-cfb</code>，这里改为<code>rc4-md5</code>，这样上网会快一些，相应的客户端加密也要改成<code>rc4-md5</code>，别忘了</p>
-<p>这里设置的项都是给你客户端连接时使用的</p>
+<p><code>my_server_ip</code>填你的服务器地址</p>
+<p>8388填你的端口(自定义的，可能不更改，保留8388)</p>
+<p><code>mypassword</code>填写你要设置的密码</p>
 </blockquote>
+<p><strong>多用户配置</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"server"</span>:<span class="string">"my_server_ip"</span>,</span><br><span class="line">    <span class="string">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="string">"local_port"</span>:<span class="number">1080</span>,</span><br><span class="line">    <span class="string">"port_password"</span>:&#123;</span><br><span class="line">    	<span class="string">"端口1"</span>:<span class="string">"密码1"</span>,</span><br><span class="line">    	<span class="string">"端口2"</span>:<span class="string">"密码2"</span>,</span><br><span class="line">    	<span class="string">"端口3"</span>:<span class="string">"密码3"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"timeout"</span>:<span class="number">600</span>,</span><br><span class="line">    <span class="string">"method"</span>:<span class="string">"rc4-md5"</span>,</span><br><span class="line">  	<span class="string">"fast_open"</span>: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>my_server_ip</code>填你的服务器地址</p>
+<p><code>端口1、密码1</code>填你要分配给客户端的端口和密码，比如’8388’:”123456”，后面的端口、密码同理</p>
+</blockquote>
+<p><strong>注意</strong>：<code>method</code>一栏，默认是<code>aes-256-cfb</code>，这里改为<code>rc4-md5</code>，这样上网会快一些，相应的客户端加密也要改成<code>rc4-md5</code>，别忘了</p>
+<p>这里设置的项都是给你客户端连接时使用的</p>
 <p><strong>第三步</strong>，开启或关闭服务</p>
 <p>使用以下命令</p>
 <p>开启服务</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
 <p>关闭服务</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
+<p><strong>开机自启动</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/rc.local</span><br></pre></td></tr></table></figure>
+<p>在<code>rc.local</code>中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
 <p>大功告成，愉快的玩耍吧(^^)</p>
 
       
@@ -386,8 +384,8 @@
     </a>
   
   
-    <a href="/2018/01/25/study/Centenos/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Linux</div>
+    <a href="/2018/01/25/study/study-bwh/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">多图详解搬瓦工(Bandwagon)购买流程</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -557,11 +555,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -569,7 +567,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
             
             <div class="clearfix"></div>
