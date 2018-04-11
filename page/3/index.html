@@ -203,6 +203,169 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-hole/android-gradle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/07/hole/android-gradle/">android-gradle</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/07/hole/android-gradle/" class="archive-article-date">
+  	<time datetime="2018-02-07T02:20:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>解决Kotlin和DataBinding冲突 Unresolved reference: databinding</strong></p>
+<p>在主工程的<code>build.gradle</code>文件添加下面一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    kapt &quot;com.android.databinding:compiler:3.0.0&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Failed to open zip file</strong></p>
+<p>当我们编译项目时，有时会出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Error:Failed to open zip file.</span><br><span class="line">Gradle&apos;s dependency cache may be corrupt (this sometimes occurs after a network connection timeout.)</span><br><span class="line">Re-download dependencies and sync project (requires network)</span><br><span class="line">Re-download dependencies and sync project (requires network)</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/02/07/hole/android-gradle/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hole</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/07/hole/android-gradle/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hole/hole-android-js-wxpay" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/30/hole/hole-android-js-wxpay/">记一次Android端H5调用微信支付引发的坑</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/30/hole/hole-android-js-wxpay/" class="archive-article-date">
+  	<time datetime="2018-01-30T07:28:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="事件背景"><a href="#事件背景" class="headerlink" title="事件背景"></a>事件背景</h3><p>今天一位H5的同事过来找我们，说他们在H5里调用微信支付(不是通过jsapi调用)，到支付界面，点击返回键，会导致APP重新启动，把<code>webview</code>给关掉了</p>
+<h3 id="事件原因分析"><a href="#事件原因分析" class="headerlink" title="事件原因分析"></a>事件原因分析</h3><p>经过我一顿猛操作，最后发现原来是<code>webview</code>设置<code>userAgent</code>引发的问题。</p>
+<p>因为H5的要求，我们会在<code>userAgent</code>里设置一些信息，这里以<code>abc</code>为例，我们把<code>abc</code>这个字符串设置到了<code>userAgent</code>里，同时在<code>AndroidManifest</code>的<code>activity</code>节点注册了<code>abc</code>的<code>scheme</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置userAgent</span></span><br><span class="line">webSettings.setUserAgentString(ua + <span class="string">" abc/"</span> + getVersionName());</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置scheme</span></span><br><span class="line">&lt;intent-filter&gt;</span><br><span class="line">  &lt;data android:scheme=<span class="string">"abc"</span> /&gt;</span><br><span class="line">  &lt;action android:name=<span class="string">"android.intent.action.VIEW"</span> /&gt;</span><br><span class="line">  &lt;category android:name=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span><br><span class="line">  &lt;category android:name=<span class="string">"android.intent.category.BROWSABLE"</span> /&gt;</span><br><span class="line">&lt;/intent-filter&gt;</span><br></pre></td></tr></table></figure>
+<p>这里设置之后，当点击微信支付的返回按钮后，发现微信会发起一个类似下面结构的<code>Intent</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url: abc://</span><br><span class="line">action: android.intent.action.VIEW</span><br></pre></td></tr></table></figure>
+<p>这里导致我们注册的<code>scheme</code>的<code>Activiy</code>会接收到，导致应用重启。</p>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><p>通过我们的观察，发现<code>scheme</code>是区别大小写的，我们最后把<code>userAgent</code>的<code>abc</code>改成大写<code>ABC</code>就OK了</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hole</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/30/hole/hole-android-js-wxpay/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-study/study-centos-ssh" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -515,19 +678,19 @@
 
 
   
-    <article id="post-study/study-bwh" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-study/Linux" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/25/study/study-bwh/">多图详解搬瓦工(Bandwagon)购买流程</a>
+      <a class="article-title" href="/2018/01/25/study/Linux/">Linux</a>
     </h1>
   
 
         
-        <a href="/2018/01/25/study/study-bwh/" class="archive-article-date">
+        <a href="/2018/01/25/study/Linux/" class="archive-article-date">
   	<time datetime="2018-01-25T02:52:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-25</time>
 </a>
         
@@ -535,12 +698,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>（温馨提示：本文图片较多，请在WIFI情况下阅读）</p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在天朝，因为qian的原因，很多外网是访问不了的。身为程序员，很多时候是需要访问<code>google</code>进行问题搜索，这时候就需要fan qiang进行科学上网了。</p>
-<p>可能有相当一部分人是买的VPN进行科学上网，但VPN一般比较贵，也不稳定，不如自己搭建VPS（相当于自己买一台海外服务器），一方面可以可以学习一下Linux，一方面还可以科学上网，还比VPN便宜不少。</p>
-        
-          <a class="article-more-a" href="/2018/01/25/study/study-bwh/#more">more >></a>
-        
+        <p><a href="https://segmentfault.com/a/1190000007086764" target="_blank" rel="noopener">jenkins</a></p>
+<p><a href="https://shadowsocks.blogspot.com/" target="_blank" rel="noopener">shadowsocks</a></p>
+<p><a href="https://www.cnblogs.com/gne-hwz/p/6662000.html" target="_blank" rel="noopener">shadowscocks</a></p>
+<p><a href="https://www.iwwenbo.com/0-1-shadowsocks-start/" target="_blank" rel="noopener">shadowscocks</a></p>
+<p><a href="http://www.jb51.net/article/119183.htm" target="_blank" rel="noopener">android sdk</a></p>
+<p><a href="https://www.jianshu.com/p/ee058d067fd9" target="_blank" rel="noopener">jenkins-github</a></p>
+<p><a href="https://www.jianshu.com/p/38b2e17ced73" target="_blank" rel="noopener">jenkins-github</a></p>
+
       
 
       
@@ -548,22 +713,11 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/25/study/study-bwh/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/01/25/study/Linux/">展开全文 >></a>
         </p>
       
 
@@ -667,19 +821,19 @@
 
 
   
-    <article id="post-study/Linux" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-study/study-bwh" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/25/study/Linux/">Linux</a>
+      <a class="article-title" href="/2018/01/25/study/study-bwh/">多图详解搬瓦工(Bandwagon)购买流程</a>
     </h1>
   
 
         
-        <a href="/2018/01/25/study/Linux/" class="archive-article-date">
+        <a href="/2018/01/25/study/study-bwh/" class="archive-article-date">
   	<time datetime="2018-01-25T02:52:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-25</time>
 </a>
         
@@ -687,14 +841,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="https://segmentfault.com/a/1190000007086764" target="_blank" rel="noopener">jenkins</a></p>
-<p><a href="https://shadowsocks.blogspot.com/" target="_blank" rel="noopener">shadowsocks</a></p>
-<p><a href="https://www.cnblogs.com/gne-hwz/p/6662000.html" target="_blank" rel="noopener">shadowscocks</a></p>
-<p><a href="https://www.iwwenbo.com/0-1-shadowsocks-start/" target="_blank" rel="noopener">shadowscocks</a></p>
-<p><a href="http://www.jb51.net/article/119183.htm" target="_blank" rel="noopener">android sdk</a></p>
-<p><a href="https://www.jianshu.com/p/ee058d067fd9" target="_blank" rel="noopener">jenkins-github</a></p>
-<p><a href="https://www.jianshu.com/p/38b2e17ced73" target="_blank" rel="noopener">jenkins-github</a></p>
-
+        <p>（温馨提示：本文图片较多，请在WIFI情况下阅读）</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在天朝，因为qian的原因，很多外网是访问不了的。身为程序员，很多时候是需要访问<code>google</code>进行问题搜索，这时候就需要fan qiang进行科学上网了。</p>
+<p>可能有相当一部分人是买的VPN进行科学上网，但VPN一般比较贵，也不稳定，不如自己搭建VPS（相当于自己买一台海外服务器），一方面可以可以学习一下Linux，一方面还可以科学上网，还比VPN便宜不少。</p>
+        
+          <a class="article-more-a" href="/2018/01/25/study/study-bwh/#more">more >></a>
+        
       
 
       
@@ -702,11 +854,22 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/25/study/Linux/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/01/25/study/study-bwh/">展开全文 >></a>
         </p>
       
 
@@ -786,165 +949,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/07/12/fe/css-background/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-fe/css-border" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/11/fe/css-border/">css-border</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/11/fe/css-border/" class="archive-article-date">
-  	<time datetime="2017-07-11T09:28:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="本章主要包含以下内容"><a href="#本章主要包含以下内容" class="headerlink" title="本章主要包含以下内容"></a>本章主要包含以下内容</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">边框&gt;内阴影&gt;背景图片&gt;背景颜色&gt;外阴影</span><br></pre></td></tr></table></figure>
-<ul>
-<li>border-radius</li>
-<li>box-shadow</li>
-<li>border-image</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/07/11/fe/css-border/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">fe</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/11/fe/css-border/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hole/jenkins-android" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/07/hole/jenkins-android/">jenkins-android</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/07/hole/jenkins-android/" class="archive-article-date">
-  	<time datetime="2017-07-07T03:37:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前用jenkins打包时，提示<code>Failed to find Build Tools revision xx.x.x</code> ，于是进入到<code>var/lib/jenkins/tools/android-sdk/tools/</code>下面，输入下面命令</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android list sdk -a</span><br></pre></td></tr></table></figure>
-<p>控制台没有反应，于是又试了下其他命令</p>
-        
-          <a class="article-more-a" href="/2017/07/07/hole/jenkins-android/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hole</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/07/hole/jenkins-android/">展开全文 >></a>
         </p>
       
 
@@ -1071,23 +1075,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">apple</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1099,7 +1091,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1108,6 +1108,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1124,10 +1132,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>
