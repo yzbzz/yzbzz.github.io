@@ -203,6 +203,170 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-android/android-config-am" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/22/android/android-config-am/">Android配置文件详解-AndroidManifest</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/22/android/android-config-am/" class="archive-article-date">
+  	<time datetime="2017-02-22T03:51:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="AndroidManifest"><a href="#AndroidManifest" class="headerlink" title="AndroidManifest"></a>AndroidManifest</h1><blockquote>
+<p>每个应用的根目录中都必须包含一个AndroidManifest.xml文件(且文件名精确无误)。AndroidManifest向Android系统提供应用的必要信息，系统必须具备有这些信息方可运行应用的任何代码。<br>此外，AndroidManifest还可执行以下操作</p>
+</blockquote>
+<ul>
+<li>为应用的Java软件包命名。软件包名称充当应用的唯一标识符。</li>
+<li>描述应用的各个组件，包括构成应用的 Activity、服务、广播接收器和内容提供程序。它还为实现每个组件的类命名并发布其功能，例如它们可以处理的 <a href="https://developer.android.com/reference/android/content/Intent.html" target="_blank" rel="noopener">Intent</a> 消息。这些声明向 Android 系统告知有关组件以及可以启动这些组件的条件的信息。</li>
+<li>确定托管应用组件的进程。</li>
+<li>声明应用必须具备哪些权限才能访问 API 中受保护的部分并与其他应用交互。还声明其他应用与该应用组件交互所需具备的权限。</li>
+<li>列出 <a href="https://developer.android.com/reference/android/app/Instrumentation.html" target="_blank" rel="noopener">Instrumentation</a> 类，这些类可在应用运行时提供分析和其他信息。这些声明只会在应用处于开发阶段时出现在清单中，在应用发布之前将移除。</li>
+<li>声明应用所需的最低 Android API 级别</li>
+<li>列出应用必须链接到的库</li>
+</ul>
+<p>注：准备要在 Chromebook 上运行的 Android 应用时，要考虑一些重要的硬件和软件功能限制。如需了解详细信息，请参阅 <a href="https://developer.android.com/topic/arc/manifest.html" target="_blank" rel="noopener">Chromebook 的应用清单兼容性</a>文档。</p>
+        
+          <a class="article-more-a" href="/2017/02/22/android/android-config-am/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/22/android/android-config-am/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-android/android-guides" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/13/android/android-guides/">android-guides</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/13/android/android-guides/" class="archive-article-date">
+  	<time datetime="2017-02-13T08:33:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><h3 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h3><p>对于Button上的文本，系统会对Button中的所有英文字母自动进行大写转换，如果这不是你想要的效果，可以使用如下配置来禁用这一默认特性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// android:textAllCaps="false"</span></span><br><span class="line">&lt;Button</span><br><span class="line">  	android:id=<span class="string">"@+id/button"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    android:text=<span class="string">"Button"</span></span><br><span class="line">    android:textAllCaps=<span class="string">"false"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2017/02/13/android/android-guides/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/13/android/android-guides/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-mac-os-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -931,204 +1095,6 @@
 
 
   
-    <article id="post-fe/react-native-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/22/fe/react-native-view/">react-native-view</a>
-    </h1>
-  
-
-        
-        <a href="/2016/08/22/fe/react-native-view/" class="archive-article-date">
-  	<time datetime="2016-08-22T08:22:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>最基本的构建UI视图的容器，<code>View</code> 支持flexbox、style、一些触摸事件和访问性控制，<code>View</code>直接映射到<code>native</code>视图，不管在什么平台，不管它是UIView，<div>，android.view，等等…</div></p>
-<p><code>View</code>设计成嵌套其它视图，可以有0到任何类型的children</p>
-<blockquote>
-<p>View的设计初衷是和StyleSheet搭配使用，这样可以使代码更清晰并且获得更高的性能。尽管内联样式也同样可以使用</p>
-</blockquote>
-<h3 id="合成触摸事件"><a href="#合成触摸事件" class="headerlink" title="合成触摸事件"></a>合成触摸事件</h3><h3 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h3><h4 id="style"><a href="#style" class="headerlink" title="style"></a>style</h4><p><code>backfaceVisibility</code> ReactPropTypes.oneOf([‘visible’, ‘hidden’])<br><code>backgroundColor</code> color<br><code>borderBottomColor</code> color<br><code>borderBottomLeftRadius</code> ReactPropTypes.number<br><code>borderBottomRightRadius</code> ReactPropTypes.number<br><code>borderBottomWidth</code> ReactPropTypes.number<br><code>borderColor</code> color<br><code>borderLeftColor</code> color<br><code>borderLeftWidth</code> ReactPropTypes.number<br><code>borderRadius</code> ReactPropTypes.number<br><code>borderRightColor</code> color<br><code>borderRightWidth</code> ReactPropTypes.number<br><code>borderStyle</code> ReactPropTypes.oneOf([‘solid’, ‘dotted’, ‘dashed’])<br><code>borderTopColor</code> color<br><code>borderTopLeftRadius</code> ReactPropTypes.number<br><code>borderTopRightRadius</code> ReactPropTypes.number<br><code>borderTopWidth</code> ReactPropTypes.number<br><code>borderWidth</code> ReactPropTypes.number<br><code>opacity</code> ReactPropTypes.number<br><code>overflow</code> ReactPropTypes.oneOf([‘visible’, ‘hidden’])</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">fe</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/08/22/fe/react-native-view/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/22/study/hexo/">hexo</a>
-    </h1>
-  
-
-        
-        <a href="/2016/08/22/study/hexo/" class="archive-article-date">
-  	<time datetime="2016-08-22T08:11:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h3><blockquote>
-<p>官网：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">https://hexo.io/zh-cn/</a></p>
-</blockquote>
-<p>主题：<a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a></p>
-<p>MARKDOWN EDITOR: <a href="https://typora.io" target="_blank" rel="noopener">typora</a></p>
-<h3 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<p>其它命令不确定，部署这个命令一定要用git bash，否则会提示</p>
-<p><code>Permission denied (publickey).</code></p>
-<p>推荐博客：</p>
-<p><a href="http://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html" target="_blank" rel="noopener">http://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html</a></p>
-<p><a href="https://smartbeng.github.io/2017/03/26/blogFinish/" target="_blank" rel="noopener">最适合新手的 GitHub + Hexo 「大话」博客搭建教程</a></p>
-<p><a href="http://liuqingwen.me/blog/2017/04/11/hexo-blog-creation-work-progress/" target="_blank" rel="noopener">新手搭建博客过程</a></p>
-<h3 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h3><ul>
-<li><p>安装Hexo</p>
-<p><code>sudo npm install -g hexo</code></p>
-</li>
-<li><p>初始化</p>
-<p><code>hexo init</code></p>
-</li>
-<li><p>生成静态页面</p>
-<p><code>hexo generate</code>(hexo g也可以)</p>
-</li>
-<li><p>本地启动</p>
-<p><code>hexo server</code></p>
-</li>
-<li><p>执行配置命令上传到github</p>
-<p><code>hexo deploy</code></p>
-</li>
-<li><p>新建文章</p>
-<p><code>hexo new &#39;postName&#39;</code></p>
-</li>
-<li><p>新建页面</p>
-<p><code>hexo new page &#39;pageName&#39;</code></p>
-</li>
-<li><p>查盾帮助</p>
-<p><code>hexo help</code></p>
-</li>
-<li><p>查看Hexo的版本</p>
-<p><code>hexo version</code></p>
-</li>
-<li><p>每次部署的步骤，可按以下三步来进行</p>
-<p>hexo clean</p>
-<p>hexo g</p>
-<p>hexo d</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/08/22/study/hexo/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1238,11 +1204,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1250,11 +1212,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1262,15 +1224,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1278,11 +1236,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
             
             <div class="clearfix"></div>
