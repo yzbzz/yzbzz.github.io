@@ -203,74 +203,252 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-java/java-annotations" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-java/java-annotation-class" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/12/java/java-annotations/">Java 注解</a>
+      <a class="article-title" href="/2018/04/13/java/java-annotation-class/">java 编译时注解(RetentionPolicy.CLASS)</a>
     </h1>
   
 
         
-        <a href="/2018/04/12/java/java-annotations/" class="archive-article-date">
-  	<time datetime="2018-04-12T10:09:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-12</time>
+        <a href="/2018/04/13/java/java-annotation-class/" class="archive-article-date">
+  	<time datetime="2018-04-13T08:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>注解(Annotaion)，也叫元数据。一种代码级别的说明。它是<code>JDK1.5</code>及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。</p>
-<p>作用分类：</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/13/java/java-annotation-class/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java/java-annotation-runtime" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/java/java-annotation-runtime/">java 运行时注解(RetentionPolicy.RUNTIME)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/13/java/java-annotation-runtime/" class="archive-article-date">
+  	<time datetime="2018-04-13T08:07:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于运行时注解<code>RetentionPolicy.RUNTIME</code>，我们可以通过反射的方式来获取注解的相关信息。根据注解中的<code>Target</code>，我们可以从<code>Constructor</code>、<code>CLASS</code>、<code>Field</code>、<code>Method</code>获取注解对象，基本方法都差不多。</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>获取Annotation</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ElementType.TYPE</td>
+<td><code>Class&lt;?&gt;</code>. getAnnotation()</td>
+<td>通过Class对象获取注解</td>
+</tr>
+<tr>
+<td>ElementType.CONSTRUCTOR</td>
+<td><code>Constructor</code>.getAnnotation()</td>
+<td>通过Constructor对象获取注解</td>
+</tr>
+<tr>
+<td>ElementType.FIELD</td>
+<td><code>Field</code>.getAnnotation()</td>
+<td>通过Field对象获取注解</td>
+</tr>
+<tr>
+<td>ElementType.METHOD</td>
+<td><code>Method</code>.getAnnotation()</td>
+<td>通过Method对象获取注解</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>一些常见的获取注解的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取指定类型的注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> &lt;A extends Annotation&gt; <span class="function">A <span class="title">getAnnotation</span><span class="params">(Class&lt;A&gt; annotationType)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取所有注解，如果有的话</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Annotation[] getAnnotations();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取所有注解，忽略继承的注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Annotation[] getDeclaredAnnotations();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定注解是否存在该元素上，如果有则返回true，否则false</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAnnotationPresent</span><span class="params">(Class&lt;? extends Annotation&gt; annotationType)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取Method中参数的所有注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Annotation[][] getParameterAnnotations();</span><br></pre></td></tr></table></figure>
+<h3 id="定义运行时注解"><a href="#定义运行时注解" class="headerlink" title="定义运行时注解"></a>定义运行时注解</h3><p><strong>自定义注解</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 适用于类、接口(包含注解类型)或enum</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ClassAnnotation &#123;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 适用于构造函数</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.CONSTRUCTOR)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ConstructorAnnotation &#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">id</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 适用于字段(包含enum实例)</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> FiledAnnotation &#123;</span><br><span class="line">	<span class="keyword">int</span>[] value();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 适用于方法</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MethodAnnotation &#123;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在注解中定义<code>成员(属性)</code>时它的类型必须是 8 种基本数据类型外加 类、接口、注解及它们的数组(下面例子中的<code>int id()</code>、<code>String value()</code>)。注解中<code>成员(属性)</code>可以有默认值，默认值需要用 <code>default</code> 关键值指定。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.CONSTRUCTOR)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ConstructorAnnotation &#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">id</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> "ConstructorAnnotation"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>如何使用</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ClassAnnotation</span>(<span class="string">"this is class annotation"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestAnnotation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@ConstructorAnnotation</span>(id = <span class="number">1</span>, value = <span class="string">"this is constructor annotation"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TestAnnotation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@ConstructorAnnotation</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TestAnnotation</span><span class="params">(<span class="keyword">int</span> id, String msg)</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@FiledAnnotation</span>(&#123; <span class="number">1</span>, <span class="number">2</span> &#125;)</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> id = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@FiledAnnotation</span>(<span class="number">3</span>)</span><br><span class="line">	<span class="keyword">public</span> String field = <span class="string">"field"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@MethodAnnotation</span>(<span class="string">"this is method annotation"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"method"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注解赋值的方式是在注解的括号内以<code>value=””</code>形式，多个属性之前用<code>,</code>隔开。如果希望使用注解的默认值，可以像以述例子中一样直接使用<code>@ConstructorAnnotation</code>或<code>@ConstructorAnnotation()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConstructorAnnotation</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TestAnnotation</span><span class="params">(<span class="keyword">int</span> id, String msg)</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">==&gt;</span><br><span class="line"><span class="meta">@ConstructorAnnotation</span>()</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TestAnnotation</span><span class="params">(<span class="keyword">int</span> id, String msg)</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果注解只包含一个成员，并且成员定义的名称为<code>value()</code>，则可以省略<code>value</code>关键字</p>
+<p>例如上面定义的<code>FiledAnnotation</code>和<code>MethodAnnotation</code>，都使用了<code>value()</code>名称</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> FiledAnnotation &#123;</span><br><span class="line">	<span class="keyword">int</span>[] value();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MethodAnnotation &#123;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>则可以省略<code>value</code>关键字，下面的调用方式是等同的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对于字段</span></span><br><span class="line"><span class="meta">@FiledAnnotation</span>(value = &#123; <span class="number">1</span>, <span class="number">2</span> &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> id = <span class="number">1</span>;</span><br><span class="line">==&gt;</span><br><span class="line"><span class="meta">@FiledAnnotation</span>(&#123; <span class="number">1</span>, <span class="number">2</span> &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> id = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对于方法</span></span><br><span class="line"><span class="meta">@MethodAnnotation</span>(value = <span class="string">"this is method annotation"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"method"</span>;</span><br><span class="line">&#125;</span><br><span class="line">==&gt;</span><br><span class="line"><span class="meta">@MethodAnnotation</span>(<span class="string">"this is method annotation"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"method"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="获取运行时注解信息"><a href="#获取运行时注解信息" class="headerlink" title="获取运行时注解信息"></a>获取运行时注解信息</h3><p>因为我们定义的是<code>RetentionPolicy.RUNTIME</code>的注解，所以我们可以在运行时拿到注解的信息<strong>(需要反射获取)</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取@ClassAnnotation的信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printClassAnnotation</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    sb.append(<span class="string">"Class注解:"</span>);</span><br><span class="line">    ClassAnnotation classAnnotation = clazz</span><br><span class="line">        .getAnnotation(ClassAnnotation.class);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">null</span> != classAnnotation) &#123;</span><br><span class="line">        sb.append(<span class="string">"\n\t类名: "</span>);</span><br><span class="line">        sb.append(Modifier.toString(clazz.getModifiers())).append(<span class="string">" "</span>)</span><br><span class="line">            .append(clazz.getSimpleName());</span><br><span class="line">        sb.append(<span class="string">"\n\t注解值: "</span>).append(classAnnotation.value());</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sb.toString());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取ConstructorAnnotation的信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printConstructorAnnotation</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    sb.append(<span class="string">"Constructor注解:"</span>);</span><br><span class="line">    Constructor&lt;?&gt;[] constructors = clazz.getConstructors();</span><br><span class="line">    <span class="keyword">for</span> (Constructor&lt;?&gt; constructor : constructors) &#123;</span><br><span class="line">        ConstructorAnnotation constructorAnnotation = constructor</span><br><span class="line">            .getAnnotation(ConstructorAnnotation.class);</span><br><span class="line">        sb.append(<span class="string">"\n\t构造函数名: "</span>);</span><br><span class="line">        sb.append(Modifier.toString(constructor.getModifiers())).append(<span class="string">" "</span>)</span><br><span class="line">            .append(constructor.getClass().getSimpleName());</span><br><span class="line"></span><br><span class="line">        sb.append(<span class="string">"\n\t构造函数参数: "</span>);</span><br><span class="line">        Parameter[] parameters = constructor.getParameters();</span><br><span class="line">        <span class="keyword">for</span> (Parameter parameter: parameters) &#123;</span><br><span class="line">            sb.append(<span class="string">"\n\t\t"</span>);</span><br><span class="line">            sb.append(parameter.getType().getSimpleName()).append(<span class="string">" "</span>)</span><br><span class="line">                .append(parameter.getName());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        sb.append(<span class="string">"\n\t注解值: "</span>)</span><br><span class="line">            .append(<span class="string">"\n\t\tid: "</span> + constructorAnnotation.id())</span><br><span class="line">            .append(<span class="string">"\n\t\tvalue: "</span> + constructorAnnotation.value());</span><br><span class="line">        sb.append(<span class="string">"\n\t---------------"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sb.toString());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取@FieldAnnotation的信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printFieldAnnotation</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    sb.append(<span class="string">"Filed注解:"</span>);</span><br><span class="line">    Field[] fields = clazz.getFields();</span><br><span class="line">    <span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">        FiledAnnotation filedAnnotation = field</span><br><span class="line">            .getAnnotation(FiledAnnotation.class);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != filedAnnotation) &#123;</span><br><span class="line">            sb.append(<span class="string">"\n\t字段名: "</span>);</span><br><span class="line">            sb.append(Modifier.toString(field.getModifiers())).append(<span class="string">" "</span>)</span><br><span class="line">                .append(field.getType().getSimpleName()).append(<span class="string">" "</span>)</span><br><span class="line">                .append(field.getName());</span><br><span class="line">            sb.append(<span class="string">"\n\t注解值: "</span>).append(</span><br><span class="line">                Arrays.toString(filedAnnotation.value()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sb.toString());</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取@MethodAnnotation的信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printMethodAnnotation</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    sb.append(<span class="string">"Method注解:"</span>);</span><br><span class="line">    Method[] methods = clazz.getMethods();</span><br><span class="line">    <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">        MethodAnnotation methodAnnotation = method</span><br><span class="line">            .getAnnotation(MethodAnnotation.class);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != methodAnnotation) &#123;</span><br><span class="line">            sb.append(<span class="string">"\n\t方法名: "</span>);</span><br><span class="line">            sb.append(Modifier.toString(method.getModifiers())).append(<span class="string">" "</span>)</span><br><span class="line">                .append(method.getReturnType().getSimpleName()).append(<span class="string">" "</span>)</span><br><span class="line">                .append(method.getName());</span><br><span class="line">            sb.append(<span class="string">"\n\t注解值: "</span>).append(methodAnnotation.value());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sb.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下信息===&gt;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Class注解:</span><br><span class="line">	类名: <span class="keyword">public</span> TestAnnotation</span><br><span class="line">	注解值: <span class="keyword">this</span> is <span class="class"><span class="keyword">class</span> <span class="title">annotation</span></span></span><br><span class="line">Constructor注解:</span><br><span class="line">	构造函数名: <span class="keyword">public</span> Constructor</span><br><span class="line">	构造函数参数: </span><br><span class="line">	注解值: </span><br><span class="line">		id: <span class="number">1</span></span><br><span class="line">		value: <span class="keyword">this</span> is constructor annotation</span><br><span class="line">	---------------</span><br><span class="line">	构造函数名: <span class="keyword">public</span> Constructor</span><br><span class="line">	构造函数参数: </span><br><span class="line">		<span class="keyword">int</span> arg0</span><br><span class="line">		String arg1</span><br><span class="line">	注解值: </span><br><span class="line">		id: <span class="number">0</span></span><br><span class="line">		value: ConstructorAnnotation</span><br><span class="line">	---------------</span><br><span class="line">Filed注解:</span><br><span class="line">	字段名: <span class="keyword">public</span> <span class="keyword">int</span> id</span><br><span class="line">	注解值: [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">	字段名: <span class="keyword">public</span> String field</span><br><span class="line">	注解值: [<span class="number">3</span>]</span><br><span class="line">Method注解:</span><br><span class="line">	方法名: <span class="keyword">public</span> String method</span><br><span class="line">	注解值: <span class="keyword">this</span> is method annotation</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/13/java/java-annotation-runtime/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java/java-annotations-source" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/java/java-annotations-source/">java 源码注解(RetentionPolicy.SOURCE)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/13/java/java-annotations-source/" class="archive-article-date">
+  	<time datetime="2018-04-13T08:00:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>通过之前的文章<a href="/2018/04/12/java/java-annotations/">Java 注解介绍</a>，我们了解到源码注解(<code>RetentionPolicy.SOURCE</code>)的生命周期只存在Java源文件这一阶段，是3种生命周期中最短的注解。当在Java源程序上加了一个注解，这个Java源程序要由javac去编译，javac把java源文件编译成.class文件，在编译成class时会把Java源程序上的源码注解给去掉。需要注意的是，在编译器处理期间源码注解还存在，即<code>注解处理器Processor</code> 也能处理源码注解，编译器处理完之后就没有该注解信息了。</p>
+<h3 id="定义源码注解"><a href="#定义源码注解" class="headerlink" title="定义源码注解"></a>定义源码注解</h3><p>在<code>Android</code>中，我们经常会用到下拉刷新的功能，通常会有四种状态</p>
 <ul>
-<li>编写文档：通过代码里标识的元数据生成文档【生成文档doc文档】。</li>
-<li>代码分析：通过代码里标识的元数据对代码进行分析【使用反射】。</li>
-<li>编译检查：通过代码里标识的元数据让编译器能实现基本的编译检查【Override】。</li>
+<li>PULL_FROM_START：下拉刷新</li>
+<li>PULL_FROM_END：上拉加载</li>
+<li>BOTH：同时设置下拉刷新和上拉加载</li>
+<li>DISABLED：禁用下拉刷新和上拉加载</li>
 </ul>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个注解</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AnnotationsTest &#123; </span><br><span class="line">    <span class="function">String <span class="title">value</span> <span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="meta">@AnnotationsTest</span>(value = <span class="string">"abc"</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>以<code>@interface</code>关键字定义</li>
-<li>注解包含成员，成员以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型</li>
-<li>成员赋值是通过@Annotation(name=value)的形式</li>
-<li>注解需要标明注解的生命周期，注解的修饰目标等信息，这些信息是通过元注解实现</li>
-</ol>
-<p>以<code>java.lang.annotation</code>中定义的<code>Target</code>注解来分析：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>元注解@Retention，成员value的值为RetentionPolicy.RUNTIME</li>
-<li>元注解@Target，成员value是个数组，用{}形式赋值，值为ElementType.ANNOTATION_TYPE</li>
-<li>成员名称为value，类型为ElementType[]</li>
-</ul>
-<p>另外，需要注意一下，如果成员名称是value，在赋值过程中可以简写。如果成员类型为数组，但是只赋值一个元素，则也可以简写。如上面的简写形式为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br></pre></td></tr></table></figure>
-<h3 id="注解的类型"><a href="#注解的类型" class="headerlink" title="注解的类型"></a>注解的类型</h3><p>注解分为两类，一类是元注解(meta-annotation)，另外一类是普通注解</p>
-<blockquote>
-<p>所谓元注解就是修饰注解的注解。<br>拿到一个注解，如何知道它是否是元注解呢？需要看它的元注解（无论是元注解还是普通注解都是有元注解），如果看到这样的元注解：@Target(ElementType.ANNOTATION_TYPE)，那么此时这个注解一定是元注解。</p>
-</blockquote>
-<h4 id="元注解-四个"><a href="#元注解-四个" class="headerlink" title="元注解(四个)"></a>元注解(四个)</h4><p><strong>@Target</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>表示该注解用于什么地方，可能的值在枚举类<code>ElementType</code>中</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE,  <span class="comment">// 类、接口(包含注解类型)或enum声明</span></span><br><span class="line">    FIELD, <span class="comment">// 字段声明(包含enum实例)</span></span><br><span class="line">    METHOD, <span class="comment">// 方法声明</span></span><br><span class="line">    PARAMETER, <span class="comment">// 参数声明</span></span><br><span class="line">    CONSTRUCTOR, <span class="comment">// 构造器声明</span></span><br><span class="line">    LOCAL_VARIABLE, <span class="comment">// 局部变量声明</span></span><br><span class="line">    ANNOTATION_TYPE, <span class="comment">// 注解声明</span></span><br><span class="line">    PACKAGE, <span class="comment">// 包声明</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Type parameter declaration</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_PARAMETER,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Use of a type</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_USE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>@Retention</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Retention &#123;</span><br><span class="line">    <span class="function">RetentionPolicy <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>表示在什么级别保存该注解信息，可能的值在枚举类<code>ElementType</code>中</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    SOURCE, <span class="comment">// 注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃</span></span><br><span class="line">    CLASS, <span class="comment">// 注解被保留到class文件，jvm加载class文件时候被遗弃。这是默认的生命周期</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在，保存到class对象中，</span></span><br><span class="line"><span class="comment">    * 可以通过反射来获取</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    RUNTIME </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>@Documented</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Documented &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>将此注解包含在 javadoc 中 ，它代表着此注解会被javadoc工具提取成文档。在doc文档中的内容会因为此注解的信息内容不同而不同。相当与@see,@param 等。</p>
-<p><strong>@Inherited</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Inherited &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>允许子类继承父类中的注解</p>
-<h4 id="普通注解"><a href="#普通注解" class="headerlink" title="普通注解"></a>普通注解</h4><h5 id="基本内置注解"><a href="#基本内置注解" class="headerlink" title="基本内置注解"></a>基本内置注解</h5><p><strong>@Override</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Override &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>@Deprecated</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(value=&#123;CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, PARAMETER, TYPE&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Deprecated &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>@SuppressWarnings</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SuppressWarnings &#123;</span><br><span class="line">    String[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>参考：<a href="http://swiftlet.net/archives/1906" target="_blank" rel="noopener">注解系列知识总结</a></p>
+<p>为了限制程序只能使用上面4种状态，我们一般会定义一个<code>Enum</code>枚举作为参数，这样就能限定参数的取值范围</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PullToRefresh</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Mode mMode =  Mode.PULL_FROM_START;</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMode</span><span class="params">(Mode mode)</span> </span>&#123;</span><br><span class="line">		mMode = mode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Mode <span class="title">getMode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> mMode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (mMode == Mode.PULL_FROM_START) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (mMode == Mode.PULL_FROM_END) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (mMode == Mode.BOTH) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (mMode == Mode.DISABLED) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">enum</span> Mode &#123;</span><br><span class="line">		PULL_FROM_START, PULL_FROM_END, BOTH, DISABLED</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过以下的方式调用</span></span><br><span class="line">PullToRefresh pullToRefresh = <span class="keyword">new</span> PullToRefresh();</span><br><span class="line">pullToRefresh.setMode(Mode.BOTH);</span><br></pre></td></tr></table></figure>
+<p>根据google官网的描述，使用枚举会比常量占用更多的内存。这个时候我们就可以自己定义一个注解来处理上面的问题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PullToRefresh</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PULL_FROM_START = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PULL_FROM_END = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BOTH = <span class="number">3</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DISABLED = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> sMode = PULL_FROM_START;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMode</span><span class="params">(@Mode <span class="keyword">int</span> mode)</span> </span>&#123;</span><br><span class="line">		sMode = mode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> sMode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (sMode == PULL_FROM_START) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sMode == PULL_FROM_END) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sMode == BOTH) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sMode == DISABLED) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line">	<span class="meta">@Target</span>(ElementType.PARAMETER)</span><br><span class="line">	<span class="meta">@IntDef</span>(&#123;PULL_FROM_START,PULL_FROM_END,BOTH,DISABLED&#125;)</span><br><span class="line">	<span class="keyword">public</span> <span class="meta">@interface</span> Mode &#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过以下的方式调用</span></span><br><span class="line">PullToRefresh pullToRefresh = <span class="keyword">new</span> PullToRefresh();</span><br><span class="line">pullToRefresh.setMode(PullToRefresh.BOTH);</span><br></pre></td></tr></table></figure>
+<p>其中的<code>@IntDef</code>为<code>Android</code>提供的源码注解，用于表示取值范围，在<code>android.support.annotation</code>包下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.ANNOTATION_TYPE&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> IntDef &#123;</span><br><span class="line">    <span class="comment">/** Defines the allowed constants for this element */</span></span><br><span class="line">    <span class="keyword">long</span>[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Defines whether the constants can be used as a flag, or just as an enum (the default) */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">flag</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类似的还有<code>@StringDef</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.ANNOTATION_TYPE&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> StringDef &#123;</span><br><span class="line">    <span class="comment">/** Defines the allowed constants for this element */</span></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>总的来说，了解了源码注解，我们可以更规范的写代码，避免的很多问题的发生</p>
 
       
 
@@ -285,6 +463,173 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/13/java/java-annotations-source/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java/java-annotations" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/12/java/java-annotations/">Java 注解介绍</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/12/java/java-annotations/" class="archive-article-date">
+  	<time datetime="2018-04-12T10:09:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<p>本文及相关注解文章部分摘自以下的博客，推荐大家阅读</p>
+<p><a href="http://blog.csdn.net/briblue/article/details/73824058" target="_blank" rel="noopener"> 秒懂，Java 注解 （Annotation）你可以这样学</a></p>
+<p><a href="https://blog.csdn.net/github_35180164/article/details/52107204" target="_blank" rel="noopener">Java注解基础概念总结</a></p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>注解(Annotaion)，也叫元数据。一种代码级别的说明。它是<code>JDK1.5</code>及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。</p>
+<p>作用分类：</p>
+<ul>
+<li>编写文档：通过代码里标识的元数据生成文档【生成文档doc文档】。</li>
+<li>代码分析：通过代码里标识的元数据对代码进行分析【使用反射】。</li>
+<li>编译检查：通过代码里标识的元数据让编译器能实现基本的编译检查【Override】。</li>
+</ul>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个注解</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AnnotationsTest &#123; </span><br><span class="line">    <span class="function">String <span class="title">value</span> <span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="meta">@AnnotationsTest</span>(value = <span class="string">"abc"</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>以<code>@interface</code>关键字定义</li>
+<li>注解包含成员，成员以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型，例如上述例子中的<code>String value()</code></li>
+<li>成员赋值是通过@Annotation(name=value)的形式，例如上述例子中的<code>@Target(ElementType.TYPE)</code></li>
+<li>注解需要标明注解的生命周期，注解的修饰目标等信息，这些信息是通过元注解实现</li>
+</ol>
+<p>下面我们来分析一下<code>java.lang.annotation</code>中定义的<code>Target</code>注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>元注解@Retention，成员value的值为<code>RetentionPolicy.RUNTIME</code></li>
+<li>元注解@Target，成员value是个数组，用{}形式赋值，值为<code>ElementType.ANNOTATION_TYPE</code></li>
+<li>成员名称为value，类型为<code>ElementType[]</code></li>
+</ul>
+<p>另外，需要注意一下，如果成员名称是value，在赋值过程中可以简写。如果成员类型为数组，但是只赋值一个元素，则也可以简写。如上面的简写形式为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br></pre></td></tr></table></figure>
+<h3 id="注解的类型"><a href="#注解的类型" class="headerlink" title="注解的类型"></a>注解的类型</h3><p>注解分为两类，一类是元注解(meta-annotation)，另外一类是普通注解</p>
+<h4 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h4><blockquote>
+<p>所谓元注解就是修饰注解的注解。<br>拿到一个注解，如何知道它是否是元注解呢？需要看它的元注解（无论是元注解还是普通注解都是有元注解），如果看到这样的元注解：<code>@Target(ElementType.ANNOTATION_TYPE)</code>，那么此时这个注解一定是元注解。</p>
+</blockquote>
+<p><strong>@Retention</strong></p>
+<p>表示在什么级别保存该注解信息，可能的值在枚举类<code>ElementType</code>中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Retention &#123;</span><br><span class="line">    <span class="function">RetentionPolicy <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// RetentionPolicy</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    SOURCE, <span class="comment">// 注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃</span></span><br><span class="line">    CLASS, <span class="comment">// 注解被保留到class文件，jvm加载class文件时候被遗弃。这是默认的生命周期</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在，保存到class对象中，</span></span><br><span class="line"><span class="comment">    * 可以通过反射来获取</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    RUNTIME </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这3个生命周期对应表如下</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>生命周期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RetentionPolicy.SOURCE</td>
+<td>Java源文件(.java文件)</td>
+</tr>
+<tr>
+<td>RetentionPolicy.CLASS</td>
+<td>.class文件</td>
+</tr>
+<tr>
+<td>RetentionPolicy.RUNTIME</td>
+<td>内存中的字节</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>首先要明确生命周期长度 <strong>SOURCE &lt; CLASS &lt; RUNTIME</strong> ，所以前者能作用的地方后者一定也能作用。一般如果需要在运行时去动态获取注解信息，那只能用 <code>RUNTIME</code>注解；如果要在编译时进行一些预处理操作，比如生成一些辅助代码（如 <a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">ButterKnife</a>），就用 <code>CLASS</code>注解；如果只是做一些检查性的操作，比如<code>@Override</code> 和 <code>@SuppressWarnings</code>，则可选用 <code>SOURCE</code> 注解。</p>
+</blockquote>
+<p><strong>@Target</strong></p>
+<p>表示该注解用于什么地方，可能的值在枚举类<code>ElementType</code>中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE,  <span class="comment">// 类、接口(包含注解类型)或enum声明</span></span><br><span class="line">    FIELD, <span class="comment">// 字段声明(包含enum实例)</span></span><br><span class="line">    METHOD, <span class="comment">// 方法声明</span></span><br><span class="line">    PARAMETER, <span class="comment">// 参数声明</span></span><br><span class="line">    CONSTRUCTOR, <span class="comment">// 构造器声明</span></span><br><span class="line">    LOCAL_VARIABLE, <span class="comment">// 局部变量声明</span></span><br><span class="line">    ANNOTATION_TYPE, <span class="comment">// 注解声明</span></span><br><span class="line">    PACKAGE, <span class="comment">// 包声明</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Type parameter declaration</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_PARAMETER,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Use of a type</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_USE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>@Documented</strong></p>
+<p>将此注解包含在 javadoc 中 ，它代表着此注解会被javadoc工具提取成文档。在doc文档中的内容会因为此注解的信息内容不同而不同。相当与@see,@param 等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Documented &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>@Inherited</strong></p>
+<p>允许子类继承父类中的注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Inherited &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>@Repeatable</strong></p>
+<p>@Repeatable 是 Java 1.8 才加的，意为可重复，也就是注解的值可以同时取多个</p>
+<p>示例，一个人</p>
+<h4 id="普通注解"><a href="#普通注解" class="headerlink" title="普通注解"></a>普通注解</h4><h5 id="基本内置注解"><a href="#基本内置注解" class="headerlink" title="基本内置注解"></a>基本内置注解</h5><p><strong>@Override</strong></p>
+<p>该注解提示子类复写父类中的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Override &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>@Deprecated</strong></p>
+<p>这注解用来标记过时的元素。编译器在编译阶段遇到这个注解时会发出提醒警告，告诉开发者正在调用一个过时的元素（过时的方法、过时的类、过时的成员变量）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(value=&#123;CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, PARAMETER, TYPE&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Deprecated &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>@SuppressWarnings</strong></p>
+<p>阻止警告的意思。之前说过调用被 @Deprecated 注解的方法后，编译器会警告提醒，而有时候开发者会忽略这种警告，他们可以在调用的地方通过 @SuppressWarnings 达到目的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SuppressWarnings &#123;</span><br><span class="line">    String[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h5><p>关于自定义注解，请移步</p>
+<p><a href="/2018/01/25/study/study-bwh/">java 自定义源码注解</a></p>
+<p><a href="/2018/01/25/study/study-bwh/">java 自定义编译时注解</a></p>
+<p><a href="/2018/01/25/study/study-bwh/">java 自定运行时注解</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
         		</li>
       		
 		</ul>
@@ -778,416 +1123,6 @@
 
 
   
-    <article id="post-android/kotlin-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/19/android/kotlin-tips/">kotlin-tips</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/19/android/kotlin-tips/" class="archive-article-date">
-  	<time datetime="2018-03-19T11:38:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> <span class="title">test</span><span class="params">()</span></span> : T &#123;</span><br><span class="line">    <span class="keyword">when</span>(T)&#123;      <span class="comment">// this won't work perhaps T::something? </span></span><br><span class="line">        <span class="keyword">is</span> <span class="built_in">Int</span> -&gt; &#123; ........ </span><br><span class="line">                   </span><br><span class="line">==&gt;</span><br><span class="line">                   </span><br><span class="line"><span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;<span class="keyword">reified</span> T&gt;</span> <span class="title">test</span><span class="params">()</span></span> : T &#123;</span><br><span class="line">  <span class="keyword">when</span> (T::<span class="class"><span class="keyword">class</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">Int</span>::<span class="class"><span class="keyword">class</span> -&gt; <span class="title">println</span></span>(<span class="string">"Int"</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; println(<span class="string">"<span class="subst">$&#123;T::class&#125;</span>"</span>)</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/19/android/kotlin-tips/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-android/kotlin-collections" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/android/kotlin-collections/">Kotlin详解集合与操作符</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/14/android/kotlin-collections/" class="archive-article-date">
-  	<time datetime="2018-03-14T02:06:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>[TOC]</p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>kotlin的集合分为不可变集合和可变集合</p>
-<p>Kotlin 的 <code>List&lt;out T&gt;</code> 只提供只读操作如 <code>size</code>、<code>get</code>等的接口。和 Java 类似，它继承自 <code>Collection&lt;T&gt;</code> 进而继承自 <code>Iterable&lt;T&gt;</code>。改变 list 的方法是由 <code>MutableList&lt;T&gt;</code> 加入的。这一模式同样适用于 <code>Set&lt;out T&gt;/MutableSet&lt;T&gt;</code> 及 <code>Map&lt;K, out V&gt;/MutableMap&lt;K, V&gt;</code>。详见下表</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">不可变</th>
-<th>可变</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Iterable</td>
-<td>MutableIterable</td>
-</tr>
-<tr>
-<td style="text-align:left">Collection</td>
-<td>MutableCollection</td>
-</tr>
-<tr>
-<td style="text-align:left">List</td>
-<td>MutableList</td>
-</tr>
-<tr>
-<td style="text-align:left">Set</td>
-<td>MutableSet</td>
-</tr>
-<tr>
-<td style="text-align:left">Map</td>
-<td>MutableMap</td>
-</tr>
-</tbody>
-</table>
-<p><code>List</code>和<code>Set</code>的基本用法</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numbers: MutableList&lt;<span class="built_in">Int</span>&gt; = mutableListOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="keyword">val</span> readOnlyView: List&lt;<span class="built_in">Int</span>&gt; = numbers</span><br><span class="line">println(numbers)        <span class="comment">// 输出 "[1, 2, 3]"</span></span><br><span class="line">numbers.add(<span class="number">4</span>)</span><br><span class="line">println(readOnlyView)   <span class="comment">// 输出 "[1, 2, 3, 4]"</span></span><br><span class="line">readOnlyView.clear()    <span class="comment">// -&gt; 不能编译</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> strings = hashSetOf(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"c"</span>)</span><br><span class="line">assert(strings.size == <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="总数操作符"><a href="#总数操作符" class="headerlink" title="总数操作符"></a>总数操作符</h3><p><strong>any</strong></p>
-<p>只要有一个元素符合判断条件，则返回<code>true</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.any &#123; it % <span class="number">2</span> == <span class="number">0</span>&#125; <span class="comment">// true</span></span><br><span class="line">list.any &#123; it &gt; <span class="number">10</span> &#125; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<p><strong>all</strong></p>
-<p>只有全部的元素符合判断条件，则返回<code>true</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.all &#123; it &lt; <span class="number">10</span> &#125; <span class="comment">// true</span></span><br><span class="line">list.all &#123; it % <span class="number">2</span> == <span class="number">0</span>&#125; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<p><strong>count</strong></p>
-<p>返回符合判断条件的元素总数</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.count &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-<p><strong>fold</strong></p>
-<p>给定一个初始值，在初始值的基础上，通过给定的函数来累计所有元素。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.fold(<span class="number">4</span>) &#123; total, next -&gt; total + next &#125; <span class="comment">// 4+1+2+3+4+5+6 = 25</span></span><br><span class="line">list.fold(<span class="number">4</span>) &#123; total, next -&gt; total * next &#125; <span class="comment">// 4*1*2*3*4*5*6 = 2880</span></span><br></pre></td></tr></table></figure>
-<p><strong>foldRight</strong></p>
-<p>与<code>fold</code>一样，只是顺序是从最后一项到第一项</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.foldRight(<span class="number">4</span>) &#123; total, next -&gt; total + next &#125; <span class="comment">// 25</span></span><br></pre></td></tr></table></figure>
-<p><strong>forEach</strong></p>
-<p>遍历的所有的元素，并执行给定的操作</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.forEach &#123; println(it) &#125;</span><br></pre></td></tr></table></figure>
-<p><strong>forEachIndexed</strong></p>
-<p>与<code>forEach</code>类似，但是我们同时可以得到元素的<code>index</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.forEachIndexed &#123; (index, value) -&gt; println(<span class="string">"position <span class="variable">$index</span> contains a <span class="variable">$value</span>"</span>) &#125;</span><br></pre></td></tr></table></figure>
-<p><strong>max/min</strong></p>
-<p>返回最大/最小的一项，如果没有则返回<code>null</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.max() <span class="comment">// 6</span></span><br><span class="line">list.min() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
-<p><strong>maxBy/minBy</strong></p>
-<p>根据给定的函数返回最大/最小的一项，如果没有则返回<code>null</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.maxBy &#123; -it &#125; <span class="comment">// 1</span></span><br><span class="line">list.minBy &#123; -it &#125; <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
-<p><strong>none</strong></p>
-<p>如果没有任何元素与给定的函数匹配，则返回<code>true</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.none &#123; it % <span class="number">7</span> == <span class="number">0</span> &#125; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p><strong>reduce</strong></p>
-<p>和<code>fold</code>一样，但是没有一个初始值。通过给定的函数来累计所有元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.reduce &#123; total, next -&gt; total + next &#125; <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
-<p><strong>reduceRight</strong></p>
-<p>和<code>reduce</code>一样，但是顺序是从最后一项到第一项</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.reduceRight &#123; total, next -&gt; total + next &#125; <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
-<p><strong>sum</strong></p>
-<p>返回所有元素的和</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.sum() <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
-<p><strong>sumBy</strong></p>
-<p>返回所有元素通过给定的函数转换之后的数据总和</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.sumBy &#123; it % <span class="number">2</span> &#125; <span class="comment">// 3</span></span><br><span class="line">list.sumBy &#123; it + <span class="number">1</span> &#125; <span class="comment">// 27</span></span><br></pre></td></tr></table></figure>
-<h3 id="过滤操作符"><a href="#过滤操作符" class="headerlink" title="过滤操作符"></a>过滤操作符</h3><p><strong>drop</strong></p>
-<p>返回包括去掉前<code>n</code>个元素的所有元素的列表</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.drop(<span class="number">4</span>) <span class="comment">// listOf(5, 6)</span></span><br></pre></td></tr></table></figure>
-<p><strong>dropWhile</strong></p>
-<p>这个函数有点难理解，我们需要结合一下源码来看：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> Iterable<span class="type">&lt;T&gt;</span>.<span class="title">dropWhile</span><span class="params">(predicate: (<span class="type">T</span>)</span></span> -&gt; <span class="built_in">Boolean</span>): List&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> yielding = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">val</span> list = ArrayList&lt;T&gt;()</span><br><span class="line">    <span class="keyword">for</span> (item <span class="keyword">in</span> <span class="keyword">this</span>)</span><br><span class="line">        <span class="keyword">if</span> (yielding)</span><br><span class="line">            list.add(item)</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!predicate(item)) &#123;</span><br><span class="line">            list.add(item)</span><br><span class="line">            yielding = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>调用<code>dropWhile</code>时，先遍历集合，如果集合中的元素不符合<code>predicate</code>函数的规则，则从当前元素开始，所有元素依次添加到新集合<code>list</code>并返回，如果集合中的元素都符合规则，则一个都不添加。我们以下面的例子来分析：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list1 = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list1.dropWhile &#123; it &lt; <span class="number">3</span> &#125; <span class="comment">// listOf(3, 4, 5, 6)</span></span><br></pre></td></tr></table></figure>
-<p>在上面的例子中，我们定义的函数规则是当前元素要小于3<code>{it &lt; 3}</code>，当集合遍历到<code>3</code>时，因为3是不小于3的，不符合函数的规则，所以从<code>3</code>开始，往后的元素都被添加到了新集合中。</p>
-<p>再来看一个例子，我们把集合中的<code>6</code>放到最前面</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list2 = listOf(<span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">list2.dropWhile &#123; it &lt; <span class="number">3</span>&#125; <span class="comment">// listOf(6, 1, 2, 3, 4, 5)</span></span><br></pre></td></tr></table></figure>
-<p>遍历集合时，因为第一个元素是<code>6</code>，不符合<code>{it &lt; 3}</code>，所要<code>6</code>及之后的元素都被添加到了新集合中</p>
-<p><strong>dropLastWhile</strong></p>
-<p>返回根据给定函数从最后一项开始去掉指定元素的列表</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.dropLastWhile &#123; it &gt; <span class="number">4</span> &#125; <span class="comment">// listOf(1, 2, 3, 4)</span></span><br></pre></td></tr></table></figure>
-<p><strong>filter</strong></p>
-<p>返回符合给定条件的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.filter &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// listOf(2, 4, 6)</span></span><br><span class="line">list.filter &#123; it &lt; <span class="number">3</span> &#125; <span class="comment">// listOf(1, 2)</span></span><br></pre></td></tr></table></figure>
-<p><strong>filterNot</strong></p>
-<p>返回所有不符合给定函数条件的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.filterNot &#123; it % <span class="number">2</span> == <span class="number">0</span>&#125; <span class="comment">// listOf(1, 3, 5)</span></span><br></pre></td></tr></table></figure>
-<p><strong>filterNotNull</strong></p>
-<p>返回集合中非<code>null</code>的函数</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="literal">null</span>)</span><br><span class="line">println(list.filterNotNull()) <span class="comment">// listOf[1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
-<p><strong>slice</strong></p>
-<p>返回指定区域的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.slice(<span class="number">0.</span><span class="number">.3</span>) <span class="comment">// listOf(1, 2, 3, 4)</span></span><br><span class="line">list.slice(listOf(<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>)) <span class="comment">// listOf(2, 4, 5)</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>(0..3)</code>：表示取出第0个到第3个之间的元素</p>
-<p><code>listOf(1, 3, 4)</code>：表示取出下标为1、3、4的元素</p>
-</blockquote>
-<p><strong>take</strong></p>
-<p>返回从第一个开始的n个元素(返回前n个元素)</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.take(<span class="number">2</span>) <span class="comment">// listOf[1, 2]</span></span><br></pre></td></tr></table></figure>
-<p><strong>takeLast</strong></p>
-<p>返回从最后一个开始的n个元素(返回后n个元素)</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.take(<span class="number">2</span>) <span class="comment">// listOf[5, 6]</span></span><br></pre></td></tr></table></figure>
-<p><strong>takeWhile</strong></p>
-<p>返回从第一个开始符合给定函数条件的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.takeWhile &#123; it &lt; <span class="number">3</span> &#125; <span class="comment">// listOf[1, 2]</span></span><br></pre></td></tr></table></figure>
-<h3 id="映射操作符"><a href="#映射操作符" class="headerlink" title="映射操作符"></a>映射操作符</h3><p><strong>flatMap</strong></p>
-<p>遍历所有的元素，为每个元素创建一个集合，最后把所有的集合放在一个集合中。</p>
-<p>什么意思呢，就是你可以把每一个元素转化成一个新的<code>list</code>，最后这些<code>list</code>会合并成一个大的<code>list</code>。我们通过代码来分析：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.flatMap &#123; listOf(<span class="string">'a'</span> + it) &#125; <span class="comment">// listOf(b, c, d, e, f, g)</span></span><br></pre></td></tr></table></figure>
-<p>上面的例子中，我们通过函数<code>listOf(&#39;a&#39;+ it)</code>把每一个元素都转换成了新的list。因为我们有6个元素，所以会生成6个list<code>(listOf(b)、listOf(c)、listOf(d)、listOf(e)、listOf(f)和listOf(g))</code>，最后会遍历这6个<code>list</code>，把这6个<code>list</code>中的每一项添加到一个新的<code>list</code>中。当然你也可以为<code>listOf(&#39;a&#39; + it)</code>添加多个元素，看下面的例子：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.flatMap &#123; listOf(it, <span class="string">'a'</span> + it) &#125; <span class="comment">// listOf(1, b, 2, c, 3, d, 4, e, 5, f, 6, g)</span></span><br></pre></td></tr></table></figure>
-<p><strong>groupBy</strong></p>
-<p>返回一个根据给定函数分组后的map，把函数的返回值作为<code>key</code>，符合条件的所有元素作为<code>value</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line"><span class="comment">// 返回为 mapOf("odd" to listOf(1, 3, 5), "even" to listOf(2, 4, 6)&#125;</span></span><br><span class="line">list.groupBy &#123; <span class="keyword">if</span> (it % <span class="number">2</span> ==<span class="number">0</span>) <span class="string">"even"</span> <span class="keyword">else</span> <span class="string">"odd"</span> &#125;</span><br></pre></td></tr></table></figure>
-<p><strong>map</strong></p>
-<p>返回一个每一个元素根据给定的函数转换所组成的List(把元素列表中的每一项进行相应计算或转成其它你想要的任何格式)。</p>
-<p>把元素中的每一项乘2：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.map &#123; it * <span class="number">2</span> &#125; <span class="comment">// listOf(2, 4, 6, 8, 10, 12)</span></span><br></pre></td></tr></table></figure>
-<p>把元素中的每一项转成字母：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.map &#123; <span class="string">'a'</span> + it &#125; <span class="comment">// listOf(b, c, d, e, f, g)</span></span><br></pre></td></tr></table></figure>
-<p><strong>mapIndexed</strong></p>
-<p>和<code>map</code>一样，但是我们可以同时得到元素的<code>index</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.mapIndexed &#123; index, it -&gt; index + it &#125; <span class="comment">// listOf(1, 3, 5, 7, 9, 11)</span></span><br></pre></td></tr></table></figure>
-<p><strong>mapNotNull</strong></p>
-<p>和<code>map</code>一样，但是会过滤掉为<code>null</code>的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String? = <span class="literal">null</span>)</span><br><span class="line"><span class="keyword">val</span> list = listOf(Person(), Person(<span class="string">"Alice"</span>))</span><br><span class="line"><span class="comment">// map</span></span><br><span class="line">list.map &#123; it.name &#125; <span class="comment">// listOf(null, "Alice")</span></span><br><span class="line"><span class="comment">// mapNotNull</span></span><br><span class="line">list.mapNotNull &#123; it.name &#125; <span class="comment">// listOf("Alice")</span></span><br></pre></td></tr></table></figure>
-<h3 id="元素操作符"><a href="#元素操作符" class="headerlink" title="元素操作符"></a>元素操作符</h3><p><strong>contains</strong></p>
-<p>如果的元素可以在集合中找到，则返回true</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.contains(<span class="number">2</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p><strong>elementAt</strong></p>
-<p>返回给定index对应的元素，如果index数组越界则会抛出<code>IndexOutOfBoundsException</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.elementAt(<span class="number">1</span>) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
-<p><strong>elementAtOrElse</strong></p>
-<p>返回给定index对应的元素，如果index数组越界则会返回给定函数的返回值，函数中的参数为给定的index。如下图所示：<code>it</code>为传入的10</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.elementAtOrElse(<span class="number">10</span>, &#123; <span class="number">2</span> * it &#125;) <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
-<p><strong>elementAtOrNull</strong></p>
-<p>返回给定index对应的元素，如果index数组越界则会返回null</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.elementAtOrNull(<span class="number">10</span>) <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
-<p><strong>first</strong></p>
-<p>返回符合给定函数条件的第一个元素，如果没有符合抛出<code>java.util.NoSuchElementException</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.first() <span class="comment">// 1</span></span><br><span class="line">list.first &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
-<p><strong>firstOrNull</strong></p>
-<p>返回符合给定函数条件的第一个元素，如果没有符合则返回null</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.firstOrNull() <span class="comment">// 1</span></span><br><span class="line">list.firstOrNull &#123; it % <span class="number">7</span> == <span class="number">0</span> &#125;) <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
-<p><strong>indexOf</strong></p>
-<p>返回指定元素的第一个index，如果不存在，则返回<code>-1</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.indexOf(<span class="number">4</span>) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-<p><strong>indexOfFirst</strong></p>
-<p>返回第一个符合给定函数条件的元素的index，如果没有符合则返回<code>-1</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.indexOfFirst &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
-<p><strong>indexOfLast</strong></p>
-<p>返回最后一个符合给定函数条件的元素的index，如果没有符合则返回<code>-1</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.indexOfLast &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
-<p><strong>last</strong></p>
-<p>返回符合给定函数条件的最后一个元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.last &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
-<p><strong>lastIndexOf</strong></p>
-<p>返回的指定元素的最后一个index，如果不存在，则返回<code>-1</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.lastIndexOf(<span class="number">2</span>) <span class="comment">// 1</span></span><br><span class="line">list.lastIndexOf(<span class="number">7</span>) <span class="comment">// -1</span></span><br></pre></td></tr></table></figure>
-<p><strong>single/singleOrNull</strong></p>
-<p>返回符合给定函数的单个元素，如果没有符合或者超过一个，<code>single</code>抛出异常，<code>singleOrNull</code>返回<code>null</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.single &#123; it % <span class="number">5</span> == <span class="number">0</span> &#125; <span class="comment">// 5</span></span><br><span class="line">list.single &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// java.lang.IllegalArgumentException</span></span><br><span class="line">list.singleOrNull &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
-<h3 id="生产操作符"><a href="#生产操作符" class="headerlink" title="生产操作符"></a>生产操作符</h3><p><strong>partition</strong></p>
-<p>把一个集合通过给定的函数分为两个集合，符合条件的作为一个，不符合的作为另一个</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.partition &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// Pair(listOf(2, 4, 6), listOf(1, 3, 5))</span></span><br></pre></td></tr></table></figure>
-<p><strong>plus</strong></p>
-<p>使用<code>+</code>号操作符把两个集合合并到一个集合中</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list + listOf(<span class="number">7</span>, <span class="number">8</span> ) <span class="comment">// listOf(1, 2, 3, 4, 5, 6, 7, 8)</span></span><br></pre></td></tr></table></figure>
-<p><strong>zip(返回值 List&lt;Pair<t, r="">&gt;)</t,></strong></p>
-<p>返回由<code>Pair</code>组成的List，每个<code>Pair</code>由两个集合中相同index的元素组成。这个返回的List的大小是由最小的那个集合决定</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.zip(listOf(<span class="number">7</span>, <span class="number">8</span>)) <span class="comment">// listOf(Pair(1, 7), Pair(2, 8))</span></span><br></pre></td></tr></table></figure>
-<p><strong>unzip</strong></p>
-<p>从包含<code>Pair</code>的List中生成包含List的<code>Pair</code> 。有点拗口，看代码</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(Pair(<span class="number">5</span>, <span class="number">7</span>), Pair(<span class="number">6</span>, <span class="number">8</span>))</span><br><span class="line">list.unzip() <span class="comment">// Pair(listOf(5, 6), listOf(7, 8))</span></span><br></pre></td></tr></table></figure>
-<p>看上面的代码，还是有点难理解，我们需要结合源码来看</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R&gt;</span> Iterable<span class="type">&lt;Pair&lt;T, R&gt;</span>&gt;.<span class="title">unzip</span><span class="params">()</span></span>: Pair&lt;List&lt;T&gt;, List&lt;R&gt;&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> expectedSize = collectionSizeOrDefault(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">val</span> listT = ArrayList&lt;T&gt;(expectedSize)</span><br><span class="line">    <span class="keyword">val</span> listR = ArrayList&lt;R&gt;(expectedSize)</span><br><span class="line">    <span class="keyword">for</span> (pair <span class="keyword">in</span> <span class="keyword">this</span>) &#123;</span><br><span class="line">        listT.add(pair.first)</span><br><span class="line">        listR.add(pair.second)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> listT to listR</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>unzip</code>方法中，会定义两个集合，一个集合会添加<code>list</code>元素<code>Pair(5,7), Pair(6,8)</code>的<code>first</code>，出就是<code>5、6</code>，另一个集合会添加<code>second</code>，也就是<code>7、8</code></p>
-<h3 id="顺序操作符"><a href="#顺序操作符" class="headerlink" title="顺序操作符"></a>顺序操作符</h3><p><strong>reversed</strong></p>
-<p>返回一个倒序的list</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.reversed() <span class="comment">// listOf(6, 5, 4, 3, 2, 1)</span></span><br></pre></td></tr></table></figure>
-<p><strong>sorted</strong></p>
-<p>把list进行生序排列</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">6</span>)</span><br><span class="line">list.sorted() <span class="comment">// listOf(1, 2, 3, 4, 5, 6)</span></span><br></pre></td></tr></table></figure>
-<p><strong>sortedBy</strong></p>
-<p>把不符合条件的元素按照在集合中之前的顺序放在集合的最前面，把符合条件的元素依次放在后面</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">7</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">1</span>)</span><br><span class="line">list.sortedBy &#123; it &gt; <span class="number">2</span> &#125; <span class="comment">// listOf(2, 1, 7, 6, 3, 5, 4)</span></span><br></pre></td></tr></table></figure>
-<p>看代码，因为<code>2,1</code>不符合条件，所以把<code>2,1</code>按之前的顺序放到最前面，<code>7,6,3,5,4</code>仿照之前的顺序依次放到后面</p>
-<p><strong>sortedDescending</strong></p>
-<p>把list进行降序排列</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">7</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">2</span>)</span><br><span class="line">list.sortedDescending() <span class="comment">// listOf(7, 6, 5, 4, 3, 2, 1)</span></span><br></pre></td></tr></table></figure>
-<p><strong>sortedByDescending</strong></p>
-<p>和<code>sortedBy</code>类似，只不过是把符合条件的放在集合的前面，不符合的放在集合的后面</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">7</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">2</span>)</span><br><span class="line">list.sortedByDescending &#123; it &gt; <span class="number">3</span> &#125; <span class="comment">// listOf(7, 4, 5, 6, 3, 1, 2)</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>参考: 《kotlin-for-android-developers》《kotlin in action》</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kotlin</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/14/android/kotlin-collections/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-android/kotlin-extensions" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/13/android/kotlin-extensions/">Kotlin扩展</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/13/android/kotlin-extensions/" class="archive-article-date">
-  	<time datetime="2018-03-13T03:36:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/13/android/kotlin-extensions/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1285,11 +1220,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color1">apple</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">apple</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1297,15 +1232,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1313,11 +1240,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
+                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1325,7 +1260,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color1">Annotation</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1334,6 +1269,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">

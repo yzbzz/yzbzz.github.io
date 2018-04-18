@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="yzbzz.github.io">
-  <title>Java 注解 | Yzbzz&#39;s Blog</title>
+  <title>Java 注解介绍 | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文档：通过代码里标识的元数据生成文档【生成文档doc文档】。 代码分析：通过代码里标识的元数据对代码进行分析【使用反射】。 编译检查：通过代码里标识的元数">
-<meta name="keywords" content="java">
+  <meta name="description" content="[TOC] 本文及相关注解文章部分摘自以下的博客，推荐大家阅读  秒懂，Java 注解 （Annotation）你可以这样学 Java注解基础概念总结 定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文">
+<meta name="keywords" content="java,Annotation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 注解">
+<meta property="og:title" content="Java 注解介绍">
 <meta property="og:url" content="yzbzz.github.io/2018/04/12/java/java-annotations/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
-<meta property="og:description" content="定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文档：通过代码里标识的元数据生成文档【生成文档doc文档】。 代码分析：通过代码里标识的元数据对代码进行分析【使用反射】。 编译检查：通过代码里标识的元数">
+<meta property="og:description" content="[TOC] 本文及相关注解文章部分摘自以下的博客，推荐大家阅读  秒懂，Java 注解 （Annotation）你可以这样学 Java注解基础概念总结 定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-13T02:15:27.498Z">
+<meta property="og:updated_time" content="2018-04-18T06:59:36.355Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java 注解">
-<meta name="twitter:description" content="定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文档：通过代码里标识的元数据生成文档【生成文档doc文档】。 代码分析：通过代码里标识的元数据对代码进行分析【使用反射】。 编译检查：通过代码里标识的元数">
+<meta name="twitter:title" content="Java 注解介绍">
+<meta name="twitter:description" content="[TOC] 本文及相关注解文章部分摘自以下的博客，推荐大家阅读  秒懂，Java 注解 （Annotation）你可以这样学 Java注解基础概念总结 定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
   
@@ -210,7 +210,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Java 注解
+      Java 注解介绍
     </h1>
   
 
@@ -223,54 +223,92 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>注解(Annotaion)，也叫元数据。一种代码级别的说明。它是<code>JDK1.5</code>及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。</p>
+        <p>[TOC]</p>
+<p>本文及相关注解文章部分摘自以下的博客，推荐大家阅读</p>
+<p><a href="http://blog.csdn.net/briblue/article/details/73824058" target="_blank" rel="noopener"> 秒懂，Java 注解 （Annotation）你可以这样学</a></p>
+<p><a href="https://blog.csdn.net/github_35180164/article/details/52107204" target="_blank" rel="noopener">Java注解基础概念总结</a></p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>注解(Annotaion)，也叫元数据。一种代码级别的说明。它是<code>JDK1.5</code>及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。</p>
 <p>作用分类：</p>
 <ul>
 <li>编写文档：通过代码里标识的元数据生成文档【生成文档doc文档】。</li>
 <li>代码分析：通过代码里标识的元数据对代码进行分析【使用反射】。</li>
 <li>编译检查：通过代码里标识的元数据让编译器能实现基本的编译检查【Override】。</li>
 </ul>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个注解</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AnnotationsTest &#123; </span><br><span class="line">    <span class="function">String <span class="title">value</span> <span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="meta">@AnnotationsTest</span>(value = <span class="string">"abc"</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个注解</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AnnotationsTest &#123; </span><br><span class="line">    <span class="function">String <span class="title">value</span> <span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="meta">@AnnotationsTest</span>(value = <span class="string">"abc"</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>以<code>@interface</code>关键字定义</li>
-<li>注解包含成员，成员以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型</li>
-<li>成员赋值是通过@Annotation(name=value)的形式</li>
+<li>注解包含成员，成员以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型，例如上述例子中的<code>String value()</code></li>
+<li>成员赋值是通过@Annotation(name=value)的形式，例如上述例子中的<code>@Target(ElementType.TYPE)</code></li>
 <li>注解需要标明注解的生命周期，注解的修饰目标等信息，这些信息是通过元注解实现</li>
 </ol>
-<p>以<code>java.lang.annotation</code>中定义的<code>Target</code>注解来分析：</p>
+<p>下面我们来分析一下<code>java.lang.annotation</code>中定义的<code>Target</code>注解：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>元注解@Retention，成员value的值为RetentionPolicy.RUNTIME</li>
-<li>元注解@Target，成员value是个数组，用{}形式赋值，值为ElementType.ANNOTATION_TYPE</li>
-<li>成员名称为value，类型为ElementType[]</li>
+<li>元注解@Retention，成员value的值为<code>RetentionPolicy.RUNTIME</code></li>
+<li>元注解@Target，成员value是个数组，用{}形式赋值，值为<code>ElementType.ANNOTATION_TYPE</code></li>
+<li>成员名称为value，类型为<code>ElementType[]</code></li>
 </ul>
 <p>另外，需要注意一下，如果成员名称是value，在赋值过程中可以简写。如果成员类型为数组，但是只赋值一个元素，则也可以简写。如上面的简写形式为：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br></pre></td></tr></table></figure>
 <h3 id="注解的类型"><a href="#注解的类型" class="headerlink" title="注解的类型"></a>注解的类型</h3><p>注解分为两类，一类是元注解(meta-annotation)，另外一类是普通注解</p>
-<blockquote>
-<p>所谓元注解就是修饰注解的注解。<br>拿到一个注解，如何知道它是否是元注解呢？需要看它的元注解（无论是元注解还是普通注解都是有元注解），如果看到这样的元注解：@Target(ElementType.ANNOTATION_TYPE)，那么此时这个注解一定是元注解。</p>
+<h4 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h4><blockquote>
+<p>所谓元注解就是修饰注解的注解。<br>拿到一个注解，如何知道它是否是元注解呢？需要看它的元注解（无论是元注解还是普通注解都是有元注解），如果看到这样的元注解：<code>@Target(ElementType.ANNOTATION_TYPE)</code>，那么此时这个注解一定是元注解。</p>
 </blockquote>
-<h4 id="元注解-四个"><a href="#元注解-四个" class="headerlink" title="元注解(四个)"></a>元注解(四个)</h4><p><strong>@Target</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>表示该注解用于什么地方，可能的值在枚举类<code>ElementType</code>中</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE,  <span class="comment">// 类、接口(包含注解类型)或enum声明</span></span><br><span class="line">    FIELD, <span class="comment">// 字段声明(包含enum实例)</span></span><br><span class="line">    METHOD, <span class="comment">// 方法声明</span></span><br><span class="line">    PARAMETER, <span class="comment">// 参数声明</span></span><br><span class="line">    CONSTRUCTOR, <span class="comment">// 构造器声明</span></span><br><span class="line">    LOCAL_VARIABLE, <span class="comment">// 局部变量声明</span></span><br><span class="line">    ANNOTATION_TYPE, <span class="comment">// 注解声明</span></span><br><span class="line">    PACKAGE, <span class="comment">// 包声明</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Type parameter declaration</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_PARAMETER,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Use of a type</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_USE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>@Retention</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Retention &#123;</span><br><span class="line">    <span class="function">RetentionPolicy <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>表示在什么级别保存该注解信息，可能的值在枚举类<code>ElementType</code>中</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    SOURCE, <span class="comment">// 注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃</span></span><br><span class="line">    CLASS, <span class="comment">// 注解被保留到class文件，jvm加载class文件时候被遗弃。这是默认的生命周期</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在，保存到class对象中，</span></span><br><span class="line"><span class="comment">    * 可以通过反射来获取</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    RUNTIME </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Retention &#123;</span><br><span class="line">    <span class="function">RetentionPolicy <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// RetentionPolicy</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    SOURCE, <span class="comment">// 注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃</span></span><br><span class="line">    CLASS, <span class="comment">// 注解被保留到class文件，jvm加载class文件时候被遗弃。这是默认的生命周期</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在，保存到class对象中，</span></span><br><span class="line"><span class="comment">    * 可以通过反射来获取</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    RUNTIME </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这3个生命周期对应表如下</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>生命周期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RetentionPolicy.SOURCE</td>
+<td>Java源文件(.java文件)</td>
+</tr>
+<tr>
+<td>RetentionPolicy.CLASS</td>
+<td>.class文件</td>
+</tr>
+<tr>
+<td>RetentionPolicy.RUNTIME</td>
+<td>内存中的字节</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>首先要明确生命周期长度 <strong>SOURCE &lt; CLASS &lt; RUNTIME</strong> ，所以前者能作用的地方后者一定也能作用。一般如果需要在运行时去动态获取注解信息，那只能用 <code>RUNTIME</code>注解；如果要在编译时进行一些预处理操作，比如生成一些辅助代码（如 <a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">ButterKnife</a>），就用 <code>CLASS</code>注解；如果只是做一些检查性的操作，比如<code>@Override</code> 和 <code>@SuppressWarnings</code>，则可选用 <code>SOURCE</code> 注解。</p>
+</blockquote>
+<p><strong>@Target</strong></p>
+<p>表示该注解用于什么地方，可能的值在枚举类<code>ElementType</code>中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE,  <span class="comment">// 类、接口(包含注解类型)或enum声明</span></span><br><span class="line">    FIELD, <span class="comment">// 字段声明(包含enum实例)</span></span><br><span class="line">    METHOD, <span class="comment">// 方法声明</span></span><br><span class="line">    PARAMETER, <span class="comment">// 参数声明</span></span><br><span class="line">    CONSTRUCTOR, <span class="comment">// 构造器声明</span></span><br><span class="line">    LOCAL_VARIABLE, <span class="comment">// 局部变量声明</span></span><br><span class="line">    ANNOTATION_TYPE, <span class="comment">// 注解声明</span></span><br><span class="line">    PACKAGE, <span class="comment">// 包声明</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Type parameter declaration</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_PARAMETER,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Use of a type</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_USE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>@Documented</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Documented &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>将此注解包含在 javadoc 中 ，它代表着此注解会被javadoc工具提取成文档。在doc文档中的内容会因为此注解的信息内容不同而不同。相当与@see,@param 等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Documented &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>@Inherited</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Inherited &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>允许子类继承父类中的注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Inherited &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>@Repeatable</strong></p>
+<p>@Repeatable 是 Java 1.8 才加的，意为可重复，也就是注解的值可以同时取多个</p>
+<p>示例，一个人</p>
 <h4 id="普通注解"><a href="#普通注解" class="headerlink" title="普通注解"></a>普通注解</h4><h5 id="基本内置注解"><a href="#基本内置注解" class="headerlink" title="基本内置注解"></a>基本内置注解</h5><p><strong>@Override</strong></p>
+<p>该注解提示子类复写父类中的方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Override &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>@Deprecated</strong></p>
+<p>这注解用来标记过时的元素。编译器在编译阶段遇到这个注解时会发出提醒警告，告诉开发者正在调用一个过时的元素（过时的方法、过时的类、过时的成员变量）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(value=&#123;CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, PARAMETER, TYPE&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Deprecated &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>@SuppressWarnings</strong></p>
+<p>阻止警告的意思。之前说过调用被 @Deprecated 注解的方法后，编译器会警告提醒，而有时候开发者会忽略这种警告，他们可以在调用的地方通过 @SuppressWarnings 达到目的。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SuppressWarnings &#123;</span><br><span class="line">    String[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>参考：<a href="http://swiftlet.net/archives/1906" target="_blank" rel="noopener">注解系列知识总结</a></p>
+<h5 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h5><p>关于自定义注解，请移步</p>
+<p><a href="/2018/01/25/study/study-bwh/">java 自定义源码注解</a></p>
+<p><a href="/2018/01/25/study/study-bwh/">java 自定义编译时注解</a></p>
+<p><a href="/2018/01/25/study/study-bwh/">java 自定运行时注解</a></p>
 
       
 
@@ -316,6 +354,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
         		</li>
       		
 		</ul>
@@ -384,6 +426,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/04/13/java/java-annotations-source/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          java 源码注解(RetentionPolicy.SOURCE)
+        
+      </div>
+    </a>
   
   
     <a href="/2018/04/11/android/android-customer-annotations/" id="article-nav-older" class="article-nav-link-wrap">
@@ -513,11 +564,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color1">apple</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">apple</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -525,15 +576,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,11 +584,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
+                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -553,7 +604,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color1">Annotation</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,6 +613,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
