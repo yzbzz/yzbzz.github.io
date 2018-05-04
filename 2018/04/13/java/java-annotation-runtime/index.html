@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="yzbzz.github.io">
-  <title>java 运行时注解(RetentionPolicy.RUNTIME) | Yzbzz&#39;s Blog</title>
+  <title>Java 运行时注解(RetentionPolicy.RUNTIME) | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言对于运行时注解RetentionPolicy.RUNTIME，我们可以通过反射的方式来获取注解的相关信息。根据注解中的Target，我们可以从Constructor、CLASS、Field、Method获取注解对象，基本方法都差不多。    Target 获取Annotation 描述     ElementType.TYPE Class&amp;lt;?&amp;gt;. getAnnotation() 通">
 <meta name="keywords" content="java,Annotation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java 运行时注解(RetentionPolicy.RUNTIME)">
+<meta property="og:title" content="Java 运行时注解(RetentionPolicy.RUNTIME)">
 <meta property="og:url" content="yzbzz.github.io/2018/04/13/java/java-annotation-runtime/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="前言对于运行时注解RetentionPolicy.RUNTIME，我们可以通过反射的方式来获取注解的相关信息。根据注解中的Target，我们可以从Constructor、CLASS、Field、Method获取注解对象，基本方法都差不多。    Target 获取Annotation 描述     ElementType.TYPE Class&amp;lt;?&amp;gt;. getAnnotation() 通">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-16T09:29:15.712Z">
+<meta property="og:updated_time" content="2018-04-18T10:50:04.492Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java 运行时注解(RetentionPolicy.RUNTIME)">
+<meta name="twitter:title" content="Java 运行时注解(RetentionPolicy.RUNTIME)">
 <meta name="twitter:description" content="前言对于运行时注解RetentionPolicy.RUNTIME，我们可以通过反射的方式来获取注解的相关信息。根据注解中的Target，我们可以从Constructor、CLASS、Field、Method获取注解对象，基本方法都差不多。    Target 获取Annotation 描述     ElementType.TYPE Class&amp;lt;?&amp;gt;. getAnnotation() 通">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
@@ -210,7 +210,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      java 运行时注解(RetentionPolicy.RUNTIME)
+      Java 运行时注解(RetentionPolicy.RUNTIME)
     </h1>
   
 
@@ -260,6 +260,7 @@
 </tr>
 </tbody>
 </table>
+<a id="more"></a>
 <p>一些常见的获取注解的方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取指定类型的注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> &lt;A extends Annotation&gt; <span class="function">A <span class="title">getAnnotation</span><span class="params">(Class&lt;A&gt; annotationType)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取所有注解，如果有的话</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Annotation[] getAnnotations();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取所有注解，忽略继承的注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Annotation[] getDeclaredAnnotations();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定注解是否存在该元素上，如果有则返回true，否则false</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAnnotationPresent</span><span class="params">(Class&lt;? extends Annotation&gt; annotationType)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取Method中参数的所有注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Annotation[][] getParameterAnnotations();</span><br></pre></td></tr></table></figure>
 <h3 id="定义运行时注解"><a href="#定义运行时注解" class="headerlink" title="定义运行时注解"></a>定义运行时注解</h3><p><strong>自定义注解</strong></p>
@@ -400,14 +401,14 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          java 编译时注解(RetentionPolicy.CLASS)
+          Java 编译时注解(RetentionPolicy.CLASS)
         
       </div>
     </a>
   
   
     <a href="/2018/04/13/java/java-annotations-source/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">java 源码注解(RetentionPolicy.SOURCE)</div>
+      <div class="article-nav-title">Java 源码注解(RetentionPolicy.SOURCE)</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -533,19 +534,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">apple</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color1">apple</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,11 +554,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -577,7 +578,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -585,15 +586,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>

@@ -203,6 +203,194 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java/java-reflection" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/27/java/java-reflection/">Java反射</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/27/java/java-reflection/" class="archive-article-date">
+  	<time datetime="2018-04-27T08:35:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在Java中，我们主要通过反射(Reflection)来在运行时来获取类或对象的相关信息</p>
+<ul>
+<li>获取对象所属的类</li>
+<li>构造类的对象</li>
+<li>获取类的构造函数对象</li>
+<li>获取类的成员变量，包括<code>private</code> 修饰的变量</li>
+<li>调用类的方法，包括<code>private</code>修饰的方法</li>
+</ul>
+        
+          <a class="article-more-a" href="/2018/04/27/java/java-reflection/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/27/java/java-reflection/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java/java-annotations-processor" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/18/java/java-annotations-processor/">Java 注解处理器(Annotation Processor)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/18/java/java-annotations-processor/" class="archive-article-date">
+  	<time datetime="2018-04-18T10:48:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>注解处理器(Annotation Processor)是<code>javac</code>的一个工具，主要用于在编译时处理<code>运行时注解RetentionPolicy.RUNTIME）</code>。我们可以自定义注解处理器，获取我们自定义的注解信息，通过注解信息生成<code>java</code>文件(如： <a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">ButterKnife</a>)或进行其它的一些操作</p>
+<h3 id="自定义注解处理器"><a href="#自定义注解处理器" class="headerlink" title="自定义注解处理器"></a>自定义注解处理器</h3><p>自定义注解处理器需要继承于<code>AbstractProcessor</code>，一般我们会重写下面4个方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment processingEnvironment)</span> </span>&#123; &#125;</span><br><span class="line">   </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedAnnotationTypes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Set&lt;String&gt; types = <span class="keyword">new</span> LinkedHashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">return</span> types</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SourceVersion.latestSupported();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; set, RoundEnvironment roundEnvironment)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>init(ProcessingEnvironment env):  每一个注解处理器类都必须有一个空的构造函数。然而，这里有一个特殊的init()方法，它会被注解处理工具调用，并输入ProcessingEnviroment参数。ProcessingEnviroment提供很多有用的工具类Elements, Types和Filer。后面我们将看到详细的内容。</li>
+<li>process(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment env) :  这相当于每个处理器的主函数main()。你在这里写你的扫描、评估和处理注解的代码，以及生成Java文件。输入参数RoundEnviroment，可以让你查询出包含特定注解的被注解元素。后面我们将看到详细的内容。</li>
+<li>getSupportedAnnotationTypes():  这里你必须指定，这个注解处理器是注册给哪个注解的。注意，它的返回值是一个字符串的集合，包含本处理器想要处理的注解类型的合法全称。换句话说，你在这里定义你的注解处理器注册到哪些注解上。</li>
+<li>getSupportedSourceVersion(): 用来指定你使用的Java版本。通常这里返回<code>SourceVersion.latestSupported()</code>。然而，如果你有足够的理由只支持Java 6的话，你也可以返回SourceVersion.RELEASE_6。我推荐你使用前者。</li>
+</ul>
+<p>在Java 7中，你也可以使用注解来代替getSupportedAnnotationTypes()和getSupportedSourceVersion()，像这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SupportedSourceVersion</span>(SourceVersion.latestSupported())</span><br><span class="line"><span class="meta">@SupportedAnnotationTypes</span>(&#123;</span><br><span class="line">   <span class="comment">// 合法注解全名的集合</span></span><br><span class="line"> &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment env)</span></span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annoations, RoundEnvironment env)</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为兼容的原因，特别是针对Android平台，我建议使用重载<code>getSupportedAnnotationTypes()</code>和<code>getSupportedSourceVersion()</code>方法代替<code>@SupportedAnnotationTypes</code>和</p>
+<p><code>@SuppozrtedSourceVersion</code></p>
+<p>接下来的你必须知道的事情是，注解处理器是运行它自己的虚拟机JVM中。是的，你没有看错，<strong>javac</strong>启动一个完整Java虚拟机来运行注解处理器。这对你意味着什么？你可以使用任何你在其他java应用中使用的的东西。使用guava。如果你愿意，你可以使用依赖注入工具，例如dagger或者其他你想要的类库。但是不要忘记，即使是一个很小的处理，你也要像其他Java应用一样，注意算法效率，以及设计模式。</p>
+<p><strong>注册你的处理器</strong></p>
+<p>你可能会问，我怎样将处理器MyProcessor注册到javac中。你必须提供一个<strong>.jar</strong>文件。就像其他<strong>.jar</strong>文件一样，你打包你的注解处理器到此文件中。并且，在你的jar中，你需要打包一个特定的文件javax.annotation.processing.Processor到META-INF/services路径下。所以，你的.jar文件看起来就像下面这样：</p>
+<ul>
+<li>MyProcessor.jar</li>
+<li>– com</li>
+<li>– – example</li>
+<li>– – – MyProcessor.class</li>
+<li>– META-INF</li>
+<li>– – services</li>
+<li>– – – javax.annotation.processing.Processor</li>
+</ul>
+<p>打包进MyProcessor.jar中的javax.annotation.processing.Processor的内容是，注解处理器的合法的全名列表，每一个元素换行分割：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">com.example.MyProcessor  </span><br><span class="line">com.foo.OtherProcessor  </span><br><span class="line">net.blabla.SpecialProcessor</span><br></pre></td></tr></table></figure>
+<p>把MyProcessor.jar放到你的builpath中，<strong>javac</strong>会自动检查和读取javax.annotation.processing.Processor中的内容，并且注册MyProcessor作为注解处理器。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/18/java/java-annotations-processor/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-java/java-annotation-class" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -210,7 +398,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/13/java/java-annotation-class/">java 编译时注解(RetentionPolicy.CLASS)</a>
+      <a class="article-title" href="/2018/04/13/java/java-annotation-class/">Java 编译时注解(RetentionPolicy.CLASS)</a>
     </h1>
   
 
@@ -287,7 +475,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/13/java/java-annotation-runtime/">java 运行时注解(RetentionPolicy.RUNTIME)</a>
+      <a class="article-title" href="/2018/04/13/java/java-annotation-runtime/">Java 运行时注解(RetentionPolicy.RUNTIME)</a>
     </h1>
   
 
@@ -337,25 +525,9 @@
 </tr>
 </tbody>
 </table>
-<p>一些常见的获取注解的方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取指定类型的注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> &lt;A extends Annotation&gt; <span class="function">A <span class="title">getAnnotation</span><span class="params">(Class&lt;A&gt; annotationType)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取所有注解，如果有的话</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Annotation[] getAnnotations();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取所有注解，忽略继承的注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Annotation[] getDeclaredAnnotations();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定注解是否存在该元素上，如果有则返回true，否则false</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAnnotationPresent</span><span class="params">(Class&lt;? extends Annotation&gt; annotationType)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取Method中参数的所有注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Annotation[][] getParameterAnnotations();</span><br></pre></td></tr></table></figure>
-<h3 id="定义运行时注解"><a href="#定义运行时注解" class="headerlink" title="定义运行时注解"></a>定义运行时注解</h3><p><strong>自定义注解</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 适用于类、接口(包含注解类型)或enum</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ClassAnnotation &#123;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 适用于构造函数</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.CONSTRUCTOR)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ConstructorAnnotation &#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">id</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 适用于字段(包含enum实例)</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> FiledAnnotation &#123;</span><br><span class="line">	<span class="keyword">int</span>[] value();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 适用于方法</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MethodAnnotation &#123;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在注解中定义<code>成员(属性)</code>时它的类型必须是 8 种基本数据类型外加 类、接口、注解及它们的数组(下面例子中的<code>int id()</code>、<code>String value()</code>)。注解中<code>成员(属性)</code>可以有默认值，默认值需要用 <code>default</code> 关键值指定。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.CONSTRUCTOR)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ConstructorAnnotation &#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">id</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> "ConstructorAnnotation"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>如何使用</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ClassAnnotation</span>(<span class="string">"this is class annotation"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestAnnotation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@ConstructorAnnotation</span>(id = <span class="number">1</span>, value = <span class="string">"this is constructor annotation"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TestAnnotation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@ConstructorAnnotation</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TestAnnotation</span><span class="params">(<span class="keyword">int</span> id, String msg)</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@FiledAnnotation</span>(&#123; <span class="number">1</span>, <span class="number">2</span> &#125;)</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> id = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@FiledAnnotation</span>(<span class="number">3</span>)</span><br><span class="line">	<span class="keyword">public</span> String field = <span class="string">"field"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@MethodAnnotation</span>(<span class="string">"this is method annotation"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"method"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注解赋值的方式是在注解的括号内以<code>value=””</code>形式，多个属性之前用<code>,</code>隔开。如果希望使用注解的默认值，可以像以述例子中一样直接使用<code>@ConstructorAnnotation</code>或<code>@ConstructorAnnotation()</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConstructorAnnotation</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TestAnnotation</span><span class="params">(<span class="keyword">int</span> id, String msg)</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">==&gt;</span><br><span class="line"><span class="meta">@ConstructorAnnotation</span>()</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TestAnnotation</span><span class="params">(<span class="keyword">int</span> id, String msg)</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果注解只包含一个成员，并且成员定义的名称为<code>value()</code>，则可以省略<code>value</code>关键字</p>
-<p>例如上面定义的<code>FiledAnnotation</code>和<code>MethodAnnotation</code>，都使用了<code>value()</code>名称</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> FiledAnnotation &#123;</span><br><span class="line">	<span class="keyword">int</span>[] value();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MethodAnnotation &#123;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>则可以省略<code>value</code>关键字，下面的调用方式是等同的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对于字段</span></span><br><span class="line"><span class="meta">@FiledAnnotation</span>(value = &#123; <span class="number">1</span>, <span class="number">2</span> &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> id = <span class="number">1</span>;</span><br><span class="line">==&gt;</span><br><span class="line"><span class="meta">@FiledAnnotation</span>(&#123; <span class="number">1</span>, <span class="number">2</span> &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> id = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对于方法</span></span><br><span class="line"><span class="meta">@MethodAnnotation</span>(value = <span class="string">"this is method annotation"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"method"</span>;</span><br><span class="line">&#125;</span><br><span class="line">==&gt;</span><br><span class="line"><span class="meta">@MethodAnnotation</span>(<span class="string">"this is method annotation"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"method"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="获取运行时注解信息"><a href="#获取运行时注解信息" class="headerlink" title="获取运行时注解信息"></a>获取运行时注解信息</h3><p>因为我们定义的是<code>RetentionPolicy.RUNTIME</code>的注解，所以我们可以在运行时拿到注解的信息<strong>(需要反射获取)</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取@ClassAnnotation的信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printClassAnnotation</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    sb.append(<span class="string">"Class注解:"</span>);</span><br><span class="line">    ClassAnnotation classAnnotation = clazz</span><br><span class="line">        .getAnnotation(ClassAnnotation.class);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">null</span> != classAnnotation) &#123;</span><br><span class="line">        sb.append(<span class="string">"\n\t类名: "</span>);</span><br><span class="line">        sb.append(Modifier.toString(clazz.getModifiers())).append(<span class="string">" "</span>)</span><br><span class="line">            .append(clazz.getSimpleName());</span><br><span class="line">        sb.append(<span class="string">"\n\t注解值: "</span>).append(classAnnotation.value());</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sb.toString());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取ConstructorAnnotation的信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printConstructorAnnotation</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    sb.append(<span class="string">"Constructor注解:"</span>);</span><br><span class="line">    Constructor&lt;?&gt;[] constructors = clazz.getConstructors();</span><br><span class="line">    <span class="keyword">for</span> (Constructor&lt;?&gt; constructor : constructors) &#123;</span><br><span class="line">        ConstructorAnnotation constructorAnnotation = constructor</span><br><span class="line">            .getAnnotation(ConstructorAnnotation.class);</span><br><span class="line">        sb.append(<span class="string">"\n\t构造函数名: "</span>);</span><br><span class="line">        sb.append(Modifier.toString(constructor.getModifiers())).append(<span class="string">" "</span>)</span><br><span class="line">            .append(constructor.getClass().getSimpleName());</span><br><span class="line"></span><br><span class="line">        sb.append(<span class="string">"\n\t构造函数参数: "</span>);</span><br><span class="line">        Parameter[] parameters = constructor.getParameters();</span><br><span class="line">        <span class="keyword">for</span> (Parameter parameter: parameters) &#123;</span><br><span class="line">            sb.append(<span class="string">"\n\t\t"</span>);</span><br><span class="line">            sb.append(parameter.getType().getSimpleName()).append(<span class="string">" "</span>)</span><br><span class="line">                .append(parameter.getName());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        sb.append(<span class="string">"\n\t注解值: "</span>)</span><br><span class="line">            .append(<span class="string">"\n\t\tid: "</span> + constructorAnnotation.id())</span><br><span class="line">            .append(<span class="string">"\n\t\tvalue: "</span> + constructorAnnotation.value());</span><br><span class="line">        sb.append(<span class="string">"\n\t---------------"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sb.toString());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取@FieldAnnotation的信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printFieldAnnotation</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    sb.append(<span class="string">"Filed注解:"</span>);</span><br><span class="line">    Field[] fields = clazz.getFields();</span><br><span class="line">    <span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">        FiledAnnotation filedAnnotation = field</span><br><span class="line">            .getAnnotation(FiledAnnotation.class);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != filedAnnotation) &#123;</span><br><span class="line">            sb.append(<span class="string">"\n\t字段名: "</span>);</span><br><span class="line">            sb.append(Modifier.toString(field.getModifiers())).append(<span class="string">" "</span>)</span><br><span class="line">                .append(field.getType().getSimpleName()).append(<span class="string">" "</span>)</span><br><span class="line">                .append(field.getName());</span><br><span class="line">            sb.append(<span class="string">"\n\t注解值: "</span>).append(</span><br><span class="line">                Arrays.toString(filedAnnotation.value()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sb.toString());</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取@MethodAnnotation的信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printMethodAnnotation</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    sb.append(<span class="string">"Method注解:"</span>);</span><br><span class="line">    Method[] methods = clazz.getMethods();</span><br><span class="line">    <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">        MethodAnnotation methodAnnotation = method</span><br><span class="line">            .getAnnotation(MethodAnnotation.class);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != methodAnnotation) &#123;</span><br><span class="line">            sb.append(<span class="string">"\n\t方法名: "</span>);</span><br><span class="line">            sb.append(Modifier.toString(method.getModifiers())).append(<span class="string">" "</span>)</span><br><span class="line">                .append(method.getReturnType().getSimpleName()).append(<span class="string">" "</span>)</span><br><span class="line">                .append(method.getName());</span><br><span class="line">            sb.append(<span class="string">"\n\t注解值: "</span>).append(methodAnnotation.value());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sb.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出如下信息===&gt;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Class注解:</span><br><span class="line">	类名: <span class="keyword">public</span> TestAnnotation</span><br><span class="line">	注解值: <span class="keyword">this</span> is <span class="class"><span class="keyword">class</span> <span class="title">annotation</span></span></span><br><span class="line">Constructor注解:</span><br><span class="line">	构造函数名: <span class="keyword">public</span> Constructor</span><br><span class="line">	构造函数参数: </span><br><span class="line">	注解值: </span><br><span class="line">		id: <span class="number">1</span></span><br><span class="line">		value: <span class="keyword">this</span> is constructor annotation</span><br><span class="line">	---------------</span><br><span class="line">	构造函数名: <span class="keyword">public</span> Constructor</span><br><span class="line">	构造函数参数: </span><br><span class="line">		<span class="keyword">int</span> arg0</span><br><span class="line">		String arg1</span><br><span class="line">	注解值: </span><br><span class="line">		id: <span class="number">0</span></span><br><span class="line">		value: ConstructorAnnotation</span><br><span class="line">	---------------</span><br><span class="line">Filed注解:</span><br><span class="line">	字段名: <span class="keyword">public</span> <span class="keyword">int</span> id</span><br><span class="line">	注解值: [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">	字段名: <span class="keyword">public</span> String field</span><br><span class="line">	注解值: [<span class="number">3</span>]</span><br><span class="line">Method注解:</span><br><span class="line">	方法名: <span class="keyword">public</span> String method</span><br><span class="line">	注解值: <span class="keyword">this</span> is method annotation</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/04/13/java/java-annotation-runtime/#more">more >></a>
+        
       
 
       
@@ -419,7 +591,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/13/java/java-annotations-source/">java 源码注解(RetentionPolicy.SOURCE)</a>
+      <a class="article-title" href="/2018/04/13/java/java-annotations-source/">Java 源码注解(RetentionPolicy.SOURCE)</a>
     </h1>
   
 
@@ -433,23 +605,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>通过之前的文章<a href="/2018/04/12/java/java-annotations/">Java 注解介绍</a>，我们了解到源码注解(<code>RetentionPolicy.SOURCE</code>)的生命周期只存在Java源文件这一阶段，是3种生命周期中最短的注解。当在Java源程序上加了一个注解，这个Java源程序要由javac去编译，javac把java源文件编译成.class文件，在编译成class时会把Java源程序上的源码注解给去掉。需要注意的是，在编译器处理期间源码注解还存在，即<code>注解处理器Processor</code> 也能处理源码注解，编译器处理完之后就没有该注解信息了。</p>
-<h3 id="定义源码注解"><a href="#定义源码注解" class="headerlink" title="定义源码注解"></a>定义源码注解</h3><p>在<code>Android</code>中，我们经常会用到下拉刷新的功能，通常会有四种状态</p>
-<ul>
-<li>PULL_FROM_START：下拉刷新</li>
-<li>PULL_FROM_END：上拉加载</li>
-<li>BOTH：同时设置下拉刷新和上拉加载</li>
-<li>DISABLED：禁用下拉刷新和上拉加载</li>
-</ul>
-<p>为了限制程序只能使用上面4种状态，我们一般会定义一个<code>Enum</code>枚举作为参数，这样就能限定参数的取值范围</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PullToRefresh</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Mode mMode =  Mode.PULL_FROM_START;</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMode</span><span class="params">(Mode mode)</span> </span>&#123;</span><br><span class="line">		mMode = mode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Mode <span class="title">getMode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> mMode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (mMode == Mode.PULL_FROM_START) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (mMode == Mode.PULL_FROM_END) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (mMode == Mode.BOTH) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (mMode == Mode.DISABLED) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">enum</span> Mode &#123;</span><br><span class="line">		PULL_FROM_START, PULL_FROM_END, BOTH, DISABLED</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过以下的方式调用</span></span><br><span class="line">PullToRefresh pullToRefresh = <span class="keyword">new</span> PullToRefresh();</span><br><span class="line">pullToRefresh.setMode(Mode.BOTH);</span><br></pre></td></tr></table></figure>
-<p>根据google官网的描述，使用枚举会比常量占用更多的内存。这个时候我们就可以自己定义一个注解来处理上面的问题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PullToRefresh</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PULL_FROM_START = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PULL_FROM_END = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BOTH = <span class="number">3</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DISABLED = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> sMode = PULL_FROM_START;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMode</span><span class="params">(@Mode <span class="keyword">int</span> mode)</span> </span>&#123;</span><br><span class="line">		sMode = mode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> sMode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (sMode == PULL_FROM_START) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sMode == PULL_FROM_END) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sMode == BOTH) &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sMode == DISABLED) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line">	<span class="meta">@Target</span>(ElementType.PARAMETER)</span><br><span class="line">	<span class="meta">@IntDef</span>(&#123;PULL_FROM_START,PULL_FROM_END,BOTH,DISABLED&#125;)</span><br><span class="line">	<span class="keyword">public</span> <span class="meta">@interface</span> Mode &#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过以下的方式调用</span></span><br><span class="line">PullToRefresh pullToRefresh = <span class="keyword">new</span> PullToRefresh();</span><br><span class="line">pullToRefresh.setMode(PullToRefresh.BOTH);</span><br></pre></td></tr></table></figure>
-<p>其中的<code>@IntDef</code>为<code>Android</code>提供的源码注解，用于表示取值范围，在<code>android.support.annotation</code>包下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.ANNOTATION_TYPE&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> IntDef &#123;</span><br><span class="line">    <span class="comment">/** Defines the allowed constants for this element */</span></span><br><span class="line">    <span class="keyword">long</span>[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Defines whether the constants can be used as a flag, or just as an enum (the default) */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">flag</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>类似的还有<code>@StringDef</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.ANNOTATION_TYPE&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> StringDef &#123;</span><br><span class="line">    <span class="comment">/** Defines the allowed constants for this element */</span></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>总的来说，了解了源码注解，我们可以更规范的写代码，避免的很多问题的发生</p>
-
+        
+          <a class="article-more-a" href="/2018/04/13/java/java-annotations-source/#more">more >></a>
+        
       
 
       
@@ -537,82 +695,9 @@
 <li>代码分析：通过代码里标识的元数据对代码进行分析【使用反射】。</li>
 <li>编译检查：通过代码里标识的元数据让编译器能实现基本的编译检查【Override】。</li>
 </ul>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个注解</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AnnotationsTest &#123; </span><br><span class="line">    <span class="function">String <span class="title">value</span> <span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="meta">@AnnotationsTest</span>(value = <span class="string">"abc"</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>以<code>@interface</code>关键字定义</li>
-<li>注解包含成员，成员以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型，例如上述例子中的<code>String value()</code></li>
-<li>成员赋值是通过@Annotation(name=value)的形式，例如上述例子中的<code>@Target(ElementType.TYPE)</code></li>
-<li>注解需要标明注解的生命周期，注解的修饰目标等信息，这些信息是通过元注解实现</li>
-</ol>
-<p>下面我们来分析一下<code>java.lang.annotation</code>中定义的<code>Target</code>注解：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>元注解@Retention，成员value的值为<code>RetentionPolicy.RUNTIME</code></li>
-<li>元注解@Target，成员value是个数组，用{}形式赋值，值为<code>ElementType.ANNOTATION_TYPE</code></li>
-<li>成员名称为value，类型为<code>ElementType[]</code></li>
-</ul>
-<p>另外，需要注意一下，如果成员名称是value，在赋值过程中可以简写。如果成员类型为数组，但是只赋值一个元素，则也可以简写。如上面的简写形式为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br></pre></td></tr></table></figure>
-<h3 id="注解的类型"><a href="#注解的类型" class="headerlink" title="注解的类型"></a>注解的类型</h3><p>注解分为两类，一类是元注解(meta-annotation)，另外一类是普通注解</p>
-<h4 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h4><blockquote>
-<p>所谓元注解就是修饰注解的注解。<br>拿到一个注解，如何知道它是否是元注解呢？需要看它的元注解（无论是元注解还是普通注解都是有元注解），如果看到这样的元注解：<code>@Target(ElementType.ANNOTATION_TYPE)</code>，那么此时这个注解一定是元注解。</p>
-</blockquote>
-<p><strong>@Retention</strong></p>
-<p>表示在什么级别保存该注解信息，可能的值在枚举类<code>ElementType</code>中</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Retention &#123;</span><br><span class="line">    <span class="function">RetentionPolicy <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// RetentionPolicy</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    SOURCE, <span class="comment">// 注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃</span></span><br><span class="line">    CLASS, <span class="comment">// 注解被保留到class文件，jvm加载class文件时候被遗弃。这是默认的生命周期</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在，保存到class对象中，</span></span><br><span class="line"><span class="comment">    * 可以通过反射来获取</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    RUNTIME </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这3个生命周期对应表如下</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>生命周期</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RetentionPolicy.SOURCE</td>
-<td>Java源文件(.java文件)</td>
-</tr>
-<tr>
-<td>RetentionPolicy.CLASS</td>
-<td>.class文件</td>
-</tr>
-<tr>
-<td>RetentionPolicy.RUNTIME</td>
-<td>内存中的字节</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>首先要明确生命周期长度 <strong>SOURCE &lt; CLASS &lt; RUNTIME</strong> ，所以前者能作用的地方后者一定也能作用。一般如果需要在运行时去动态获取注解信息，那只能用 <code>RUNTIME</code>注解；如果要在编译时进行一些预处理操作，比如生成一些辅助代码（如 <a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">ButterKnife</a>），就用 <code>CLASS</code>注解；如果只是做一些检查性的操作，比如<code>@Override</code> 和 <code>@SuppressWarnings</code>，则可选用 <code>SOURCE</code> 注解。</p>
-</blockquote>
-<p><strong>@Target</strong></p>
-<p>表示该注解用于什么地方，可能的值在枚举类<code>ElementType</code>中</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE,  <span class="comment">// 类、接口(包含注解类型)或enum声明</span></span><br><span class="line">    FIELD, <span class="comment">// 字段声明(包含enum实例)</span></span><br><span class="line">    METHOD, <span class="comment">// 方法声明</span></span><br><span class="line">    PARAMETER, <span class="comment">// 参数声明</span></span><br><span class="line">    CONSTRUCTOR, <span class="comment">// 构造器声明</span></span><br><span class="line">    LOCAL_VARIABLE, <span class="comment">// 局部变量声明</span></span><br><span class="line">    ANNOTATION_TYPE, <span class="comment">// 注解声明</span></span><br><span class="line">    PACKAGE, <span class="comment">// 包声明</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Type parameter declaration</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_PARAMETER,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Use of a type</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_USE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>@Documented</strong></p>
-<p>将此注解包含在 javadoc 中 ，它代表着此注解会被javadoc工具提取成文档。在doc文档中的内容会因为此注解的信息内容不同而不同。相当与@see,@param 等。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Documented &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>@Inherited</strong></p>
-<p>允许子类继承父类中的注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Inherited &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>@Repeatable</strong></p>
-<p>@Repeatable 是 Java 1.8 才加的，意为可重复，也就是注解的值可以同时取多个</p>
-<p>示例，一个人</p>
-<h4 id="普通注解"><a href="#普通注解" class="headerlink" title="普通注解"></a>普通注解</h4><h5 id="基本内置注解"><a href="#基本内置注解" class="headerlink" title="基本内置注解"></a>基本内置注解</h5><p><strong>@Override</strong></p>
-<p>该注解提示子类复写父类中的方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Override &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>@Deprecated</strong></p>
-<p>这注解用来标记过时的元素。编译器在编译阶段遇到这个注解时会发出提醒警告，告诉开发者正在调用一个过时的元素（过时的方法、过时的类、过时的成员变量）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(value=&#123;CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, PARAMETER, TYPE&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Deprecated &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>@SuppressWarnings</strong></p>
-<p>阻止警告的意思。之前说过调用被 @Deprecated 注解的方法后，编译器会警告提醒，而有时候开发者会忽略这种警告，他们可以在调用的地方通过 @SuppressWarnings 达到目的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SuppressWarnings &#123;</span><br><span class="line">    String[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h5><p>关于自定义注解，请移步</p>
-<p><a href="/2018/01/25/study/study-bwh/">java 自定义源码注解</a></p>
-<p><a href="/2018/01/25/study/study-bwh/">java 自定义编译时注解</a></p>
-<p><a href="/2018/01/25/study/study-bwh/">java 自定运行时注解</a></p>
-
+        
+          <a class="article-more-a" href="/2018/04/12/java/java-annotations/#more">more >></a>
+        
       
 
       
@@ -961,171 +1046,9 @@
 
 
   
-    <article id="post-study/study-ubuntu-bbr" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/30/study/study-ubuntu-bbr/">Ubuntu开启BBR</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/30/study/study-ubuntu-bbr/" class="archive-article-date">
-  	<time datetime="2018-03-30T03:02:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原文地址：<a href="https://www.flyzy2005.com/fan-qiang/shadowsocks/ubuntu-bbr-shadowsocks/" target="_blank" rel="noopener">Ubuntu开启BBR加速Shadowsocks</a></p>
-<h3 id="升级内核"><a href="#升级内核" class="headerlink" title="升级内核"></a>升级内核</h3><p>ubuntu开启BBR加速需要内核高于4.9，先检查内核版本:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br></pre></td></tr></table></figure>
-<p>如果版本高于4.9，那就可以直接开启BBR，否则需要先升级内核（需要root权限）</p>
-<p>1.首先查看系统是32位还是64位</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getconf LONG_BIT</span><br></pre></td></tr></table></figure>
-<p>2.去<a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/" target="_blank" rel="noopener">官网</a>最新的程序包，这里以<code>v4.15/</code>为例</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.15/linux-image-4.15.0-041500-generic_4.15.0-041500.201802011154_amd64.deb</span><br></pre></td></tr></table></figure>
-<p>3.执行下面的命令进行升级</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -i linux-image-4.15.0-041500-generic_4.15.0-041500.201802011154_amd64.deb</span><br></pre></td></tr></table></figure>
-<p>4.更新grub引导装入程序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update-grub</span><br></pre></td></tr></table></figure>
-<p>5.重启机器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
-<p>重启后查看自己的内核版本就会发现更新到4.15了</p>
-<h3 id="开启TCP-BBR加速"><a href="#开启TCP-BBR加速" class="headerlink" title="开启TCP BBR加速"></a>开启TCP BBR加速</h3><p>1.修改系统变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"net.core.default_qdisc=fq"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.tcp_congestion_control=bbr"</span> &gt;&gt; /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
-<p>如查执行上述命令时显示拒绝访问，则可以尝试使用如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo bash -c <span class="string">'echo "net.core.default_qdisc=fq" &gt;&gt; /etc/sysctl.conf'</span></span><br><span class="line">sudo bash -c <span class="string">'echo "net.ipv4.tcp_congestion_control=bbr" &gt;&gt; /etc/sysctl.conf'</span></span><br></pre></td></tr></table></figure>
-<p>2.保存生效</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
-<p>3.查看是否开启成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
-<p>如果返回:<code>net.ipv4.tcp_available_congestion_control = reno cubic bbr</code>，那么表示<code>BBR</code>开启成功</p>
-<p>也可以执行<code>lsmod | grep bbr</code>来查看是否开启成功</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/30/study/study-ubuntu-bbr/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/study-ubuntu-nextcloud" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/study/study-ubuntu-nextcloud/">study-ubuntu-nextcloud</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/23/study/study-ubuntu-nextcloud/" class="archive-article-date">
-  	<time datetime="2018-03-23T03:53:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install snap</span><br><span class="line">sudo apt-get install snapd</span><br><span class="line">sudo snap install nextcloud</span><br></pre></td></tr></table></figure>
-<p>加密</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nextcloud.enable-https lets-encrypt</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/23/study/study-ubuntu-nextcloud/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1220,19 +1143,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">apple</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color1">apple</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1244,11 +1163,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1264,7 +1187,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1272,15 +1195,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>

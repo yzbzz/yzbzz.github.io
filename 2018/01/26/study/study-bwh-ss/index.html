@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="前言之前一篇文章，我们讲了合适懒人的搬瓦工+ShadowsocksX教程，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-23T07:33:59.242Z">
+<meta property="og:updated_time" content="2018-04-25T07:29:17.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shadowsocks多用户配置">
 <meta name="twitter:description" content="前言之前一篇文章，我们讲了合适懒人的搬瓦工+ShadowsocksX教程，我们使用的是搬瓦工自己的服务进行安装的，还没有看的同学请先看下。本篇主要讲解如何使用命令行的方式进行安装shadowsocks，配置单用户和多用户。 如何进入服务器: 使用SSH客户端(Termius)连接服务器">
@@ -228,7 +228,15 @@
 <a id="more"></a>
 <h3 id="shadowsocks服务器配置"><a href="#shadowsocks服务器配置" class="headerlink" title="shadowsocks服务器配置"></a>shadowsocks服务器配置</h3><p>这里我们安装的是python版本，首先进入官网:<a href="https://github.com/shadowsocks/shadowsocks/tree/master" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks/tree/master</a></p>
 <p>进入后拖动页面，找到自己的服务器版本，我们这里以<code>CentOS</code>为例:</p>
-<h4 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install python-setuptools &amp;&amp; easy_install pip</span><br><span class="line">pip install git+https://github.com/shadowsocks/shadowsocks.git@master</span><br></pre></td></tr></table></figure>
+<h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>安装shadowsocks，需要先安装<code>git</code></p>
+<p><strong>CentOS</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y git</span><br></pre></td></tr></table></figure>
+<p><strong>Debian / Ubuntu</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install -y git</span><br></pre></td></tr></table></figure>
+<h4 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h4><p><strong>CentOS</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install python-setuptools &amp;&amp; easy_install pip</span><br><span class="line">pip install git+https://github.com/shadowsocks/shadowsocks.git@master</span><br></pre></td></tr></table></figure>
+<p><strong>Debian / Ubuntu</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install python-pip</span><br><span class="line">pip install git+https://github.com/shadowsocks/shadowsocks.git@master</span><br></pre></td></tr></table></figure>
 <p>安装完成后，打开 <a href="https://github.com/shadowsocks/shadowsocks/wiki/Configuration-via-Config-File" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks/wiki/Configuration-via-Config-File</a></p>
 <p>我们可以看到官网的一些描述，这里简单说明一下：</p>
 <p><strong>第一步</strong>，创建一个<code>shadowsocks.json</code>文件并打开，使用以下命令</p>
@@ -249,6 +257,7 @@
 </blockquote>
 <p><strong>注意</strong>：<code>method</code>一栏，默认是<code>aes-256-cfb</code>，这里改为<code>rc4-md5</code>，这样上网会快一些，相应的客户端加密也要改成<code>rc4-md5</code>，别忘了</p>
 <p>这里设置的项都是给你客户端连接时使用的</p>
+<p>填好后，按<code>ESC</code>键退出编辑模式，输出<code>:wq</code>保存退出</p>
 <p><strong>第三步</strong>，开启或关闭服务</p>
 <p>使用以下命令</p>
 <p>开启服务</p>
@@ -511,19 +520,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">apple</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color1">apple</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -535,11 +540,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -555,7 +564,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,15 +572,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>

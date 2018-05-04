@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="yzbzz.github.io">
-  <title>java 源码注解(RetentionPolicy.SOURCE) | Yzbzz&#39;s Blog</title>
+  <title>Java 源码注解(RetentionPolicy.SOURCE) | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言通过之前的文章Java 注解介绍，我们了解到源码注解(RetentionPolicy.SOURCE)的生命周期只存在Java源文件这一阶段，是3种生命周期中最短的注解。当在Java源程序上加了一个注解，这个Java源程序要由javac去编译，javac把java源文件编译成.class文件，在编译成class时会把Java源程序上的源码注解给去掉。需要注意的是，在编译器处理期间源码注解还存在，">
 <meta name="keywords" content="java,Annotation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java 源码注解(RetentionPolicy.SOURCE)">
+<meta property="og:title" content="Java 源码注解(RetentionPolicy.SOURCE)">
 <meta property="og:url" content="yzbzz.github.io/2018/04/13/java/java-annotations-source/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="前言通过之前的文章Java 注解介绍，我们了解到源码注解(RetentionPolicy.SOURCE)的生命周期只存在Java源文件这一阶段，是3种生命周期中最短的注解。当在Java源程序上加了一个注解，这个Java源程序要由javac去编译，javac把java源文件编译成.class文件，在编译成class时会把Java源程序上的源码注解给去掉。需要注意的是，在编译器处理期间源码注解还存在，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-18T07:10:25.341Z">
+<meta property="og:updated_time" content="2018-04-18T10:50:13.091Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java 源码注解(RetentionPolicy.SOURCE)">
+<meta name="twitter:title" content="Java 源码注解(RetentionPolicy.SOURCE)">
 <meta name="twitter:description" content="前言通过之前的文章Java 注解介绍，我们了解到源码注解(RetentionPolicy.SOURCE)的生命周期只存在Java源文件这一阶段，是3种生命周期中最短的注解。当在Java源程序上加了一个注解，这个Java源程序要由javac去编译，javac把java源文件编译成.class文件，在编译成class时会把Java源程序上的源码注解给去掉。需要注意的是，在编译器处理期间源码注解还存在，">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
@@ -210,7 +210,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      java 源码注解(RetentionPolicy.SOURCE)
+      Java 源码注解(RetentionPolicy.SOURCE)
     </h1>
   
 
@@ -224,6 +224,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>通过之前的文章<a href="/2018/04/12/java/java-annotations/">Java 注解介绍</a>，我们了解到源码注解(<code>RetentionPolicy.SOURCE</code>)的生命周期只存在Java源文件这一阶段，是3种生命周期中最短的注解。当在Java源程序上加了一个注解，这个Java源程序要由javac去编译，javac把java源文件编译成.class文件，在编译成class时会把Java源程序上的源码注解给去掉。需要注意的是，在编译器处理期间源码注解还存在，即<code>注解处理器Processor</code> 也能处理源码注解，编译器处理完之后就没有该注解信息了。</p>
+<a id="more"></a>
 <h3 id="定义源码注解"><a href="#定义源码注解" class="headerlink" title="定义源码注解"></a>定义源码注解</h3><p>在<code>Android</code>中，我们经常会用到下拉刷新的功能，通常会有四种状态</p>
 <ul>
 <li>PULL_FROM_START：下拉刷新</li>
@@ -362,7 +363,7 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          java 运行时注解(RetentionPolicy.RUNTIME)
+          Java 运行时注解(RetentionPolicy.RUNTIME)
         
       </div>
     </a>
@@ -495,19 +496,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">apple</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color1">apple</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -519,11 +516,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,7 +540,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,15 +548,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>

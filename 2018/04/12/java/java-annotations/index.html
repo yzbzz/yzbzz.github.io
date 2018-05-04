@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="[TOC] 本文及相关注解文章部分摘自以下的博客，推荐大家阅读  秒懂，Java 注解 （Annotation）你可以这样学 Java注解基础概念总结 定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-18T06:59:36.355Z">
+<meta property="og:updated_time" content="2018-04-19T05:46:26.964Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 注解介绍">
 <meta name="twitter:description" content="[TOC] 本文及相关注解文章部分摘自以下的博客，推荐大家阅读  秒懂，Java 注解 （Annotation）你可以这样学 Java注解基础概念总结 定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文">
@@ -234,6 +234,7 @@
 <li>代码分析：通过代码里标识的元数据对代码进行分析【使用反射】。</li>
 <li>编译检查：通过代码里标识的元数据让编译器能实现基本的编译检查【Override】。</li>
 </ul>
+<a id="more"></a>
 <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>示例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个注解</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AnnotationsTest &#123; </span><br><span class="line">    <span class="function">String <span class="title">value</span> <span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="meta">@AnnotationsTest</span>(value = <span class="string">"abc"</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
 <ol>
@@ -286,7 +287,7 @@
 </blockquote>
 <p><strong>@Target</strong></p>
 <p>表示该注解用于什么地方，可能的值在枚举类<code>ElementType</code>中</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE,  <span class="comment">// 类、接口(包含注解类型)或enum声明</span></span><br><span class="line">    FIELD, <span class="comment">// 字段声明(包含enum实例)</span></span><br><span class="line">    METHOD, <span class="comment">// 方法声明</span></span><br><span class="line">    PARAMETER, <span class="comment">// 参数声明</span></span><br><span class="line">    CONSTRUCTOR, <span class="comment">// 构造器声明</span></span><br><span class="line">    LOCAL_VARIABLE, <span class="comment">// 局部变量声明</span></span><br><span class="line">    ANNOTATION_TYPE, <span class="comment">// 注解声明</span></span><br><span class="line">    PACKAGE, <span class="comment">// 包声明</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Type parameter declaration</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_PARAMETER,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Use of a type</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_USE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE,  <span class="comment">// 类、接口(包含注解类型)或enum声明</span></span><br><span class="line">    FIELD, <span class="comment">// 字段声明(包含enum实例)</span></span><br><span class="line">    METHOD, <span class="comment">// 方法声明</span></span><br><span class="line">    PARAMETER, <span class="comment">// 参数声明</span></span><br><span class="line">    CONSTRUCTOR, <span class="comment">// 构造器声明</span></span><br><span class="line">    LOCAL_VARIABLE, <span class="comment">// 局部变量声明</span></span><br><span class="line">    ANNOTATION_TYPE, <span class="comment">// 注解声明</span></span><br><span class="line">    PACKAGE, <span class="comment">// 包声明</span></span><br><span class="line">    TYPE_PARAMETER, <span class="comment">// 泛型参数声明 (自1.8提供)</span></span><br><span class="line">    TYPE_USE, <span class="comment">// 泛型声明 (自1.8提供)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>@Documented</strong></p>
 <p>将此注解包含在 javadoc 中 ，它代表着此注解会被javadoc工具提取成文档。在doc文档中的内容会因为此注解的信息内容不同而不同。相当与@see,@param 等。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Documented &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -431,7 +432,7 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          java 源码注解(RetentionPolicy.SOURCE)
+          Java 源码注解(RetentionPolicy.SOURCE)
         
       </div>
     </a>
@@ -564,19 +565,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">apple</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color1">apple</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -588,11 +585,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -608,7 +609,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -616,15 +617,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>
