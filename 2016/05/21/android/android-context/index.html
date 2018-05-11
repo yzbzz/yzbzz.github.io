@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="Context的能力Context能做的通用操作决定于这个context最初来源于哪里。下表所列的是，在应用中常见的会收到context对象，以及对应的每种情况，它可以用于哪些地方：     Application Activity Service ContentProvider BroadcaseReceiver     显示Dialog NO YEA NO NO NO   启动Activity">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2016-12-23T08:47:23.000Z">
+<meta property="og:updated_time" content="2018-05-09T10:17:40.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android-context">
 <meta name="twitter:description" content="Context的能力Context能做的通用操作决定于这个context最初来源于哪里。下表所列的是，在应用中常见的会收到context对象，以及对应的每种情况，它可以用于哪些地方：     Application Activity Service ContentProvider BroadcaseReceiver     显示Dialog NO YEA NO NO NO   启动Activity">
@@ -66,10 +66,6 @@
 	        
 				<li><a href="/tags/fe">FE前端</a></li>
 	        
-				<li><a href="/tags/apple">MAC OS</a></li>
-	        
-				<li><a href="/tags/life">学习生活</a></li>
-	        
 				<li><a href="/tags/read">读书笔记</a></li>
 	        
 				<li><a href="/tags/blog">博客地址</a></li>
@@ -77,6 +73,12 @@
 				<li><a href="/tags/study">安装配置</a></li>
 	        
 				<li><a href="/tags/hole">踩过的坑</a></li>
+	        
+				<li><a href="/tags/life">学习生活</a></li>
+	        
+				<li><a href="/tags/poetry">写不成诗</a></li>
+	        
+				<li><a href="/tags/smile">开心一笑</a></li>
 	        
 			</ul>
 		</nav>
@@ -150,6 +152,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -170,25 +174,27 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 10%"><a href="/tags/android">Android</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/android">Android</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/ios">IOS</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/ios">IOS</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/java">Java</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/java">Java</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/fe">FE前端</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/fe">FE前端</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/apple">MAC OS</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/read">读书笔记</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/life">学习生活</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/blog">博客地址</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/read">读书笔记</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/study">安装配置</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/blog">博客地址</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/hole">踩过的坑</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/study">安装配置</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/life">学习生活</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/hole">踩过的坑</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/poetry">写不成诗</a></li>
+		        
+					<li style="width: 9.090909090909092%"><a href="/tags/smile">开心一笑</a></li>
 		        
 				</ul>
 			</nav>
@@ -302,12 +308,13 @@
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>注：</p>
-<ol>
-<li>NO1表示Application context的确可以开始一个Activity，但是它需要创建一个新的task。这可能会满足一些特定的需求，但是在你的应用中会创建一个不标准的回退栈（back stack），这通常是不推荐的或者不是最好的实践。</li>
-</ol>
-</blockquote>
+<p>需要注意的是：</p>
+<ul>
+<li>NO1：表示这些类的确可以开始一个Activity，但是它需要创建一个新的task。这可能会满足一些特定的需求，但是在你的应用中会创建一个不标准的回退栈（back stack），这通常是不推荐的或者不是最好的实践</li>
+<li>NO2：表示这些类去layout inflate是合法的，但是会使用系统默认的主题，如果你自定义了某些样式，可能不会被使用</li>
+<li>NO3：表示在receiver为null时允许，在4.2或以上的版本中，用于获取黏性广播的当前值。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>对于UI相关的方法，都不建议或者不可使用Application，都应该使用Activity作为Context来处理。另外需要注意Context引用的持有，防止内存泄漏。</p>
 
       
 
@@ -563,7 +570,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">apple</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,15 +590,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">stanford</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -603,6 +606,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
@@ -611,7 +618,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">poetry</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -619,7 +630,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color1">smile</a>
               </li>
             
             <div class="clearfix"></div>

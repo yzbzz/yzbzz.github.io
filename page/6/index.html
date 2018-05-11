@@ -64,10 +64,6 @@
 	        
 				<li><a href="/tags/fe">FE前端</a></li>
 	        
-				<li><a href="/tags/apple">MAC OS</a></li>
-	        
-				<li><a href="/tags/life">学习生活</a></li>
-	        
 				<li><a href="/tags/read">读书笔记</a></li>
 	        
 				<li><a href="/tags/blog">博客地址</a></li>
@@ -75,6 +71,12 @@
 				<li><a href="/tags/study">安装配置</a></li>
 	        
 				<li><a href="/tags/hole">踩过的坑</a></li>
+	        
+				<li><a href="/tags/life">学习生活</a></li>
+	        
+				<li><a href="/tags/poetry">写不成诗</a></li>
+	        
+				<li><a href="/tags/smile">开心一笑</a></li>
 	        
 			</ul>
 		</nav>
@@ -148,6 +150,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -168,25 +172,27 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 10%"><a href="/tags/android">Android</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/android">Android</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/ios">IOS</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/ios">IOS</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/java">Java</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/java">Java</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/fe">FE前端</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/fe">FE前端</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/apple">MAC OS</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/read">读书笔记</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/life">学习生活</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/blog">博客地址</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/read">读书笔记</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/study">安装配置</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/blog">博客地址</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/hole">踩过的坑</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/study">安装配置</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/life">学习生活</a></li>
 		        
-					<li style="width: 10%"><a href="/tags/hole">踩过的坑</a></li>
+					<li style="width: 9.090909090909092%"><a href="/tags/poetry">写不成诗</a></li>
+		        
+					<li style="width: 9.090909090909092%"><a href="/tags/smile">开心一笑</a></li>
 		        
 				</ul>
 			</nav>
@@ -202,6 +208,500 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-android/android-config-activity" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/23/android/android-config-activity/">Android配置文件详解-Activity</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/23/android/android-config-activity/" class="archive-article-date">
+  	<time datetime="2017-02-23T03:00:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:allowEmbedded=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:allowTaskReparenting=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:alwaysRetainTaskState=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:alwaysRetainTaskState=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:autoRemoveFromRecents=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:banner=”drawable resource”</span><br><span class="line">          android:clearTaskOnLaunch=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:configChanges=[<span class="string">"mcc"</span>, <span class="string">"mnc"</span>, <span class="string">"locale"</span>,</span><br><span class="line">                                 <span class="string">"touchscreen"</span>, <span class="string">"keyboard"</span>, <span class="string">"keyboardHidden"</span>,</span><br><span class="line">                                 <span class="string">"navigation"</span>, <span class="string">"screenLayout"</span>, <span class="string">"fontScale"</span>,</span><br><span class="line">                                 <span class="string">"uiMode"</span>, <span class="string">"orientation"</span>,<span class="string">"screenSize"</span>,</span><br><span class="line">                                 <span class="string">"smallestScreenSize"</span>]</span><br><span class="line">          android:documentLaunchMode=[<span class="string">"intoExisting"</span> | <span class="string">"always"</span> | </span><br><span class="line">“none” | “never”]</span><br><span class="line">          android:enabled=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:excludeFromRecents=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:exported=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:finishOnTaskLaunch=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:hardwareAccelerated=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:icon=<span class="string">"drawable resource"</span></span><br><span class="line">          android:label=<span class="string">"string resource"</span></span><br><span class="line">          android:launchMode=[<span class="string">"standard"</span> | <span class="string">"singleTop"</span> |</span><br><span class="line">                              <span class="string">"singleTask"</span> | <span class="string">"singleInstance"</span>]</span><br><span class="line">          android:maxRecents=<span class="string">"integer"</span></span><br><span class="line">          android:multiprocess=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:name=<span class="string">"string"</span></span><br><span class="line">          android:noHistory=[<span class="string">"true"</span> | <span class="string">"false"</span>]  </span><br><span class="line">          android:parentActivityName=<span class="string">"string"</span></span><br><span class="line">          android:permission=<span class="string">"string"</span></span><br><span class="line">          android:process=<span class="string">"string"</span></span><br><span class="line">          android:relinquishTaskIdentity=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:resizeableActivity=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:screenOrientation=[<span class="string">"unspecified"</span> | <span class="string">"behind"</span> | <span class="string">"landscape"</span> |</span><br><span class="line">                                     <span class="string">"portrait"</span> | <span class="string">"reverseLandscape"</span> | <span class="string">"sensorLandscape"</span> |</span><br><span class="line">                                     <span class="string">"sensorPortrait"</span> | <span class="string">"userLandscape"</span> | <span class="string">"userPortrait"</span> |</span><br><span class="line">                                     <span class="string">"sensor"</span> | <span class="string">"fullSensor"</span> | <span class="string">"nosensor"</span>]</span><br><span class="line">                                     <span class="string">"user"</span> | <span class="string">"fullUser"</span> | <span class="string">"locked"</span></span><br><span class="line">          android:stateNotNeeded=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:supportsPictureInPicture=[<span class="string">"true"</span> | <span class="string">"false"</span>]</span><br><span class="line">          android:taskAffinity=<span class="string">"string"</span></span><br><span class="line">          android:theme=<span class="string">"resource or theme"</span></span><br><span class="line">          android:uiOptions=[<span class="string">"none"</span> | <span class="string">"splitActionBarWhenNarrow"</span>]</span><br><span class="line">          android:windowSoftInputMode=[<span class="string">"stateUnspecified"</span>,</span><br><span class="line">                                       <span class="string">"stateUnchanged"</span>, <span class="string">"stateHidden"</span>,</span><br><span class="line">                                       <span class="string">"stateAlwaysHidden"</span>, <span class="string">"stateVisible"</span>,</span><br><span class="line">                                       <span class="string">"stateAlwaysVisible"</span>, <span class="string">"adjustUnspecified"</span>,</span><br><span class="line">                                       <span class="string">"adjustResize"</span>, <span class="string">"adjustPan"</span>] &gt;   </span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2017/02/23/android/android-config-activity/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/23/android/android-config-activity/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-android/android-config-am" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/22/android/android-config-am/">Android配置文件详解-AndroidManifest</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/22/android/android-config-am/" class="archive-article-date">
+  	<time datetime="2017-02-22T03:51:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="AndroidManifest"><a href="#AndroidManifest" class="headerlink" title="AndroidManifest"></a>AndroidManifest</h1><blockquote>
+<p>每个应用的根目录中都必须包含一个AndroidManifest.xml文件(且文件名精确无误)。AndroidManifest向Android系统提供应用的必要信息，系统必须具备有这些信息方可运行应用的任何代码。<br>此外，AndroidManifest还可执行以下操作</p>
+</blockquote>
+<ul>
+<li>为应用的Java软件包命名。软件包名称充当应用的唯一标识符。</li>
+<li>描述应用的各个组件，包括构成应用的 Activity、服务、广播接收器和内容提供程序。它还为实现每个组件的类命名并发布其功能，例如它们可以处理的 <a href="https://developer.android.com/reference/android/content/Intent.html" target="_blank" rel="noopener">Intent</a> 消息。这些声明向 Android 系统告知有关组件以及可以启动这些组件的条件的信息。</li>
+<li>确定托管应用组件的进程。</li>
+<li>声明应用必须具备哪些权限才能访问 API 中受保护的部分并与其他应用交互。还声明其他应用与该应用组件交互所需具备的权限。</li>
+<li>列出 <a href="https://developer.android.com/reference/android/app/Instrumentation.html" target="_blank" rel="noopener">Instrumentation</a> 类，这些类可在应用运行时提供分析和其他信息。这些声明只会在应用处于开发阶段时出现在清单中，在应用发布之前将移除。</li>
+<li>声明应用所需的最低 Android API 级别</li>
+<li>列出应用必须链接到的库</li>
+</ul>
+<p>注：准备要在 Chromebook 上运行的 Android 应用时，要考虑一些重要的硬件和软件功能限制。如需了解详细信息，请参阅 <a href="https://developer.android.com/topic/arc/manifest.html" target="_blank" rel="noopener">Chromebook 的应用清单兼容性</a>文档。</p>
+        
+          <a class="article-more-a" href="/2017/02/22/android/android-config-am/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/22/android/android-config-am/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-android/android-guides" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/13/android/android-guides/">android-guides</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/13/android/android-guides/" class="archive-article-date">
+  	<time datetime="2017-02-13T08:33:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><h3 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h3><p>对于Button上的文本，系统会对Button中的所有英文字母自动进行大写转换，如果这不是你想要的效果，可以使用如下配置来禁用这一默认特性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// android:textAllCaps="false"</span></span><br><span class="line">&lt;Button</span><br><span class="line">  	android:id=<span class="string">"@+id/button"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    android:text=<span class="string">"Button"</span></span><br><span class="line">    android:textAllCaps=<span class="string">"false"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2017/02/13/android/android-guides/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/13/android/android-guides/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/mac-os-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/10/study/mac-os-tips/">mac-os-tips</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/10/study/mac-os-tips/" class="archive-article-date">
+  	<time datetime="2017-02-10T07:28:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h3><p>有时候，我们安装程序时，会提示文件已损坏，需要打开安全性与隐私中的任何来源选项</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-disable</span><br></pre></td></tr></table></figure>
+<p><strong>显示文件隐藏文件夹</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command + shift + .</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/10/study/mac-os-tips/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-refactor/refactor" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/09/refactor/refactor/">refactor</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/09/refactor/refactor/" class="archive-article-date">
+  	<time datetime="2017-02-09T08:53:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h2><ul>
+<li>如果你发现自己需要为程序添加一个特性，而代码结构使你无法很方便地达成目的，那就先重构那个程序，使特性的添加比较容易进行，然后现添加特性</li>
+<li>重构前，先检查自己是否有一套可靠的测试机制，这些测试必须有自我检验能力</li>
+<li>重构技术就是以微小的步伐修改程序，如果你犯下错误，很容易使可发现它。</li>
+<li>任何一个傻瓜都能写出计算机可以理解的代码。唯有写出人类容易理解的代码，才是优秀的程序员。</li>
+<li>当你感觉需要撰写注释时，请先尝试重构，试着让所有注释都变得多余。</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/02/09/refactor/refactor/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">read</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/09/refactor/refactor/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-android/android-okhttp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/06/android/android-okhttp/">android-okhttp</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/06/android/android-okhttp/" class="archive-article-date">
+  	<time datetime="2017-02-06T08:14:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote>
+<p>OKhttp3是一个高效的http&amp;http/2的客户端，用于android和java，支持同步和异步请求。</p>
+</blockquote>
+<p>OKhttp3是开源界著名的Square公司的大作，大神<a href="https://github.com/JakeWharton" target="_blank" rel="noopener">JakeWharton</a>的公司。Google已把Android的网络请求替换为Okhttp的实现</p>
+<p>OKhttp3有以下优点：</p>
+<ol>
+<li><p>支持请求相同host的所有请求，共享socket</p>
+</li>
+<li><p>连接池可以减少请求延迟(如果HTTP / 2不可使用)。</p>
+</li>
+<li><p>透明的GZIP压缩</p>
+</li>
+<li><p>响应缓存避免了完全重复的网络请求</p>
+</li>
+<li><p>socket自动选择最好路线，并支持自动重连</p>
+</li>
+<li><p>……</p>
+</li>
+</ol>
+<p>支持版本：Android 2.3及以上，java1.7及以上</p>
+        
+          <a class="article-more-a" href="/2017/02/06/android/android-okhttp/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/06/android/android-okhttp/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-blogs/js-blogs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -375,6 +875,7 @@
 <p><a href="https://tonnyl.github.io/2018/04/22/Translation-Exploring-the-v28-Android-Design-Support-Library-Additions/" target="_blank" rel="noopener">[译] 探索 Android Design Support Library v28 新增内容</a></p>
 <p><a href="http://www.goluck.top/2017/06/11/AspectJ在Android中的应用/" target="_blank" rel="noopener">AspectJ在Android中的应用</a></p>
 <p><a href="https://mp.weixin.qq.com/s?__biz=MzAxMTI4MTkwNQ==&amp;mid=2650825002&amp;idx=1&amp;sn=1ee33c018bc52408e99962c0515e0702&amp;chksm=80b7b5b4b7c03ca2fbc02c18cb2524d23dc431a2edbc1a1b6dacb7250967202efedc00c3bfe5&amp;scene=38#wechat_redirect" target="_blank" rel="noopener">Android小技巧 提升开发效率</a></p>
+<p><a href="https://blog.csdn.net/growth58/article/details/46787737" target="_blank" rel="noopener">Android Studio使用技巧系列教程（三）</a></p>
 
       
 
@@ -453,6 +954,7 @@
 <h3 id="CSDN"><a href="#CSDN" class="headerlink" title="CSDN"></a>CSDN</h3><hr>
 <p><a href="http://blog.csdn.net/Hello_Hwc/article/details/54293280?winzoom=1" target="_blank" rel="noopener">CGD精讲(Swift3)</a></p>
 <p><a href="http://www.jianshu.com/p/929f8a56eef6" target="_blank" rel="noopener">http://www.jianshu.com/p/929f8a56eef6</a></p>
+<p><a href="http://home.duiba.com.cn/docs.html" target="_blank" rel="noopener">http://home.duiba.com.cn/docs.html</a> </p>
 
       
 
@@ -587,568 +1089,6 @@
 
 
   
-    <article id="post-fe/react-native-text" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/22/fe/react-native-text/">react-native-text</a>
-    </h1>
-  
-
-        
-        <a href="/2016/08/22/fe/react-native-text/" class="archive-article-date">
-  	<time datetime="2016-08-22T08:47:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h3><p>一个用于显示文本的React组件</p>
-<p><code>Text</code>支持嵌套、样式和触摸事件</p>
-<h3 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h3><hr>
-<p>accessible bool</p>
-<p>When set to true, indicates that the view is an accessibility element. The default value for a Text element is true.</p>
-<h2 id="See-the-Accessibility-guide-for-more-information"><a href="#See-the-Accessibility-guide-for-more-information" class="headerlink" title="See the Accessibility guide for more information."></a>See the Accessibility guide for more information.</h2><p>ellipsizeMode enum(‘head’, ‘middle’, ‘tail’, ‘clip’)</p>
-<p>This can be one of the following values:</p>
-<p>head - The line is displayed so that the end fits in the container and the missing text at the beginning of the line is indicated by an ellipsis glyph. e.g., “…wxyz”<br>middle - The line is displayed so that the beginning and end fit in the container and the missing text in the middle is indicated by an ellipsis glyph. “ab…yz”<br>tail - The line is displayed so that the beginning fits in the container and the missing text at the end of the line is indicated by an ellipsis glyph. e.g., “abcd…”<br>clip - Lines are not drawn past the edge of the text container.<br>The default is tail.</p>
-<p>numberOfLines must be set in conjunction with this prop.</p>
-<p>clip is working only for iOS<br>numberOfLines number</p>
-<p>Used to truncate the text with an ellipsis after computing the text layout, including line wrapping, such that the total number of lines does not exceed this number.</p>
-<p>This prop is commonly used with ellipsizeMode.</p>
-<p>onLayout function</p>
-<p>Invoked on mount and layout changes with</p>
-<p>{nativeEvent: {layout: {x, y, width, height}}}</p>
-<p>onLongPress function</p>
-<p>This function is called on long press.</p>
-<p>e.g., `onLongPress={this.increaseSize}&gt;``</p>
-<p>onPress function</p>
-<p>This function is called on press.</p>
-<p>e.g., `onPress={() =&gt; console.log(‘1st’)}``</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">fe</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/08/22/fe/react-native-text/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-fe/react-native-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/22/fe/react-native-view/">react-native-view</a>
-    </h1>
-  
-
-        
-        <a href="/2016/08/22/fe/react-native-view/" class="archive-article-date">
-  	<time datetime="2016-08-22T08:22:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>最基本的构建UI视图的容器，<code>View</code> 支持flexbox、style、一些触摸事件和访问性控制，<code>View</code>直接映射到<code>native</code>视图，不管在什么平台，不管它是UIView，<div>，android.view，等等…</div></p>
-<p><code>View</code>设计成嵌套其它视图，可以有0到任何类型的children</p>
-<blockquote>
-<p>View的设计初衷是和StyleSheet搭配使用，这样可以使代码更清晰并且获得更高的性能。尽管内联样式也同样可以使用</p>
-</blockquote>
-<h3 id="合成触摸事件"><a href="#合成触摸事件" class="headerlink" title="合成触摸事件"></a>合成触摸事件</h3><h3 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h3><h4 id="style"><a href="#style" class="headerlink" title="style"></a>style</h4><p><code>backfaceVisibility</code> ReactPropTypes.oneOf([‘visible’, ‘hidden’])<br><code>backgroundColor</code> color<br><code>borderBottomColor</code> color<br><code>borderBottomLeftRadius</code> ReactPropTypes.number<br><code>borderBottomRightRadius</code> ReactPropTypes.number<br><code>borderBottomWidth</code> ReactPropTypes.number<br><code>borderColor</code> color<br><code>borderLeftColor</code> color<br><code>borderLeftWidth</code> ReactPropTypes.number<br><code>borderRadius</code> ReactPropTypes.number<br><code>borderRightColor</code> color<br><code>borderRightWidth</code> ReactPropTypes.number<br><code>borderStyle</code> ReactPropTypes.oneOf([‘solid’, ‘dotted’, ‘dashed’])<br><code>borderTopColor</code> color<br><code>borderTopLeftRadius</code> ReactPropTypes.number<br><code>borderTopRightRadius</code> ReactPropTypes.number<br><code>borderTopWidth</code> ReactPropTypes.number<br><code>borderWidth</code> ReactPropTypes.number<br><code>opacity</code> ReactPropTypes.number<br><code>overflow</code> ReactPropTypes.oneOf([‘visible’, ‘hidden’])</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">fe</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/08/22/fe/react-native-view/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/22/study/hexo/">hexo</a>
-    </h1>
-  
-
-        
-        <a href="/2016/08/22/study/hexo/" class="archive-article-date">
-  	<time datetime="2016-08-22T08:11:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h3><blockquote>
-<p>官网：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">https://hexo.io/zh-cn/</a></p>
-</blockquote>
-<p>主题：<a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a></p>
-<p>MARKDOWN EDITOR: <a href="https://typora.io" target="_blank" rel="noopener">typora</a></p>
-<h3 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<p>其它命令不确定，部署这个命令一定要用git bash，否则会提示</p>
-<p><code>Permission denied (publickey).</code></p>
-<p>推荐博客：</p>
-<p><a href="http://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html" target="_blank" rel="noopener">http://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html</a></p>
-<p><a href="https://smartbeng.github.io/2017/03/26/blogFinish/" target="_blank" rel="noopener">最适合新手的 GitHub + Hexo 「大话」博客搭建教程</a></p>
-<p><a href="http://liuqingwen.me/blog/2017/04/11/hexo-blog-creation-work-progress/" target="_blank" rel="noopener">新手搭建博客过程</a></p>
-<h3 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h3><ul>
-<li><p>安装Hexo</p>
-<p><code>sudo npm install -g hexo</code></p>
-</li>
-<li><p>初始化</p>
-<p><code>hexo init</code></p>
-</li>
-<li><p>生成静态页面</p>
-<p><code>hexo generate</code>(hexo g也可以)</p>
-</li>
-<li><p>本地启动</p>
-<p><code>hexo server</code></p>
-</li>
-<li><p>执行配置命令上传到github</p>
-<p><code>hexo deploy</code></p>
-</li>
-<li><p>新建文章</p>
-<p><code>hexo new &#39;postName&#39;</code></p>
-</li>
-<li><p>新建页面</p>
-<p><code>hexo new page &#39;pageName&#39;</code></p>
-</li>
-<li><p>查盾帮助</p>
-<p><code>hexo help</code></p>
-</li>
-<li><p>查看Hexo的版本</p>
-<p><code>hexo version</code></p>
-</li>
-<li><p>每次部署的步骤，可按以下三步来进行</p>
-<p>hexo clean</p>
-<p>hexo g</p>
-<p>hexo d</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/08/22/study/hexo/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Swift/swift-life-cycle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/30/Swift/swift-life-cycle/">swift-life-cycle</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/30/Swift/swift-life-cycle/" class="archive-article-date">
-  	<time datetime="2016-06-30T09:08:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="IOS生命周期"><a href="#IOS生命周期" class="headerlink" title="IOS生命周期"></a>IOS生命周期</h3><table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">IOS</th>
-<th style="text-align:center">Android</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td style="text-align:center">viewWillAppear</td>
-<td style="text-align:center">onCreate</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">viewDidAppear</td>
-<td style="text-align:center">onResume</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">viewWillDisapper</td>
-<td style="text-align:center">onPause</td>
-</tr>
-<tr>
-<td></td>
-<td style="text-align:center">viewDidApper</td>
-<td style="text-align:center">onStop</td>
-</tr>
-</tbody>
-</table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/30/Swift/swift-life-cycle/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ios/ios-stanford" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/22/ios/ios-stanford/">What&#39;s in iOS?</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/22/ios/ios-stanford/" class="archive-article-date">
-  	<time datetime="2016-06-22T07:03:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="What’s-is-in-iOS"><a href="#What’s-is-in-iOS" class="headerlink" title="What’s is in iOS?"></a>What’s is in iOS?</h3><p><img src="/img/swift/ios01.jpg" alt="ios01"></p>
-<p><img src="/img/swift/ios02.jpg" alt="ios02"></p>
-<p><img src="/img/swift/ios03.jpg" alt="ios03"></p>
-<p><img src="/img/swift/ios04.jpg" alt="ios04"></p>
-<h3 id="UIKIt"><a href="#UIKIt" class="headerlink" title="UIKIt"></a>UIKIt</h3><h4 id="bounds-VS-frame"><a href="#bounds-VS-frame" class="headerlink" title="bounds VS frame"></a>bounds VS frame</h4><p><img src="/img/swift/ios05.jpg" alt="ios05"></p>
-<blockquote>
-<p>在未设置bounds的情况下，bounds是相对于view自身坐标的，以view自身的左上角为原点(0,0)，如上图所示，不管怎么旋转view，bounds始终是一样的</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">stanford</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/22/ios/ios-stanford/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Swift/swift-record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/22/Swift/swift-record/">swift-record</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/22/Swift/swift-record/" class="archive-article-date">
-  	<time datetime="2016-06-22T07:03:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="extension"><a href="#extension" class="headerlink" title="extension"></a>extension</h3><p>声明一个扩展使用关键字<code>extension</code></p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SomeType</span></span>&#123;</span><br><span class="line">  <span class="comment">//加到SomeType的新功能写到这里</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="indirect"><a href="#indirect" class="headerlink" title="indirect"></a>indirect</h3><p>使用indirect来标识一个枚举是可以递归调用的</p>
-<h3 id="required"><a href="#required" class="headerlink" title="required"></a>required</h3><p>在类的构造器前添加<code>required</code>修饰符表明所有该类的子类都必须实现该构造器，在子类重写父类的必要构造器时，必须在子类的构造器前也添加<code>required</code>修饰符，这是为了保证继承链上子类的构造器也是必要构造器。在重写父类的必要构造器时，不需要添加<code>override</code>修饰符</p>
-<h3 id="mutating"><a href="#mutating" class="headerlink" title="mutating"></a>mutating</h3><p>一般情况下，值类型的属性不能在它的实例方法中被修改，<code>mutating</code>使得方法可以从方法内部改变它的属性；并且它做的任何改变在方法结束时还会保留在原始结构中。方法还可以给它隐含的<code>self</code>属性赋值一个全新的实例，这个新实例在方法结束后将替换原来的实例。要使用<code>mutating</code>方法，将关键字<code>mutating</code>放到方法的<code>func</code>关键字之前就可以了</p>
-<h3 id="unowned"><a href="#unowned" class="headerlink" title="unowned"></a>unowned</h3><p>使用<code>unowned</code>标识无主引用</p>
-<h3 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h3><p>使用<code>weak</code>标识弱引用</p>
-<h3 id="类型属性"><a href="#类型属性" class="headerlink" title="类型属性"></a>类型属性</h3><p>在结构体和枚举中可以使用<code>static</code>来修饰静态变量，在类中可以使用<code>static</code>和<code>class</code>来修饰，使用<code>class</code>修饰来允许子类重写父类的实现方法</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/22/Swift/swift-record/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -1250,7 +1190,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">apple</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1270,15 +1210,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">stanford</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1290,6 +1226,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
@@ -1298,7 +1238,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">poetry</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1306,7 +1250,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color1">smile</a>
               </li>
             
             <div class="clearfix"></div>
