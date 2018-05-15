@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="基本用法Button对于Button上的文本，系统会对Button中的所有英文字母自动进行大写转换，如果这不是你想要的效果，可以使用如下配置来禁用这一默认特性1234567// android:textAllCaps=&quot;false&quot;&amp;lt;Button  	android:id=&quot;@+id/button&quot;    android:layout_width=&quot;match_parent&quot;    andr">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-11-27T02:40:31.002Z">
+<meta property="og:updated_time" content="2018-05-15T08:22:42.533Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android-guides">
 <meta name="twitter:description" content="基本用法Button对于Button上的文本，系统会对Button中的所有英文字母自动进行大写转换，如果这不是你想要的效果，可以使用如下配置来禁用这一默认特性1234567// android:textAllCaps=&quot;false&quot;&amp;lt;Button  	android:id=&quot;@+id/button&quot;    android:layout_width=&quot;match_parent&quot;    andr">
@@ -364,6 +364,10 @@
 </table>
 <p><strong>子线程更新UI</strong></p>
 <p>因为在 OnCreate 的 时候，View 是还没有被 ViewRootImpl<br>加载到 Window，所以子线程修改 View 的代码没有经过 ViewRootImpl 的检测。贯穿全文，就告诉了大家在 onResum 之前在子线程可以修改 UI，具体原因没讲清楚。可以讲讲 contentView 是怎样被ViewRootImplement 加载到 Window。Window、Activity、View、ViewRootImpl 之间的关系？</p>
+<p><strong>如果你的app必须要使用本地lib引入v4库，那么就排除开源库的v4包</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">compile(&apos;com.facebook.fresco:fresco:0.10.0&apos;) &#123;</span><br><span class="line">       exclude module: &apos;support-v4&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是源码形式引入的开源库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">compile (project(&apos;:thirdpart:RecyclerViewAdapterLibrary&apos;))&#123; </span><br><span class="line">     exclude group: &apos;com.android.support&apos; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -619,10 +623,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
@@ -635,6 +635,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
@@ -643,15 +647,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Annotation</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -667,19 +675,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>
