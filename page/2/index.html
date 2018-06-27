@@ -209,6 +209,304 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java/java-annotations-processor" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/18/java/java-annotations-processor/">Java 注解处理器(Annotation Processor)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/18/java/java-annotations-processor/" class="archive-article-date">
+  	<time datetime="2018-04-18T10:48:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>注解处理器(Annotation Processor)是<code>javac</code>的一个工具，主要用于在编译时处理<code>运行时注解RetentionPolicy.RUNTIME）</code>。我们可以自定义注解处理器，获取我们自定义的注解信息，通过注解信息生成<code>java</code>文件(如： <a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">ButterKnife</a>)或进行其它的一些操作</p>
+<h3 id="自定义注解处理器"><a href="#自定义注解处理器" class="headerlink" title="自定义注解处理器"></a>自定义注解处理器</h3><p>自定义注解处理器需要继承于<code>AbstractProcessor</code>，一般我们会重写下面4个方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment processingEnvironment)</span> </span>&#123; &#125;</span><br><span class="line">   </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedAnnotationTypes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Set&lt;String&gt; types = <span class="keyword">new</span> LinkedHashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">return</span> types</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SourceVersion.latestSupported();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; set, RoundEnvironment roundEnvironment)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>init(ProcessingEnvironment env):  每一个注解处理器类都必须有一个空的构造函数。然而，这里有一个特殊的init()方法，它会被注解处理工具调用，并输入ProcessingEnviroment参数。ProcessingEnviroment提供很多有用的工具类Elements, Types和Filer。后面我们将看到详细的内容。</li>
+<li>process(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment env) :  这相当于每个处理器的主函数main()。你在这里写你的扫描、评估和处理注解的代码，以及生成Java文件。输入参数RoundEnviroment，可以让你查询出包含特定注解的被注解元素。后面我们将看到详细的内容。</li>
+<li>getSupportedAnnotationTypes():  这里你必须指定，这个注解处理器是注册给哪个注解的。注意，它的返回值是一个字符串的集合，包含本处理器想要处理的注解类型的合法全称。换句话说，你在这里定义你的注解处理器注册到哪些注解上。</li>
+<li>getSupportedSourceVersion(): 用来指定你使用的Java版本。通常这里返回<code>SourceVersion.latestSupported()</code>。然而，如果你有足够的理由只支持Java 6的话，你也可以返回SourceVersion.RELEASE_6。我推荐你使用前者。</li>
+</ul>
+<p>在Java 7中，你也可以使用注解来代替getSupportedAnnotationTypes()和getSupportedSourceVersion()，像这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SupportedSourceVersion</span>(SourceVersion.latestSupported())</span><br><span class="line"><span class="meta">@SupportedAnnotationTypes</span>(&#123;</span><br><span class="line">   <span class="comment">// 合法注解全名的集合</span></span><br><span class="line"> &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment env)</span></span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annoations, RoundEnvironment env)</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为兼容的原因，特别是针对Android平台，我建议使用重载<code>getSupportedAnnotationTypes()</code>和<code>getSupportedSourceVersion()</code>方法代替<code>@SupportedAnnotationTypes</code>和</p>
+<p><code>@SuppozrtedSourceVersion</code></p>
+<p>接下来的你必须知道的事情是，注解处理器是运行它自己的虚拟机JVM中。是的，你没有看错，<strong>javac</strong>启动一个完整Java虚拟机来运行注解处理器。这对你意味着什么？你可以使用任何你在其他java应用中使用的的东西。使用guava。如果你愿意，你可以使用依赖注入工具，例如dagger或者其他你想要的类库。但是不要忘记，即使是一个很小的处理，你也要像其他Java应用一样，注意算法效率，以及设计模式。</p>
+<p><strong>注册你的处理器</strong></p>
+<p>你可能会问，我怎样将处理器MyProcessor注册到javac中。你必须提供一个<strong>.jar</strong>文件。就像其他<strong>.jar</strong>文件一样，你打包你的注解处理器到此文件中。并且，在你的jar中，你需要打包一个特定的文件javax.annotation.processing.Processor到META-INF/services路径下。所以，你的.jar文件看起来就像下面这样：</p>
+<ul>
+<li>MyProcessor.jar</li>
+<li>– com</li>
+<li>– – example</li>
+<li>– – – MyProcessor.class</li>
+<li>– META-INF</li>
+<li>– – services</li>
+<li>– – – javax.annotation.processing.Processor</li>
+</ul>
+<p>打包进MyProcessor.jar中的javax.annotation.processing.Processor的内容是，注解处理器的合法的全名列表，每一个元素换行分割：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">com.example.MyProcessor  </span><br><span class="line">com.foo.OtherProcessor  </span><br><span class="line">net.blabla.SpecialProcessor</span><br></pre></td></tr></table></figure>
+<p>把MyProcessor.jar放到你的builpath中，<strong>javac</strong>会自动检查和读取javax.annotation.processing.Processor中的内容，并且注册MyProcessor作为注解处理器。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/18/java/java-annotations-processor/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java/java-annotation-class" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/java/java-annotation-class/">Java 编译时注解(RetentionPolicy.CLASS)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/13/java/java-annotation-class/" class="archive-article-date">
+  	<time datetime="2018-04-13T08:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/13/java/java-annotation-class/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java/java-annotation-runtime" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/java/java-annotation-runtime/">Java 运行时注解(RetentionPolicy.RUNTIME)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/13/java/java-annotation-runtime/" class="archive-article-date">
+  	<time datetime="2018-04-13T08:07:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于运行时注解<code>RetentionPolicy.RUNTIME</code>，我们可以通过反射的方式来获取注解的相关信息。根据注解中的<code>Target</code>，我们可以从<code>Constructor</code>、<code>CLASS</code>、<code>Field</code>、<code>Method</code>获取注解对象，基本方法都差不多。</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>获取Annotation</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ElementType.TYPE</td>
+<td><code>Class&lt;?&gt;</code>. getAnnotation()</td>
+<td>通过Class对象获取注解</td>
+</tr>
+<tr>
+<td>ElementType.CONSTRUCTOR</td>
+<td><code>Constructor</code>.getAnnotation()</td>
+<td>通过Constructor对象获取注解</td>
+</tr>
+<tr>
+<td>ElementType.FIELD</td>
+<td><code>Field</code>.getAnnotation()</td>
+<td>通过Field对象获取注解</td>
+</tr>
+<tr>
+<td>ElementType.METHOD</td>
+<td><code>Method</code>.getAnnotation()</td>
+<td>通过Method对象获取注解</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+        
+          <a class="article-more-a" href="/2018/04/13/java/java-annotation-runtime/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/13/java/java-annotation-runtime/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-java/java-annotations-source" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -769,418 +1067,6 @@
 
 
   
-    <article id="post-study/study-ubuntu-nextcloud" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/study/study-ubuntu-nextcloud/">study-ubuntu-nextcloud</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/23/study/study-ubuntu-nextcloud/" class="archive-article-date">
-  	<time datetime="2018-03-23T03:53:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install snap</span><br><span class="line">sudo apt-get install snapd</span><br><span class="line">sudo snap install nextcloud</span><br></pre></td></tr></table></figure>
-<p>加密</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nextcloud.enable-https lets-encrypt</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/23/study/study-ubuntu-nextcloud/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-android/kotlin-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/19/android/kotlin-tips/">kotlin-tips</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/19/android/kotlin-tips/" class="archive-article-date">
-  	<time datetime="2018-03-19T11:38:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> <span class="title">test</span><span class="params">()</span></span> : T &#123;</span><br><span class="line">    <span class="keyword">when</span>(T)&#123;      <span class="comment">// this won't work perhaps T::something? </span></span><br><span class="line">        <span class="keyword">is</span> <span class="built_in">Int</span> -&gt; &#123; ........ </span><br><span class="line">                   </span><br><span class="line">==&gt;</span><br><span class="line">                   </span><br><span class="line"><span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;<span class="keyword">reified</span> T&gt;</span> <span class="title">test</span><span class="params">()</span></span> : T &#123;</span><br><span class="line">  <span class="keyword">when</span> (T::<span class="class"><span class="keyword">class</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">Int</span>::<span class="class"><span class="keyword">class</span> -&gt; <span class="title">println</span></span>(<span class="string">"Int"</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; println(<span class="string">"<span class="subst">$&#123;T::class&#125;</span>"</span>)</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/19/android/kotlin-tips/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-android/kotlin-collections" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/android/kotlin-collections/">Kotlin详解集合与操作符</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/14/android/kotlin-collections/" class="archive-article-date">
-  	<time datetime="2018-03-14T02:06:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>[TOC]</p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>kotlin的集合分为不可变集合和可变集合</p>
-<p>Kotlin 的 <code>List&lt;out T&gt;</code> 只提供只读操作如 <code>size</code>、<code>get</code>等的接口。和 Java 类似，它继承自 <code>Collection&lt;T&gt;</code> 进而继承自 <code>Iterable&lt;T&gt;</code>。改变 list 的方法是由 <code>MutableList&lt;T&gt;</code> 加入的。这一模式同样适用于 <code>Set&lt;out T&gt;/MutableSet&lt;T&gt;</code> 及 <code>Map&lt;K, out V&gt;/MutableMap&lt;K, V&gt;</code>。详见下表</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">不可变</th>
-<th>可变</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Iterable</td>
-<td>MutableIterable</td>
-</tr>
-<tr>
-<td style="text-align:left">Collection</td>
-<td>MutableCollection</td>
-</tr>
-<tr>
-<td style="text-align:left">List</td>
-<td>MutableList</td>
-</tr>
-<tr>
-<td style="text-align:left">Set</td>
-<td>MutableSet</td>
-</tr>
-<tr>
-<td style="text-align:left">Map</td>
-<td>MutableMap</td>
-</tr>
-</tbody>
-</table>
-<p><code>List</code>和<code>Set</code>的基本用法</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numbers: MutableList&lt;<span class="built_in">Int</span>&gt; = mutableListOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="keyword">val</span> readOnlyView: List&lt;<span class="built_in">Int</span>&gt; = numbers</span><br><span class="line">println(numbers)        <span class="comment">// 输出 "[1, 2, 3]"</span></span><br><span class="line">numbers.add(<span class="number">4</span>)</span><br><span class="line">println(readOnlyView)   <span class="comment">// 输出 "[1, 2, 3, 4]"</span></span><br><span class="line">readOnlyView.clear()    <span class="comment">// -&gt; 不能编译</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> strings = hashSetOf(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"c"</span>)</span><br><span class="line">assert(strings.size == <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="总数操作符"><a href="#总数操作符" class="headerlink" title="总数操作符"></a>总数操作符</h3><p><strong>any</strong></p>
-<p>只要有一个元素符合判断条件，则返回<code>true</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.any &#123; it % <span class="number">2</span> == <span class="number">0</span>&#125; <span class="comment">// true</span></span><br><span class="line">list.any &#123; it &gt; <span class="number">10</span> &#125; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<p><strong>all</strong></p>
-<p>只有全部的元素符合判断条件，则返回<code>true</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.all &#123; it &lt; <span class="number">10</span> &#125; <span class="comment">// true</span></span><br><span class="line">list.all &#123; it % <span class="number">2</span> == <span class="number">0</span>&#125; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<p><strong>count</strong></p>
-<p>返回符合判断条件的元素总数</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.count &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-<p><strong>fold</strong></p>
-<p>给定一个初始值，在初始值的基础上，通过给定的函数来累计所有元素。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.fold(<span class="number">4</span>) &#123; total, next -&gt; total + next &#125; <span class="comment">// 4+1+2+3+4+5+6 = 25</span></span><br><span class="line">list.fold(<span class="number">4</span>) &#123; total, next -&gt; total * next &#125; <span class="comment">// 4*1*2*3*4*5*6 = 2880</span></span><br></pre></td></tr></table></figure>
-<p><strong>foldRight</strong></p>
-<p>与<code>fold</code>一样，只是顺序是从最后一项到第一项</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.foldRight(<span class="number">4</span>) &#123; total, next -&gt; total + next &#125; <span class="comment">// 25</span></span><br></pre></td></tr></table></figure>
-<p><strong>forEach</strong></p>
-<p>遍历的所有的元素，并执行给定的操作</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.forEach &#123; println(it) &#125;</span><br></pre></td></tr></table></figure>
-<p><strong>forEachIndexed</strong></p>
-<p>与<code>forEach</code>类似，但是我们同时可以得到元素的<code>index</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.forEachIndexed &#123; (index, value) -&gt; println(<span class="string">"position <span class="variable">$index</span> contains a <span class="variable">$value</span>"</span>) &#125;</span><br></pre></td></tr></table></figure>
-<p><strong>max/min</strong></p>
-<p>返回最大/最小的一项，如果没有则返回<code>null</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.max() <span class="comment">// 6</span></span><br><span class="line">list.min() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
-<p><strong>maxBy/minBy</strong></p>
-<p>根据给定的函数返回最大/最小的一项，如果没有则返回<code>null</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.maxBy &#123; -it &#125; <span class="comment">// 1</span></span><br><span class="line">list.minBy &#123; -it &#125; <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
-<p><strong>none</strong></p>
-<p>如果没有任何元素与给定的函数匹配，则返回<code>true</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.none &#123; it % <span class="number">7</span> == <span class="number">0</span> &#125; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p><strong>reduce</strong></p>
-<p>和<code>fold</code>一样，但是没有一个初始值。通过给定的函数来累计所有元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.reduce &#123; total, next -&gt; total + next &#125; <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
-<p><strong>reduceRight</strong></p>
-<p>和<code>reduce</code>一样，但是顺序是从最后一项到第一项</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.reduceRight &#123; total, next -&gt; total + next &#125; <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
-<p><strong>sum</strong></p>
-<p>返回所有元素的和</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.sum() <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
-<p><strong>sumBy</strong></p>
-<p>返回所有元素通过给定的函数转换之后的数据总和</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.sumBy &#123; it % <span class="number">2</span> &#125; <span class="comment">// 3</span></span><br><span class="line">list.sumBy &#123; it + <span class="number">1</span> &#125; <span class="comment">// 27</span></span><br></pre></td></tr></table></figure>
-<h3 id="过滤操作符"><a href="#过滤操作符" class="headerlink" title="过滤操作符"></a>过滤操作符</h3><p><strong>drop</strong></p>
-<p>返回包括去掉前<code>n</code>个元素的所有元素的列表</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.drop(<span class="number">4</span>) <span class="comment">// listOf(5, 6)</span></span><br></pre></td></tr></table></figure>
-<p><strong>dropWhile</strong></p>
-<p>这个函数有点难理解，我们需要结合一下源码来看：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> Iterable<span class="type">&lt;T&gt;</span>.<span class="title">dropWhile</span><span class="params">(predicate: (<span class="type">T</span>)</span></span> -&gt; <span class="built_in">Boolean</span>): List&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> yielding = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">val</span> list = ArrayList&lt;T&gt;()</span><br><span class="line">    <span class="keyword">for</span> (item <span class="keyword">in</span> <span class="keyword">this</span>)</span><br><span class="line">        <span class="keyword">if</span> (yielding)</span><br><span class="line">            list.add(item)</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!predicate(item)) &#123;</span><br><span class="line">            list.add(item)</span><br><span class="line">            yielding = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>调用<code>dropWhile</code>时，先遍历集合，如果集合中的元素不符合<code>predicate</code>函数的规则，则从当前元素开始，所有元素依次添加到新集合<code>list</code>并返回，如果集合中的元素都符合规则，则一个都不添加。我们以下面的例子来分析：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list1 = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list1.dropWhile &#123; it &lt; <span class="number">3</span> &#125; <span class="comment">// listOf(3, 4, 5, 6)</span></span><br></pre></td></tr></table></figure>
-<p>在上面的例子中，我们定义的函数规则是当前元素要小于3<code>{it &lt; 3}</code>，当集合遍历到<code>3</code>时，因为3是不小于3的，不符合函数的规则，所以从<code>3</code>开始，往后的元素都被添加到了新集合中。</p>
-<p>再来看一个例子，我们把集合中的<code>6</code>放到最前面</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list2 = listOf(<span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">list2.dropWhile &#123; it &lt; <span class="number">3</span>&#125; <span class="comment">// listOf(6, 1, 2, 3, 4, 5)</span></span><br></pre></td></tr></table></figure>
-<p>遍历集合时，因为第一个元素是<code>6</code>，不符合<code>{it &lt; 3}</code>，所要<code>6</code>及之后的元素都被添加到了新集合中</p>
-<p><strong>dropLastWhile</strong></p>
-<p>返回根据给定函数从最后一项开始去掉指定元素的列表</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.dropLastWhile &#123; it &gt; <span class="number">4</span> &#125; <span class="comment">// listOf(1, 2, 3, 4)</span></span><br></pre></td></tr></table></figure>
-<p><strong>filter</strong></p>
-<p>返回符合给定条件的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.filter &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// listOf(2, 4, 6)</span></span><br><span class="line">list.filter &#123; it &lt; <span class="number">3</span> &#125; <span class="comment">// listOf(1, 2)</span></span><br></pre></td></tr></table></figure>
-<p><strong>filterNot</strong></p>
-<p>返回所有不符合给定函数条件的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.filterNot &#123; it % <span class="number">2</span> == <span class="number">0</span>&#125; <span class="comment">// listOf(1, 3, 5)</span></span><br></pre></td></tr></table></figure>
-<p><strong>filterNotNull</strong></p>
-<p>返回集合中非<code>null</code>的函数</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="literal">null</span>)</span><br><span class="line">println(list.filterNotNull()) <span class="comment">// listOf[1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
-<p><strong>slice</strong></p>
-<p>返回指定区域的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.slice(<span class="number">0.</span><span class="number">.3</span>) <span class="comment">// listOf(1, 2, 3, 4)</span></span><br><span class="line">list.slice(listOf(<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>)) <span class="comment">// listOf(2, 4, 5)</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>(0..3)</code>：表示取出第0个到第3个之间的元素</p>
-<p><code>listOf(1, 3, 4)</code>：表示取出下标为1、3、4的元素</p>
-</blockquote>
-<p><strong>take</strong></p>
-<p>返回从第一个开始的n个元素(返回前n个元素)</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.take(<span class="number">2</span>) <span class="comment">// listOf[1, 2]</span></span><br></pre></td></tr></table></figure>
-<p><strong>takeLast</strong></p>
-<p>返回从最后一个开始的n个元素(返回后n个元素)</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.take(<span class="number">2</span>) <span class="comment">// listOf[5, 6]</span></span><br></pre></td></tr></table></figure>
-<p><strong>takeWhile</strong></p>
-<p>返回从第一个开始符合给定函数条件的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.takeWhile &#123; it &lt; <span class="number">3</span> &#125; <span class="comment">// listOf[1, 2]</span></span><br></pre></td></tr></table></figure>
-<h3 id="映射操作符"><a href="#映射操作符" class="headerlink" title="映射操作符"></a>映射操作符</h3><p><strong>flatMap</strong></p>
-<p>遍历所有的元素，为每个元素创建一个集合，最后把所有的集合放在一个集合中。</p>
-<p>什么意思呢，就是你可以把每一个元素转化成一个新的<code>list</code>，最后这些<code>list</code>会合并成一个大的<code>list</code>。我们通过代码来分析：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.flatMap &#123; listOf(<span class="string">'a'</span> + it) &#125; <span class="comment">// listOf(b, c, d, e, f, g)</span></span><br></pre></td></tr></table></figure>
-<p>上面的例子中，我们通过函数<code>listOf(&#39;a&#39;+ it)</code>把每一个元素都转换成了新的list。因为我们有6个元素，所以会生成6个list<code>(listOf(b)、listOf(c)、listOf(d)、listOf(e)、listOf(f)和listOf(g))</code>，最后会遍历这6个<code>list</code>，把这6个<code>list</code>中的每一项添加到一个新的<code>list</code>中。当然你也可以为<code>listOf(&#39;a&#39; + it)</code>添加多个元素，看下面的例子：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.flatMap &#123; listOf(it, <span class="string">'a'</span> + it) &#125; <span class="comment">// listOf(1, b, 2, c, 3, d, 4, e, 5, f, 6, g)</span></span><br></pre></td></tr></table></figure>
-<p><strong>groupBy</strong></p>
-<p>返回一个根据给定函数分组后的map，把函数的返回值作为<code>key</code>，符合条件的所有元素作为<code>value</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line"><span class="comment">// 返回为 mapOf("odd" to listOf(1, 3, 5), "even" to listOf(2, 4, 6)&#125;</span></span><br><span class="line">list.groupBy &#123; <span class="keyword">if</span> (it % <span class="number">2</span> ==<span class="number">0</span>) <span class="string">"even"</span> <span class="keyword">else</span> <span class="string">"odd"</span> &#125;</span><br></pre></td></tr></table></figure>
-<p><strong>map</strong></p>
-<p>返回一个每一个元素根据给定的函数转换所组成的List(把元素列表中的每一项进行相应计算或转成其它你想要的任何格式)。</p>
-<p>把元素中的每一项乘2：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.map &#123; it * <span class="number">2</span> &#125; <span class="comment">// listOf(2, 4, 6, 8, 10, 12)</span></span><br></pre></td></tr></table></figure>
-<p>把元素中的每一项转成字母：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.map &#123; <span class="string">'a'</span> + it &#125; <span class="comment">// listOf(b, c, d, e, f, g)</span></span><br></pre></td></tr></table></figure>
-<p><strong>mapIndexed</strong></p>
-<p>和<code>map</code>一样，但是我们可以同时得到元素的<code>index</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.mapIndexed &#123; index, it -&gt; index + it &#125; <span class="comment">// listOf(1, 3, 5, 7, 9, 11)</span></span><br></pre></td></tr></table></figure>
-<p><strong>mapNotNull</strong></p>
-<p>和<code>map</code>一样，但是会过滤掉为<code>null</code>的元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String? = <span class="literal">null</span>)</span><br><span class="line"><span class="keyword">val</span> list = listOf(Person(), Person(<span class="string">"Alice"</span>))</span><br><span class="line"><span class="comment">// map</span></span><br><span class="line">list.map &#123; it.name &#125; <span class="comment">// listOf(null, "Alice")</span></span><br><span class="line"><span class="comment">// mapNotNull</span></span><br><span class="line">list.mapNotNull &#123; it.name &#125; <span class="comment">// listOf("Alice")</span></span><br></pre></td></tr></table></figure>
-<h3 id="元素操作符"><a href="#元素操作符" class="headerlink" title="元素操作符"></a>元素操作符</h3><p><strong>contains</strong></p>
-<p>如果的元素可以在集合中找到，则返回true</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.contains(<span class="number">2</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p><strong>elementAt</strong></p>
-<p>返回给定index对应的元素，如果index数组越界则会抛出<code>IndexOutOfBoundsException</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.elementAt(<span class="number">1</span>) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
-<p><strong>elementAtOrElse</strong></p>
-<p>返回给定index对应的元素，如果index数组越界则会返回给定函数的返回值，函数中的参数为给定的index。如下图所示：<code>it</code>为传入的10</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.elementAtOrElse(<span class="number">10</span>, &#123; <span class="number">2</span> * it &#125;) <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
-<p><strong>elementAtOrNull</strong></p>
-<p>返回给定index对应的元素，如果index数组越界则会返回null</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.elementAtOrNull(<span class="number">10</span>) <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
-<p><strong>first</strong></p>
-<p>返回符合给定函数条件的第一个元素，如果没有符合抛出<code>java.util.NoSuchElementException</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.first() <span class="comment">// 1</span></span><br><span class="line">list.first &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
-<p><strong>firstOrNull</strong></p>
-<p>返回符合给定函数条件的第一个元素，如果没有符合则返回null</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.firstOrNull() <span class="comment">// 1</span></span><br><span class="line">list.firstOrNull &#123; it % <span class="number">7</span> == <span class="number">0</span> &#125;) <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
-<p><strong>indexOf</strong></p>
-<p>返回指定元素的第一个index，如果不存在，则返回<code>-1</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.indexOf(<span class="number">4</span>) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-<p><strong>indexOfFirst</strong></p>
-<p>返回第一个符合给定函数条件的元素的index，如果没有符合则返回<code>-1</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.indexOfFirst &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
-<p><strong>indexOfLast</strong></p>
-<p>返回最后一个符合给定函数条件的元素的index，如果没有符合则返回<code>-1</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.indexOfLast &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
-<p><strong>last</strong></p>
-<p>返回符合给定函数条件的最后一个元素</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.last &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
-<p><strong>lastIndexOf</strong></p>
-<p>返回的指定元素的最后一个index，如果不存在，则返回<code>-1</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.lastIndexOf(<span class="number">2</span>) <span class="comment">// 1</span></span><br><span class="line">list.lastIndexOf(<span class="number">7</span>) <span class="comment">// -1</span></span><br></pre></td></tr></table></figure>
-<p><strong>single/singleOrNull</strong></p>
-<p>返回符合给定函数的单个元素，如果没有符合或者超过一个，<code>single</code>抛出异常，<code>singleOrNull</code>返回<code>null</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.single &#123; it % <span class="number">5</span> == <span class="number">0</span> &#125; <span class="comment">// 5</span></span><br><span class="line">list.single &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// java.lang.IllegalArgumentException</span></span><br><span class="line">list.singleOrNull &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
-<h3 id="生产操作符"><a href="#生产操作符" class="headerlink" title="生产操作符"></a>生产操作符</h3><p><strong>partition</strong></p>
-<p>把一个集合通过给定的函数分为两个集合，符合条件的作为一个，不符合的作为另一个</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.partition &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125; <span class="comment">// Pair(listOf(2, 4, 6), listOf(1, 3, 5))</span></span><br></pre></td></tr></table></figure>
-<p><strong>plus</strong></p>
-<p>使用<code>+</code>号操作符把两个集合合并到一个集合中</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list + listOf(<span class="number">7</span>, <span class="number">8</span> ) <span class="comment">// listOf(1, 2, 3, 4, 5, 6, 7, 8)</span></span><br></pre></td></tr></table></figure>
-<p><strong>zip(返回值 List&lt;Pair<t, r="">&gt;)</t,></strong></p>
-<p>返回由<code>Pair</code>组成的List，每个<code>Pair</code>由两个集合中相同index的元素组成。这个返回的List的大小是由最小的那个集合决定</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.zip(listOf(<span class="number">7</span>, <span class="number">8</span>)) <span class="comment">// listOf(Pair(1, 7), Pair(2, 8))</span></span><br></pre></td></tr></table></figure>
-<p><strong>unzip</strong></p>
-<p>从包含<code>Pair</code>的List中生成包含List的<code>Pair</code> 。有点拗口，看代码</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(Pair(<span class="number">5</span>, <span class="number">7</span>), Pair(<span class="number">6</span>, <span class="number">8</span>))</span><br><span class="line">list.unzip() <span class="comment">// Pair(listOf(5, 6), listOf(7, 8))</span></span><br></pre></td></tr></table></figure>
-<p>看上面的代码，还是有点难理解，我们需要结合源码来看</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R&gt;</span> Iterable<span class="type">&lt;Pair&lt;T, R&gt;</span>&gt;.<span class="title">unzip</span><span class="params">()</span></span>: Pair&lt;List&lt;T&gt;, List&lt;R&gt;&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> expectedSize = collectionSizeOrDefault(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">val</span> listT = ArrayList&lt;T&gt;(expectedSize)</span><br><span class="line">    <span class="keyword">val</span> listR = ArrayList&lt;R&gt;(expectedSize)</span><br><span class="line">    <span class="keyword">for</span> (pair <span class="keyword">in</span> <span class="keyword">this</span>) &#123;</span><br><span class="line">        listT.add(pair.first)</span><br><span class="line">        listR.add(pair.second)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> listT to listR</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>unzip</code>方法中，会定义两个集合，一个集合会添加<code>list</code>元素<code>Pair(5,7), Pair(6,8)</code>的<code>first</code>，出就是<code>5、6</code>，另一个集合会添加<code>second</code>，也就是<code>7、8</code></p>
-<h3 id="顺序操作符"><a href="#顺序操作符" class="headerlink" title="顺序操作符"></a>顺序操作符</h3><p><strong>reversed</strong></p>
-<p>返回一个倒序的list</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.reversed() <span class="comment">// listOf(6, 5, 4, 3, 2, 1)</span></span><br></pre></td></tr></table></figure>
-<p><strong>sorted</strong></p>
-<p>把list进行生序排列</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">6</span>)</span><br><span class="line">list.sorted() <span class="comment">// listOf(1, 2, 3, 4, 5, 6)</span></span><br></pre></td></tr></table></figure>
-<p><strong>sortedBy</strong></p>
-<p>把不符合条件的元素按照在集合中之前的顺序放在集合的最前面，把符合条件的元素依次放在后面</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">7</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">1</span>)</span><br><span class="line">list.sortedBy &#123; it &gt; <span class="number">2</span> &#125; <span class="comment">// listOf(2, 1, 7, 6, 3, 5, 4)</span></span><br></pre></td></tr></table></figure>
-<p>看代码，因为<code>2,1</code>不符合条件，所以把<code>2,1</code>按之前的顺序放到最前面，<code>7,6,3,5,4</code>仿照之前的顺序依次放到后面</p>
-<p><strong>sortedDescending</strong></p>
-<p>把list进行降序排列</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">7</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">2</span>)</span><br><span class="line">list.sortedDescending() <span class="comment">// listOf(7, 6, 5, 4, 3, 2, 1)</span></span><br></pre></td></tr></table></figure>
-<p><strong>sortedByDescending</strong></p>
-<p>和<code>sortedBy</code>类似，只不过是把符合条件的放在集合的前面，不符合的放在集合的后面</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">7</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">2</span>)</span><br><span class="line">list.sortedByDescending &#123; it &gt; <span class="number">3</span> &#125; <span class="comment">// listOf(7, 4, 5, 6, 3, 1, 2)</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>参考: 《kotlin-for-android-developers》《kotlin in action》</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kotlin</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/14/android/kotlin-collections/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1286,6 +1172,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
@@ -1294,15 +1184,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fe</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1310,7 +1192,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1322,7 +1204,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+                <a href="javascript:void(0)" class="js-tag color1">music</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1334,15 +1220,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>
