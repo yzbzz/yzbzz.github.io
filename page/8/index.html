@@ -209,6 +209,139 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-android/android-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/31/android/android-tips/">android-tips</a>
+    </h1>
+  
+
+        
+        <a href="/2016/05/31/android/android-tips/" class="archive-article-date">
+  	<time datetime="2016-05-31T13:53:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>解决Kotlin项目Parameter specified as non-null is null: method kotlin.jvm.internal.Intrinsics.checkParameterIsNotNull, parameter savedInstanceState</strong></p>
+<p>当我们自定义application并实现ActivityLifecycleCallbacks方法，这时候我们会重写onActivityCreated这个方法</p>
+<p>使用kotlin转换java代码，会是下面这样</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityCreated</span><span class="params">(activity: <span class="type">Activity</span>, savedInstanceState: <span class="type">Bundle</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个时候我们需要把savedInstanceState: Bundle改为savedInstanceState: Bundle?，就是在Bundle后面加个?号</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityCreated</span><span class="params">(activity: <span class="type">Activity</span>, savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>OK，又可以继续玩耍了</p>
+<h3 id="Android-allowBackup敏感信息泄露的一些解决方案"><a href="#Android-allowBackup敏感信息泄露的一些解决方案" class="headerlink" title="Android allowBackup敏感信息泄露的一些解决方案"></a>Android allowBackup敏感信息泄露的一些解决方案</h3><ul>
+<li><p>直接在你的Android清单文件中设置<code>android:allowBackup=”false”</code>即可，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;application</span><br><span class="line">  	android:name=<span class="string">".app.App"</span></span><br><span class="line">    android:allowBackup=<span class="string">"true"</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不在你的Android清单文件中设置<code>android:allowBackup=”false”</code>，允许执行备份，但是在你应用启动页进行逻辑判断是否进行重新登陆等，譬如查看设备唯一识别设备编号和备份前是否一致，不一致则直接跳转登陆页面的同时清空当前应用数据及缓存。</p>
+</li>
+</ul>
+<h3 id="设置背景颜色偶现无效"><a href="#设置背景颜色偶现无效" class="headerlink" title="设置背景颜色偶现无效"></a>设置背景颜色偶现无效</h3><p>最近在开发中碰到了一个问题，在Android5.0以上的手机，对布局设置背景颜色</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:background=<span class="string">"@color/c_4897fa"</span></span><br></pre></td></tr></table></figure>
+<p>会出现背景颜色偶现无效的问题，使用下面的方法解决</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;shape xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:shape=<span class="string">"rectangle"</span>&gt;</span><br><span class="line">    &lt;!-- 角度 --&gt;</span><br><span class="line">    &lt;corners android:radius=<span class="string">"1dp"</span> /&gt;</span><br><span class="line">    &lt;!-- 填充色 --&gt;</span><br><span class="line">    &lt;solid android:color=<span class="string">"@color/c_4897fa"</span> /&gt;</span><br><span class="line">&lt;/shape&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:background=<span class="string">"@drawable/home_nearby_bg"</span></span><br></pre></td></tr></table></figure>
+<p>先画一个shape，再设置给backgroud</p>
+<h3 id="清除Android-WebView-缓存"><a href="#清除Android-WebView-缓存" class="headerlink" title="清除Android WebView 缓存"></a>清除Android WebView 缓存</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">clearWebCache</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    CookieSyncManager.createInstance(context);</span><br><span class="line">    CookieManager cm = CookieManager.getInstance();</span><br><span class="line">    cm.removeSessionCookie();</span><br><span class="line">    cm.removeAllCookie();</span><br><span class="line">    CookieSyncManager.getInstance().sync();</span><br><span class="line"></span><br><span class="line">    WebStorage.getInstance().deleteAllData();</span><br><span class="line">  &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="捕获全局异常"><a href="#捕获全局异常" class="headerlink" title="捕获全局异常"></a>捕获全局异常</h3><p>使用<code>Thread.UncaughtExceptionHandler</code>捕获全局异常</p>
+<h3 id="启动LaunchIntent"><a href="#启动LaunchIntent" class="headerlink" title="启动LaunchIntent"></a>启动LaunchIntent</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent i = getBaseContext().getPackageManager()</span><br><span class="line">.getLaunchIntentForPackage(getBaseContext().getPackageName());</span><br><span class="line">i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);</span><br><span class="line">startActivity(i);</span><br></pre></td></tr></table></figure>
+<h3 id="Annotations"><a href="#Annotations" class="headerlink" title="Annotations"></a>Annotations</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CallSuper</span></span><br><span class="line"><span class="meta">@StringRes</span></span><br><span class="line"><span class="meta">@DrawableRes</span></span><br><span class="line"><span class="meta">@CheckResult</span></span><br><span class="line"><span class="meta">@NonNull</span></span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="meta">@AnimatorRes</span></span><br><span class="line"><span class="meta">@AnimRes</span></span><br><span class="line"><span class="meta">@AnyRes</span></span><br><span class="line"><span class="meta">@AnyThread</span></span><br><span class="line"><span class="meta">@ArrayRes</span></span><br><span class="line"><span class="meta">@AttrRes</span></span><br><span class="line"><span class="meta">@BinderThread</span></span><br><span class="line"><span class="meta">@ColorRes</span></span><br><span class="line"><span class="meta">@ColorInt</span></span><br><span class="line"><span class="meta">@BoolRes</span></span><br><span class="line"><span class="meta">@DimenRes</span></span><br><span class="line"><span class="meta">@Dimension</span></span><br><span class="line"><span class="meta">@IdRes</span></span><br><span class="line"><span class="meta">@FloatRange</span></span><br><span class="line"><span class="meta">@FractionRes</span></span><br><span class="line"><span class="meta">@IntegerRes</span></span><br><span class="line"><span class="meta">@XmlRes</span></span><br></pre></td></tr></table></figure>
+<p><strong>关于Android7.0系统使用webview遇到的一个问题(二级跳转后界面空白</strong></p>
+<p><a href="https://github.com/panyz/Blogs/blob/master/Android实战经验/关于Android7.0系统使用webview遇到的一个问题(二级跳转后界面空白).md" target="_blank" rel="noopener">https://github.com/panyz/Blogs/blob/master/Android实战经验/关于Android7.0系统使用webview遇到的一个问题(二级跳转后界面空白).md</a></p>
+<p><strong>RecyclerView去掉滚动条和滑动到边界阴影</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v7.widget.RecyclerView</span><br><span class="line">    android:id=<span class="string">"@+id/rv_search_one"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">    android:overScrollMode=<span class="string">"never"</span></span><br><span class="line">    android:scrollbars=<span class="string">"none"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>设置屏幕常亮</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">  getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">super</span>.onDestroy();</span><br><span class="line">  getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>使用PhotoView+Viewpager崩溃问题</strong></p>
+<p>java.lang.IllegalArgumentException: pointerIndex out of range</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义一个Viewpager，重写onInterceptTouchEvent函数，在里面捕获IllegalArgumentException</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhotoViewPager</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">support</span>.<span class="title">v4</span>.<span class="title">view</span>.<span class="title">ViewPager</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PhotoViewPager</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PhotoViewPager</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.onTouchEvent(ev);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.onInterceptTouchEvent(ev);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>WebView自适应高度</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setupWebView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    webView.getSettings().setJavaScriptEnabled(<span class="keyword">true</span>);</span><br><span class="line">    webView.setWebViewClient(<span class="keyword">new</span> WebViewClient() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageFinished</span><span class="params">(WebView view, String url)</span> </span>&#123;</span><br><span class="line">            		webView.loadUrl(<span class="string">"javascript:MyApp.resize(document.body.getBoundingClientRect().height)"</span>);</span><br><span class="line">            <span class="keyword">super</span>.onPageFinished(view, url);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    webView.addJavascriptInterface(<span class="keyword">this</span>, <span class="string">"MyApp"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@JavascriptInterface</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">resize</span><span class="params">(<span class="keyword">final</span> <span class="keyword">float</span> height)</span> </span>&#123;</span><br><span class="line">    MyActivity.<span class="keyword">this</span>.runOnUiThread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            webView.setLayoutParams(<span class="keyword">new</span> LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (<span class="keyword">int</span>) (height * getResources().getDisplayMetrics().density)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://www.bubuko.com/infodetail-1612451.html" target="_blank" rel="noopener">http://www.bubuko.com/infodetail-1612451.html</a></p>
+<p><strong>通过resId获取属性名</strong></p>
+<p>例：R.id.tv_hello = 0x7f080007</p>
+<p>当我们调用view的getId()时，我们能获取到0x7f080007，但有时我们需要获取到tv_hello这个属性名，可以使用下面的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String name = getResources().getResourceEntryName(id);</span><br></pre></td></tr></table></figure>
+<p><strong>使用AspectJ配置</strong></p>
+<p>使用网上的配置，在gradle版本为2.2.3时，不会出现问题，当切换到2.3.3时，会报</p>
+<p>No such property: project for class: com.android.build.gradle.LibraryPlugin，</p>
+<p>修复办法：不使用 LibraryPlugin 直接使用 project</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">android.libraryVariants.all &#123; variant -&gt;</span><br><span class="line"><span class="comment">//    LibraryPlugin plugin = project.plugins.getPlugin(LibraryPlugin)</span></span><br><span class="line">    JavaCompile javaCompile = variant.javaCompile</span><br><span class="line">    javaCompile.doLast &#123;</span><br><span class="line">        String[] args = [<span class="string">"-showWeaveInfo"</span>,</span><br><span class="line">                         <span class="string">"-1.5"</span>,</span><br><span class="line">                         <span class="string">"-inpath"</span>, javaCompile.destinationDir.toString(),</span><br><span class="line">                         <span class="string">"-aspectpath"</span>, javaCompile.classpath.asPath,</span><br><span class="line">                         <span class="string">"-d"</span>, javaCompile.destinationDir.toString(),</span><br><span class="line">                         <span class="string">"-classpath"</span>, javaCompile.classpath.asPath,</span><br><span class="line">                         <span class="string">"-bootclasspath"</span>, project.android.bootClasspath.join(</span><br><span class="line">                File.pathSeparator)]</span><br><span class="line"></span><br><span class="line">        MessageHandler handler = <span class="keyword">new</span> MessageHandler(<span class="keyword">true</span>);</span><br><span class="line">        <span class="keyword">new</span> Main().run(args, handler)</span><br><span class="line"></span><br><span class="line">        def log = project.logger</span><br><span class="line">        <span class="keyword">for</span> (IMessage message : handler.getMessages(<span class="keyword">null</span>, <span class="keyword">true</span>)) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (message.getKind()) &#123;</span><br><span class="line">                <span class="keyword">case</span> IMessage.ABORT:</span><br><span class="line">                <span class="keyword">case</span> IMessage.ERROR:</span><br><span class="line">                <span class="keyword">case</span> IMessage.FAIL:</span><br><span class="line">                    log.error message.message, message.thrown</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> IMessage.WARNING:</span><br><span class="line">                <span class="keyword">case</span> IMessage.INFO:</span><br><span class="line">                    log.info message.message, message.thrown</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> IMessage.DEBUG:</span><br><span class="line">                    log.debug message.message, message.thrown</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解决支持库版本兼容问题：</strong></p>
+<p>(all com.android.support libraries must use the exact same version specification)</p>
+<p>去改第三方库所用的支持库版本比较麻烦，如果用的库很多的话工作量很大。这个时候我们可以考虑强制让所有模块都用相同的支持库版本。</p>
+<p>在app build.gradle中添加：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">configurations.all &#123;</span><br><span class="line">    resolutionStrategy.eachDependency &#123; DependencyResolveDetails details -&gt;</span><br><span class="line">        def requested = details.requested</span><br><span class="line">        <span class="keyword">if</span> (requested.group == <span class="string">'com.android.support'</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!requested.name.startsWith(<span class="string">"multidex"</span>)) &#123;</span><br><span class="line">                details.useVersion <span class="string">'25.3.1'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，25.3.1就是你要使用的支持库版本号，你可以根据需要改成其它的。</p>
+<p><a href="http://blog.csdn.net/u012730980/article/details/78390428" target="_blank" rel="noopener">error: style attribute ‘@android:attr/windowEnterAnimation’ not found.</a></p>
+<p>在Project/gradle.properties中添加 android.enableAapt2=false</p>
+<p><strong>解决Google Pixel Download Manager不在通知栏显示进度的BUG</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DownloadManager.Request request = <span class="keyword">new</span> DownloadManager.Request(Download_Uri);</span><br><span class="line"><span class="comment">// 添加下面这行</span></span><br><span class="line">request.setAllowedOverRoaming(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>解决Error:Some file crunching failed, see logs for details</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line"></span><br><span class="line">    compileSdkVersion <span class="number">25</span></span><br><span class="line">    buildToolsVersion <span class="string">'25.0.3'</span></span><br><span class="line">    useLibrary <span class="string">'org.apache.http.legacy'</span></span><br><span class="line"></span><br><span class="line">    aaptOptions &#123;</span><br><span class="line">        cruncherEnabled = <span class="keyword">false</span></span><br><span class="line">        useNewCruncher = <span class="keyword">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加aaptOptions一栏</p>
+<p><strong>解决viewpager滑动不流畅的问题</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">customViewpagerView</span> <span class="keyword">extends</span> <span class="title">ViewPager</span> </span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> preX=<span class="number">0</span>;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">customViewpagerView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">super</span>(context, attrs);  </span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">customViewpagerView</span><span class="params">(Context context)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">super</span>(context);  </span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent even)</span> </span>&#123;  </span><br><span class="line">          </span><br><span class="line">        <span class="keyword">if</span>(even.getAction()==MotionEvent.ACTION_DOWN)  </span><br><span class="line">        &#123;  </span><br><span class="line">            preX=(<span class="keyword">int</span>) even.getX();  </span><br><span class="line">        &#125;<span class="keyword">else</span>  </span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">if</span>(Math.abs((<span class="keyword">int</span>)even.getX()-preX)&gt;<span class="number">10</span>)  </span><br><span class="line">            &#123;  </span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">            &#125;<span class="keyword">else</span>  </span><br><span class="line">            &#123;  </span><br><span class="line">                preX=(<span class="keyword">int</span>) even.getX();  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onInterceptTouchEvent(even);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/05/31/android/android-tips/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-fe/regular-expression" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1088,74 +1221,9 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/18/hello-world/" class="archive-article-date">
-  	<time datetime="2016-05-18T09:17:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br>
-        
-          <a class="article-more-a" href="/2016/05/18/hello-world/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/18/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
     </nav>
   
 
@@ -1254,10 +1322,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
@@ -1274,11 +1338,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1290,11 +1358,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">music</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1302,11 +1366,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">poetry</a>
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+                <a href="javascript:void(0)" class="js-tag color1">music</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1314,7 +1382,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color2">poetry</a>
               </li>
              
               <li class="article-tag-list-item">
