@@ -476,40 +476,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>注解处理器(Annotation Processor Tool)是<code>javac</code>的一个工具，主要用于在编译时处理<code>编译时注解RetentionPolicy.CLASS）</code>。我们可以自定义注解处理器，获取我们自定义的注解信息，通过注解信息生成<code>java</code>文件(如： <a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">ButterKnife</a>)或进行其它的一些操作</p>
-<h3 id="自定义注解处理器"><a href="#自定义注解处理器" class="headerlink" title="自定义注解处理器"></a>自定义注解处理器</h3><p>自定义注解处理器需要继承于<code>AbstractProcessor</code>，一般我们会重写下面4个方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IRouterProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Messager messager; <span class="comment">// Log 日志</span></span><br><span class="line">	<span class="keyword">private</span> Elements elementUtils; <span class="comment">// 操作Element工具类</span></span><br><span class="line">	<span class="keyword">private</span> Filer filer; <span class="comment">// 支持通过注解处理器创建新文件</span></span><br><span class="line">	<span class="keyword">private</span> Map&lt;String, String&gt; options; <span class="comment">// 额外配置参数</span></span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment processingEnvironment)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.init(processingEnvironment);</span><br><span class="line">		messager = processingEnvironment.getMessager();</span><br><span class="line">		elementUtils = processingEnvironment.getElementUtils();</span><br><span class="line">		filer = processingEnvironment.getFiler();</span><br><span class="line">		options = processingEnvironment.getOptions();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedAnnotationTypes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Set&lt;String&gt; types = <span class="keyword">new</span> LinkedHashSet&lt;&gt;();</span><br><span class="line">		types.add(IRouter.class.getCanonicalName());</span><br><span class="line">		<span class="keyword">return</span> types;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> SourceVersion.latestSupported();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annotations,</span></span></span><br><span class="line"><span class="function"><span class="params">			RoundEnvironment roundEnv)</span> </span>&#123;</span><br><span class="line">		Set&lt;? extends Element&gt; routerElements = roundEnv.getElementsAnnotatedWith(IRouter.class);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">null</span> != routerElements &amp;&amp; !routerElements.isEmpty()) &#123;</span><br><span class="line">				parseRoutes(routerElements);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">parseRoutes</span><span class="params">(Set&lt;? extends Element&gt; routerElements)</span></span></span><br><span class="line"><span class="function">			<span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (Element element : routerElements) &#123;</span><br><span class="line">			TypeElement typeElement = (TypeElement) element.getEnclosingElement();</span><br><span class="line">			TypeMirror mirror = element.asType();</span><br><span class="line">			ElementKind kind = element.getKind();</span><br><span class="line">			Name name = element.getSimpleName();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>init(ProcessingEnvironment env):  每一个注解处理器类都必须有一个空的构造函数。然而，这里有一个特殊的init()方法，它会被注解处理工具调用，并输入ProcessingEnviroment参数。ProcessingEnviroment提供很多有用的工具类Elements, Types和Filer。后面我们将看到详细的内容。</li>
-<li>process(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment env) :  这相当于每个处理器的主函数main()。你在这里写你的扫描、评估和处理注解的代码，以及生成Java文件。输入参数RoundEnviroment，可以让你查询出包含特定注解的被注解元素。后面我们将看到详细的内容。</li>
-<li>getSupportedAnnotationTypes():  这里你必须指定，这个注解处理器是注册给哪个注解的。注意，它的返回值是一个字符串的集合，包含本处理器想要处理的注解类型的合法全称。换句话说，你在这里定义你的注解处理器需要处理哪些注解。</li>
-<li>getSupportedSourceVersion(): 用来指定你使用的Java版本。通常这里返回<code>SourceVersion.latestSupported()</code>。然而，如果你有足够的理由只支持Java 6的话，你也可以返回SourceVersion.RELEASE_6。我推荐你使用前者。</li>
-</ul>
-<p>在Java 7中，你也可以使用注解来代替getSupportedAnnotationTypes()和getSupportedSourceVersion()，像这样：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SupportedSourceVersion</span>(SourceVersion.latestSupported())</span><br><span class="line"><span class="meta">@SupportedAnnotationTypes</span>(&#123;</span><br><span class="line">   <span class="comment">// 合法注解全名的集合</span></span><br><span class="line"> &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IRouterProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment env)</span></span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annoations, RoundEnvironment env)</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为兼容的原因，特别是针对Android平台，我建议使用重载<code>getSupportedAnnotationTypes()</code>和<code>getSupportedSourceVersion()</code>方法代替<code>@SupportedAnnotationTypes</code>和</p>
-<p><code>@SuppozrtedSourceVersion</code></p>
-<p>接下来的你必须知道的事情是，注解处理器是运行它自己的虚拟机JVM中。是的，你没有看错，<strong>javac</strong>启动一个完整Java虚拟机来运行注解处理器。这对你意味着什么？你可以使用任何你在其他java应用中使用的的东西。使用guava。如果你愿意，你可以使用依赖注入工具，例如dagger或者其他你想要的类库。但是不要忘记，即使是一个很小的处理，你也要像其他Java应用一样，注意算法效率，以及设计模式。</p>
-<p><strong>注册你的处理器</strong></p>
-<p>你可能会问，我怎样将处理器IRouterProcessor注册到javac中。你必须提供一个<strong>.jar</strong>文件。就像其他<strong>.jar</strong>文件一样，你打包你的注解处理器到此文件中。并且，在你的jar中，你需要打包一个特定的文件javax.annotation.processing.Processor到META-INF/services路径下。所以，你的.jar文件看起来就像下面这样：</p>
-<ul>
-<li>IRouterProcessor.jar</li>
-<li>– com</li>
-<li>– – example</li>
-<li>– – – IRouterProcessor.class</li>
-<li>– META-INF</li>
-<li>– – services</li>
-<li>– – – javax.annotation.processing.Processor</li>
-</ul>
-<p>打包进IRouterProcessor.jar中的javax.annotation.processing.Processor的内容是，注解处理器的合法的全名列表，每一个元素换行分割：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">com.example.IRouterProcessor  </span><br><span class="line">com.foo.OtherProcessor  </span><br><span class="line">net.blabla.SpecialProcessor</span><br></pre></td></tr></table></figure>
-<p>把IRouterProcessor.jar放到你的builpath中，<strong>javac</strong>会自动检查和读取javax.annotation.processing.Processor中的内容，并且注册IRouterProcessor作为注解处理器。</p>
-<p><strong>使用@AutoService注册你的处理器</strong></p>
-<p>如果你觉得上面一步<code>注册你的处理器</code>比较麻烦的话，可以下载google的<code>auto-server</code>包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;com.google.auto.service:auto-service:1.0-rc4&apos;</span><br></pre></td></tr></table></figure>
-<p>在你的注解器上加上<code>@AutoService(Processor.class)</code>，这样你就可以忽略上一步的<code>注册你的处理器</code>章节，以下是完整的类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AutoService</span>(Processor.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IRouterProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Messager messager; <span class="comment">// Log 日志</span></span><br><span class="line">	<span class="keyword">private</span> Elements elementUtils; <span class="comment">// 操作Element工具类</span></span><br><span class="line">	<span class="keyword">private</span> Filer filer; <span class="comment">// 支持通过注解处理器创建新文件</span></span><br><span class="line">	<span class="keyword">private</span> Map&lt;String, String&gt; options; <span class="comment">// 额外配置参数</span></span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment processingEnvironment)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.init(processingEnvironment);</span><br><span class="line">		messager = processingEnvironment.getMessager();</span><br><span class="line">		elementUtils = processingEnvironment.getElementUtils();</span><br><span class="line">		filer = processingEnvironment.getFiler();</span><br><span class="line">		options = processingEnvironment.getOptions();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedAnnotationTypes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Set&lt;String&gt; types = <span class="keyword">new</span> LinkedHashSet&lt;&gt;();</span><br><span class="line">		types.add(IRouter.class.getCanonicalName());</span><br><span class="line">		<span class="keyword">return</span> types;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> SourceVersion.latestSupported();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annotations,</span></span></span><br><span class="line"><span class="function"><span class="params">			RoundEnvironment roundEnv)</span> </span>&#123;</span><br><span class="line">		Set&lt;? extends Element&gt; routerElements = roundEnv.getElementsAnnotatedWith(IRouter.class);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">null</span> != routerElements &amp;&amp; !routerElements.isEmpty()) &#123;</span><br><span class="line">				parseRoutes(routerElements);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">parseRoutes</span><span class="params">(Set&lt;? extends Element&gt; routerElements)</span></span></span><br><span class="line"><span class="function">			<span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (Element element : routerElements) &#123;</span><br><span class="line">			TypeElement typeElement = (TypeElement) element.getEnclosingElement();</span><br><span class="line">			TypeMirror mirror = element.asType();</span><br><span class="line">			ElementKind kind = element.getKind();</span><br><span class="line">			Name name = element.getSimpleName();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样，编译时就会执行<code>process</code>方法，在这个方法里，你可以写自己的逻辑，生成java文件等等</p>
-
+        
+          <a class="article-more-a" href="/2018/04/18/java/java-annotations-processor/#more">more >></a>
+        
       
 
       
@@ -1184,6 +1153,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
@@ -1196,19 +1169,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hole</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1220,11 +1185,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1232,11 +1197,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">poetry</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">music</a>
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1244,11 +1205,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">smile</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color1">music</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">poetry</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">smile</a>
               </li>
             
             <div class="clearfix"></div>
