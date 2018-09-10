@@ -191,6 +191,173 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ios/ios-stanford" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/22/ios/ios-stanford/">What&#39;s in iOS?</a>
+    </h1>
+  
+
+        
+        <a href="/2016/06/22/ios/ios-stanford/" class="archive-article-date">
+  	<time datetime="2016-06-22T07:03:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="What’s-is-in-iOS"><a href="#What’s-is-in-iOS" class="headerlink" title="What’s is in iOS?"></a>What’s is in iOS?</h3><p><img src="/img/swift/ios01.jpg" alt="ios01"></p>
+<p><img src="/img/swift/ios02.jpg" alt="ios02"></p>
+<p><img src="/img/swift/ios03.jpg" alt="ios03"></p>
+<p><img src="/img/swift/ios04.jpg" alt="ios04"></p>
+<h3 id="UIKIt"><a href="#UIKIt" class="headerlink" title="UIKIt"></a>UIKIt</h3><h4 id="bounds-VS-frame"><a href="#bounds-VS-frame" class="headerlink" title="bounds VS frame"></a>bounds VS frame</h4><p><img src="/img/swift/ios05.jpg" alt="ios05"></p>
+<blockquote>
+<p>在未设置bounds的情况下，bounds是相对于view自身坐标的，以view自身的左上角为原点(0,0)，如上图所示，不管怎么旋转view，bounds始终是一样的</p>
+</blockquote>
+<p><a href="https://www.cnblogs.com/ming1025/p/6125706.html" target="_blank" rel="noopener">https://www.cnblogs.com/ming1025/p/6125706.html</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">stanford</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/06/22/ios/ios-stanford/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Swift/swift-record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/22/Swift/swift-record/">swift-record</a>
+    </h1>
+  
+
+        
+        <a href="/2016/06/22/Swift/swift-record/" class="archive-article-date">
+  	<time datetime="2016-06-22T07:03:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="extension"><a href="#extension" class="headerlink" title="extension"></a>extension</h3><p>声明一个扩展使用关键字<code>extension</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SomeType</span></span>&#123;</span><br><span class="line">  <span class="comment">//加到SomeType的新功能写到这里</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="indirect"><a href="#indirect" class="headerlink" title="indirect"></a>indirect</h3><p>使用indirect来标识一个枚举是可以递归调用的</p>
+<h3 id="required"><a href="#required" class="headerlink" title="required"></a>required</h3><p>在类的构造器前添加<code>required</code>修饰符表明所有该类的子类都必须实现该构造器，在子类重写父类的必要构造器时，必须在子类的构造器前也添加<code>required</code>修饰符，这是为了保证继承链上子类的构造器也是必要构造器。在重写父类的必要构造器时，不需要添加<code>override</code>修饰符</p>
+<h3 id="mutating"><a href="#mutating" class="headerlink" title="mutating"></a>mutating</h3><p>一般情况下，值类型的属性不能在它的实例方法中被修改，<code>mutating</code>使得方法可以从方法内部改变它的属性；并且它做的任何改变在方法结束时还会保留在原始结构中。方法还可以给它隐含的<code>self</code>属性赋值一个全新的实例，这个新实例在方法结束后将替换原来的实例。要使用<code>mutating</code>方法，将关键字<code>mutating</code>放到方法的<code>func</code>关键字之前就可以了</p>
+<h3 id="unowned"><a href="#unowned" class="headerlink" title="unowned"></a>unowned</h3><p>使用<code>unowned</code>标识无主引用</p>
+<h3 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h3><p>使用<code>weak</code>标识弱引用</p>
+<h3 id="类型属性"><a href="#类型属性" class="headerlink" title="类型属性"></a>类型属性</h3><p>在结构体和枚举中可以使用<code>static</code>来修饰静态变量，在类中可以使用<code>static</code>和<code>class</code>来修饰，使用<code>class</code>修饰来允许子类重写父类的实现方法</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/06/22/Swift/swift-record/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-android/android-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -271,6 +438,7 @@
 <p>添加aaptOptions一栏</p>
 <p><strong>解决viewpager滑动不流畅的问题</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">customViewpagerView</span> <span class="keyword">extends</span> <span class="title">ViewPager</span> </span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> preX=<span class="number">0</span>;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">customViewpagerView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">super</span>(context, attrs);  </span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">customViewpagerView</span><span class="params">(Context context)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">super</span>(context);  </span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent even)</span> </span>&#123;  </span><br><span class="line">          </span><br><span class="line">        <span class="keyword">if</span>(even.getAction()==MotionEvent.ACTION_DOWN)  </span><br><span class="line">        &#123;  </span><br><span class="line">            preX=(<span class="keyword">int</span>) even.getX();  </span><br><span class="line">        &#125;<span class="keyword">else</span>  </span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">if</span>(Math.abs((<span class="keyword">int</span>)even.getX()-preX)&gt;<span class="number">10</span>)  </span><br><span class="line">            &#123;  </span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">            &#125;<span class="keyword">else</span>  </span><br><span class="line">            &#123;  </span><br><span class="line">                preX=(<span class="keyword">int</span>) even.getX();  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onInterceptTouchEvent(even);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="解决设置控件Alpha透明引发的问题"><a href="#解决设置控件Alpha透明引发的问题" class="headerlink" title="解决设置控件Alpha透明引发的问题"></a>解决设置控件Alpha透明引发的问题</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">findViewById(R.id.login_whitebg)).getBackground().mutate().setAlpha(204);</span><br><span class="line">// https://www.jianshu.com/p/4d89fe683664</span><br></pre></td></tr></table></figure>
 
       
 
@@ -1050,159 +1218,6 @@
 
 
   
-    <article id="post-about" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/about/">about</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/18/about/" class="archive-article-date">
-  	<time datetime="2016-05-18T15:16:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>人会长大三次。</p>
-<p>第一次是在发现自己不是世界中心的时候。</p>
-<p>第二次是在发现即使再怎么努力，终究还是有些事令人无能为力的时候。</p>
-<p>第三次是在明知道有些事可能会无能为力。但还是会尽力争取的时候。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">me</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/18/about/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-android/android-shape" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/android/android-shape/">android-shape</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/18/android/android-shape/" class="archive-article-date">
-  	<time datetime="2016-05-18T09:28:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>​    在Android程序开发中，我们经常会用到Shape去定义各种各样的形状。shape可以在selector，layout等里面使用，有6个子标签，如下：<br>
-        
-          <a class="article-more-a" href="/2016/05/18/android/android-shape/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/18/android/android-shape/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -1304,11 +1319,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1320,7 +1331,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1348,15 +1367,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">poetry</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1369,6 +1380,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>

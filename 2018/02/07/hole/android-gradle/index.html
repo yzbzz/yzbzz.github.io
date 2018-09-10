@@ -17,7 +17,7 @@
 <meta property="og:description" content="解决Kotlin和DataBinding冲突 Unresolved reference: databinding 在主工程的build.gradle文件添加下面一行 123dependencies &amp;#123;    kapt &amp;quot;com.android.databinding:compiler:3.0.0&amp;quot;&amp;#125; Failed to open zip file 当我们编译">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/img/hole/hole-gradle-dists.jpg">
-<meta property="og:updated_time" content="2018-03-21T07:40:37.614Z">
+<meta property="og:updated_time" content="2018-08-17T02:49:39.233Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android-gradle">
 <meta name="twitter:description" content="解决Kotlin和DataBinding冲突 Unresolved reference: databinding 在主工程的build.gradle文件添加下面一行 123dependencies &amp;#123;    kapt &amp;quot;com.android.databinding:compiler:3.0.0&amp;quot;&amp;#125; Failed to open zip file 当我们编译">
@@ -235,6 +235,10 @@
 <p><strong>error style attribute not found @android:attr</strong></p>
 <p>去掉<code>@</code>符</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=<span class="string">"PopupAnimation"</span> parent=<span class="string">"@android:Animation"</span>&gt;</span><br><span class="line">  &lt;item name="@android:windowEnterAnimation"&gt;@anim/push_bottom_in&lt;/item&gt;</span><br><span class="line">  &lt;item name="@android:windowExitAnimation"&gt;@anim/push_bottom_out&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">==&gt;</span><br><span class="line">&lt;style name=<span class="string">"PopupAnimation"</span> parent=<span class="string">"android:Animation"</span>&gt;</span><br><span class="line">  &lt;item name="android:windowEnterAnimation"&gt;@anim/push_bottom_in&lt;/item&gt;</span><br><span class="line">  &lt;item name="android:windowExitAnimation"&gt;@anim/push_bottom_out&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>error:execution failed for task ‘:app:transformnativelibswithstripdebugsymbolfordebug’.</strong></p>
+<p>删除<code>/sdk/ndk-bundle</code></p>
+<h3 id="Vivo-手机使用-Android-studio安装APK失败的解决办法"><a href="#Vivo-手机使用-Android-studio安装APK失败的解决办法" class="headerlink" title="Vivo 手机使用 Android studio安装APK失败的解决办法"></a>Vivo 手机使用 Android studio安装APK失败的解决办法</h3><p>在工程目录的<code>gradle.properties</code>中添加<code>android.injected.testOnly = false</code>即可</p>
+<h3 id="解决Android-Studio在XML中使用自定义View输入自定义属性的时候没有任何提示的问题"><a href="#解决Android-Studio在XML中使用自定义View输入自定义属性的时候没有任何提示的问题" class="headerlink" title="解决Android Studio在XML中使用自定义View输入自定义属性的时候没有任何提示的问题"></a>解决Android Studio在XML中使用自定义View输入自定义属性的时候没有任何提示的问题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我们在自定义View和自定义属性的时候，要保持自定义View的className和自定义属性的的declare-styleable名一样，根据这个约定，IDE才会自动提示</span><br></pre></td></tr></table></figure>
 
       
 
@@ -490,11 +494,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -506,7 +506,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -534,15 +542,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">poetry</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -555,6 +555,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>

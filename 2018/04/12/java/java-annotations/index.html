@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="[TOC] 本文及相关注解文章部分摘自以下的博客，推荐大家阅读  秒懂，Java 注解 （Annotation）你可以这样学 Java注解基础概念总结 定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-19T05:46:26.964Z">
+<meta property="og:updated_time" content="2018-09-07T07:44:22.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 注解介绍">
 <meta name="twitter:description" content="[TOC] 本文及相关注解文章部分摘自以下的博客，推荐大家阅读  秒懂，Java 注解 （Annotation）你可以这样学 Java注解基础概念总结 定义注解(Annotaion)，也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明、注解。 作用分类：  编写文">
@@ -295,9 +295,9 @@
 <p>阻止警告的意思。之前说过调用被 @Deprecated 注解的方法后，编译器会警告提醒，而有时候开发者会忽略这种警告，他们可以在调用的地方通过 @SuppressWarnings 达到目的。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SuppressWarnings &#123;</span><br><span class="line">    String[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h5><p>关于自定义注解，请移步</p>
-<p><a href="/2018/01/25/study/study-bwh/">java 自定义源码注解</a></p>
-<p><a href="/2018/01/25/study/study-bwh/">java 自定义编译时注解</a></p>
-<p><a href="/2018/01/25/study/study-bwh/">java 自定运行时注解</a></p>
+<p><a href="/2018/04/13/java/java-annotations-source/">java 自定义源码注解</a></p>
+<p><a href="/2018/04/13/java/java-annotation-class/">java 自定义编译时注解</a></p>
+<p><a href="/2018/04/13/java/java-annotation-runtime/">java 自定运行时注解</a></p>
 
       
 
@@ -557,11 +557,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -573,7 +569,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -601,15 +605,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">poetry</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -622,6 +618,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>

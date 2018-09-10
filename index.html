@@ -191,6 +191,545 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java/java-annotations-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/07/java/java-annotations-tips/">Java注解知识点</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/07/java/java-annotations-tips/" class="archive-article-date">
+  	<time datetime="2018-09-07T08:52:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="ProcessingEnvironment"><a href="#ProcessingEnvironment" class="headerlink" title="ProcessingEnvironment"></a>ProcessingEnvironment</h3><p>源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ProcessingEnvironment</span> </span>&#123;</span><br><span class="line">    <span class="function">Map&lt;String,String&gt; <span class="title">getOptions</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">Messager <span class="title">getMessager</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">Filer <span class="title">getFiler</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">Elements <span class="title">getElementUtils</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">Types <span class="title">getTypeUtils</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">SourceVersion <span class="title">getSourceVersion</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">Locale <span class="title">getLocale</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要方法</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getOptions()</td>
+<td><a href="#Options">Map<string,string></string,string></a></td>
+<td>返回指定的参数选项</td>
+</tr>
+<tr>
+<td>getMessager()</td>
+<td><a href="#Messager">Messager</a></td>
+<td>返回实现Messager接口的对象，用于报告错误信息、警告提醒</td>
+</tr>
+<tr>
+<td>getFiler()</td>
+<td><a href="#Filer">Filer</a></td>
+<td>返回实现Filer接口的对象，用于创建文件、类和辅助文件</td>
+</tr>
+<tr>
+<td>getElementUtils()</td>
+<td><a href="#Element">Elements</a></td>
+<td>返回实现Elements接口的对象，用于操作元素的工具类</td>
+</tr>
+<tr>
+<td>getTypeUtils()</td>
+<td>Types</td>
+<td>返回实现Types接口的对象，用于操作类型的工具类</td>
+</tr>
+</tbody>
+</table>
+<p>通过getOptions()方法获取选项参数，在gradle文件中配置选项参数值</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        javaCompileOptions &#123;</span><br><span class="line">            annotationProcessorOptions &#123;</span><br><span class="line">                arguments = [ <span class="string">version :</span> <span class="string">'1.0.0'</span> ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过<code>ProcessingEnvironment</code>去获取对应的参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">processingEnvironment.getOptions().get(&quot;version&quot;);</span><br></pre></td></tr></table></figure>
+<h3 id="RoundEnvironment"><a href="#RoundEnvironment" class="headerlink" title="RoundEnvironment"></a>RoundEnvironment</h3><p>源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">RoundEnvironment</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">processingOver</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">errorRaised</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    Set&lt;? extends Element&gt; getRootElements();</span><br><span class="line"></span><br><span class="line">    Set&lt;? extends Element&gt; getElementsAnnotatedWith(TypeElement a);</span><br><span class="line"></span><br><span class="line">    Set&lt;? extends Element&gt; getElementsAnnotatedWith(Class&lt;? extends Annotation&gt; a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要方法</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getElementsAnnotatedWith(Class&lt;? extends Annotation&gt; a)</td>
+<td>Set&lt;? extends Element&gt;</td>
+<td>通给给定的注解，获取Element元素列表（获取注解标示的元素）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Element"><a href="#Element" class="headerlink" title="Element"></a>Element</h3><p>源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Element</span> <span class="keyword">extends</span> <span class="title">javax</span>.<span class="title">lang</span>.<span class="title">model</span>.<span class="title">AnnotatedConstruct</span> </span>&#123;</span><br><span class="line">    <span class="function">TypeMirror <span class="title">asType</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">ElementKind <span class="title">getKind</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Set&lt;Modifier&gt; <span class="title">getModifiers</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Name <span class="title">getSimpleName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Element <span class="title">getEnclosingElement</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    List&lt;? extends Element&gt; getEnclosedElements();</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    List&lt;? extends AnnotationMirror&gt; getAnnotationMirrors();</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    &lt;A extends Annotation&gt; <span class="function">A <span class="title">getAnnotation</span><span class="params">(Class&lt;A&gt; annotationType)</span></span>;</span><br><span class="line">    </span><br><span class="line">    &lt;R, P&gt; <span class="function">R <span class="title">accept</span><span class="params">(ElementVisitor&lt;R, P&gt; v, P p)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要子类</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#PackageElement">PackageElement</a></td>
+<td>包元素。提供对有关包及其成员的信息的访问</td>
+</tr>
+<tr>
+<td><a href="#ExecutableElement">ExecutableElement</a></td>
+<td>类、接口的方法元素。包括构造方法、注解类型</td>
+</tr>
+<tr>
+<td><a href="#VariableElement">VariableElement</a></td>
+<td>字段、enum、方法、构造方法参数、局部变量、资源变量、异常参数</td>
+</tr>
+<tr>
+<td><a href="#TypeElement">TypeElement</a></td>
+<td>类、接口元素。提供对有关类型及其成员的信息的访问</td>
+</tr>
+<tr>
+<td><a href="#TypeParameterElement">TypeParameterElement</a></td>
+<td>类、接口、方法、构造方法的参数元素</td>
+</tr>
+</tbody>
+</table>
+<p>主要方法</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getKind()</td>
+<td><a href="#ElementKind">ElementKind</a></td>
+<td></td>
+</tr>
+<tr>
+<td>asType()</td>
+<td><a href="#TypeMirror">TypeMirror</a></td>
+<td>返回元素的数据类型（基本类型、引用类型、数组类型等等）</td>
+</tr>
+<tr>
+<td>getSimpleName()</td>
+<td>Name</td>
+<td></td>
+</tr>
+<tr>
+<td>getEnclosingElement()</td>
+<td>Element</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ElementKind"><a href="#ElementKind" class="headerlink" title="ElementKind"></a>ElementKind</h3><p>元素的类型，元素的类型判断不需要用<code>instanceof</code>去判断，而应该通过<code>Element.getKind()</code>去判断对应的类型</p>
+<p>源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementKind &#123;</span><br><span class="line">    <span class="comment">/** A package. */</span></span><br><span class="line">    PACKAGE,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** An enum type. */</span></span><br><span class="line">    ENUM,</span><br><span class="line">    <span class="comment">/** A class not described by a more specific kind (like &#123;<span class="doctag">@code</span> ENUM&#125;). */</span></span><br><span class="line">    CLASS,</span><br><span class="line">    <span class="comment">/** An annotation type. */</span></span><br><span class="line">    ANNOTATION_TYPE,</span><br><span class="line">    </span><br><span class="line">    INTERFACE,</span><br><span class="line"></span><br><span class="line">    ENUM_CONSTANT,</span><br><span class="line"></span><br><span class="line">    FIELD,</span><br><span class="line">    <span class="comment">/** A parameter of a method or constructor. */</span></span><br><span class="line">    PARAMETER,</span><br><span class="line">    <span class="comment">/** A local variable. */</span></span><br><span class="line">    LOCAL_VARIABLE,</span><br><span class="line">    <span class="comment">/** A parameter of an exception handler. */</span></span><br><span class="line">    EXCEPTION_PARAMETER,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Executables</span></span><br><span class="line">    <span class="comment">/** A method. */</span></span><br><span class="line">    METHOD,</span><br><span class="line">    <span class="comment">/** A constructor. */</span></span><br><span class="line">    CONSTRUCTOR,</span><br><span class="line">    <span class="comment">/** A static initializer. */</span></span><br><span class="line">    STATIC_INIT,</span><br><span class="line">    <span class="comment">/** An instance initializer. */</span></span><br><span class="line">    INSTANCE_INIT,</span><br><span class="line"></span><br><span class="line">    TYPE_PARAMETER,</span><br><span class="line"></span><br><span class="line">    OTHER,</span><br><span class="line"></span><br><span class="line">    RESOURCE_VARIABLE;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isClass</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span> == CLASS || <span class="keyword">this</span> == ENUM;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isInterface</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span> == INTERFACE || <span class="keyword">this</span> == ANNOTATION_TYPE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span> == FIELD || <span class="keyword">this</span> == ENUM_CONSTANT;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要类型</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PACKAGE</td>
+<td>包</td>
+</tr>
+<tr>
+<td>ENUM</td>
+<td>枚举</td>
+</tr>
+<tr>
+<td>CLASS</td>
+<td>类</td>
+</tr>
+<tr>
+<td>ANNOTATION_TYPE</td>
+<td>注解</td>
+</tr>
+<tr>
+<td>INTERFACE</td>
+<td>接口</td>
+</tr>
+<tr>
+<td>ENUM_CONSTANT</td>
+<td>枚举常量</td>
+</tr>
+<tr>
+<td>FIELD</td>
+<td>字段</td>
+</tr>
+<tr>
+<td>PARAMETER</td>
+<td>方法参数</td>
+</tr>
+<tr>
+<td>LOCAL_VAR</td>
+<td>局部变量</td>
+</tr>
+<tr>
+<td>METHOD</td>
+<td>方法</td>
+</tr>
+<tr>
+<td>CONSTRUCTOR</td>
+<td>构造方法</td>
+</tr>
+<tr>
+<td>TYPE_PARAMETER</td>
+<td>类型参数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="TypeMirror"><a href="#TypeMirror" class="headerlink" title="TypeMirror"></a>TypeMirror</h3><p>元素的数据类型，基本类型、引用类型、数组类型等等</p>
+<p>源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TypeMirror</span> <span class="keyword">extends</span> <span class="title">javax</span>.<span class="title">lang</span>.<span class="title">model</span>.<span class="title">AnnotatedConstruct</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">TypeKind <span class="title">getKind</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">toString</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    &lt;R, P&gt; <span class="function">R <span class="title">accept</span><span class="params">(TypeVisitor&lt;R, P&gt; v, P p)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要子类</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IntersectionType</td>
+<td>-</td>
+</tr>
+<tr>
+<td>UnionType</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ExecutableType</td>
+<td>Executable类型(方法、构造方法、初始化)</td>
+</tr>
+<tr>
+<td>NoType</td>
+<td>在实际类型不适合的地方使用的伪类型</td>
+</tr>
+<tr>
+<td>PrimitiveType</td>
+<td>基本数据类型</td>
+</tr>
+<tr>
+<td>WildcardType</td>
+<td>通配符类型参数</td>
+</tr>
+<tr>
+<td>ReferenceType</td>
+<td>引用类型</td>
+</tr>
+<tr>
+<td>NullType</td>
+<td>Null类型</td>
+</tr>
+<tr>
+<td>DeclaredType</td>
+<td>声明类型(类或接口类型)</td>
+</tr>
+<tr>
+<td>ErrorType</td>
+<td>异常类或接口类型)</td>
+</tr>
+<tr>
+<td>TypeVariable</td>
+<td>类型变量</td>
+</tr>
+<tr>
+<td>ClassType</td>
+<td>类类型</td>
+</tr>
+<tr>
+<td>ArrayType</td>
+<td>数组类型</td>
+</tr>
+<tr>
+<td>PackageType</td>
+<td>包类型</td>
+</tr>
+<tr>
+<td>AnnotatedType</td>
+<td>注解类型</td>
+</tr>
+<tr>
+<td>MethodType</td>
+<td>方式类型</td>
+</tr>
+</tbody>
+</table>
+<p>主要方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>返回类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getKind</td>
+<td><a href="#TypeMirror">TypeKind</a></td>
+<td>返回类型的属性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="TypeKind"><a href="#TypeKind" class="headerlink" title="TypeKind"></a>TypeKind</h3><p>类型的属性，类型的属性判断不需要用<code>instanceof</code>去判断，而应该通过<code>TypeMirror.getKind()</code>去判断对应的属性</p>
+<p>源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> TypeKind &#123;</span><br><span class="line">    BOOLEAN,</span><br><span class="line"></span><br><span class="line">    BYTE,</span><br><span class="line"></span><br><span class="line">    SHORT,</span><br><span class="line"></span><br><span class="line">    INT,</span><br><span class="line"></span><br><span class="line">    LONG,</span><br><span class="line"></span><br><span class="line">    CHAR,</span><br><span class="line"></span><br><span class="line">    FLOAT,</span><br><span class="line">    </span><br><span class="line">    DOUBLE,</span><br><span class="line"></span><br><span class="line">    VOID,</span><br><span class="line"></span><br><span class="line">    NONE,</span><br><span class="line"></span><br><span class="line">    NULL,</span><br><span class="line"></span><br><span class="line">    ARRAY,</span><br><span class="line">    </span><br><span class="line">    DECLARED,</span><br><span class="line"></span><br><span class="line">    ERROR,</span><br><span class="line"></span><br><span class="line">    TYPEVAR,</span><br><span class="line"></span><br><span class="line">    WILDCARD,</span><br><span class="line"></span><br><span class="line">    PACKAGE,</span><br><span class="line"></span><br><span class="line">    EXECUTABLE,</span><br><span class="line"></span><br><span class="line">    OTHER,</span><br><span class="line"></span><br><span class="line">    UNION,</span><br><span class="line"></span><br><span class="line">    INTERSECTION;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPrimitive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> BOOLEAN:</span><br><span class="line">        <span class="keyword">case</span> BYTE:</span><br><span class="line">        <span class="keyword">case</span> SHORT:</span><br><span class="line">        <span class="keyword">case</span> INT:</span><br><span class="line">        <span class="keyword">case</span> LONG:</span><br><span class="line">        <span class="keyword">case</span> CHAR:</span><br><span class="line">        <span class="keyword">case</span> FLOAT:</span><br><span class="line">        <span class="keyword">case</span> DOUBLE:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要属性</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BOOLEAN</td>
+<td>基本类型booelan</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>基本类型int</td>
+</tr>
+<tr>
+<td>LONG</td>
+<td>基本类型long</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>基本类型float</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>基本类型double</td>
+</tr>
+<tr>
+<td>VOID</td>
+<td>对应于关键字void的伪类型</td>
+</tr>
+<tr>
+<td>NULL</td>
+<td>null类型</td>
+</tr>
+<tr>
+<td>ARRAY</td>
+<td>数组类型</td>
+</tr>
+<tr>
+<td>PACKAGE</td>
+<td>对应于包元素的伪类型</td>
+</tr>
+<tr>
+<td>EXECUTABLE</td>
+<td>方法、构造方法、初始化</td>
+</tr>
+</tbody>
+</table>
+<p>这里需要注意的是，如果我们通过注解去获取Class类型的值，如果获取的Class未被编译，则会抛出MirroredTypeException异常，此时我们需要通过try-catch语句在catch里去获取我们所需要的类元素</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;  </span><br><span class="line">    annotation.value();<span class="comment">//如果value为Class类型则会报异常</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (MirroredTypeException mte) &#123;</span><br><span class="line">    DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();</span><br><span class="line">    TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();<span class="comment">//通过异常去获取类元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Filer"><a href="#Filer" class="headerlink" title="Filer"></a>Filer</h3><p>Filer接口支持通过注解处理器创建新文件。可以创建三种文件类型：源文件、类文件和辅助资源文件</p>
+<p>源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Filer</span> </span>&#123;</span><br><span class="line">   </span><br><span class="line">    <span class="function">JavaFileObject <span class="title">createSourceFile</span><span class="params">(CharSequence name,</span></span></span><br><span class="line"><span class="function"><span class="params">                                    Element... originatingElements)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">    <span class="function">JavaFileObject <span class="title">createClassFile</span><span class="params">(CharSequence name,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   Element... originatingElements)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">FileObject <span class="title">createResource</span><span class="params">(JavaFileManager.Location location,</span></span></span><br><span class="line"><span class="function"><span class="params">                             CharSequence pkg,</span></span></span><br><span class="line"><span class="function"><span class="params">                             CharSequence relativeName,</span></span></span><br><span class="line"><span class="function"><span class="params">                             Element... originatingElements)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">FileObject <span class="title">getResource</span><span class="params">(JavaFileManager.Location location,</span></span></span><br><span class="line"><span class="function"><span class="params">                           CharSequence pkg,</span></span></span><br><span class="line"><span class="function"><span class="params">                           CharSequence relativeName)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>createSourceFile</td>
+<td>JavaFileObject</td>
+<td>创建源文件</td>
+</tr>
+<tr>
+<td>createClassFile</td>
+<td>JavaFileObject</td>
+<td>创建类文件</td>
+</tr>
+<tr>
+<td>createResource</td>
+<td>FileObject</td>
+<td>创建辅助资源文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Messager"><a href="#Messager" class="headerlink" title="Messager"></a>Messager</h3><p>Messager接口提供注解处理器用来报告错误消息、警告和其他通知的方式</p>
+<p>源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Messager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">printMessage</span><span class="params">(Diagnostic.Kind kind, CharSequence msg)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">printMessage</span><span class="params">(Diagnostic.Kind kind, CharSequence msg, Element e)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">printMessage</span><span class="params">(Diagnostic.Kind kind, CharSequence msg, Element e, AnnotationMirror a)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">printMessage</span><span class="params">(Diagnostic.Kind kind,</span></span></span><br><span class="line"><span class="function"><span class="params">                      CharSequence msg,</span></span></span><br><span class="line"><span class="function"><span class="params">                      Element e,</span></span></span><br><span class="line"><span class="function"><span class="params">                      AnnotationMirror a,</span></span></span><br><span class="line"><span class="function"><span class="params">                      AnnotationValue v)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>printMessage</td>
+<td>打印错误消息</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>参考：</p>
+<p><a href="https://blog.csdn.net/qq_30379689/article/details/82345625" target="_blank" rel="noopener">https://blog.csdn.net/qq_30379689/article/details/82345625</a></p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/07/java/java-annotations-tips/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/study-android-jitpack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/09/study/study-android-jitpack/">study-android-jitpack</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/09/study/study-android-jitpack/" class="archive-article-date">
+  	<time datetime="2018-07-09T08:54:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/09/study/study-android-jitpack/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-android/android-jetpack-basic" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -958,187 +1497,6 @@
 
 
   
-    <article id="post-poetry/poetry-love" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/11/poetry/poetry-love/">poetry-love</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/11/poetry/poetry-love/" class="archive-article-date">
-  	<time datetime="2018-05-11T03:13:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>如果今生我们注定擦肩而过，我能做的，惟有深深地祝福你，愿你永远快乐！然后收我所有的点点情意，期待下世再与你相逢…</p>
-</li>
-<li><p>就是这样一个普通女孩，一见不过尔尔，再见方觉有些可爱，最终经历千山万水走到她身边，才惊呼她魅力非凡</p>
-</li>
-<li><p>夜阑卧听风吹雨，铁马是你，冰河也是你  </p>
-</li>
-<li><p>月落乌啼霜满天，江枫似卿，渔火亦似卿。 </p>
-</li>
-<li><p>年年白发催人老，夜夜是你，青山也是你 </p>
-</li>
-<li><p>晓看天色暮看云，行也思君，坐也思君 </p>
-</li>
-<li><p>二斤黄酒加十年相思，才说出喜欢二字 </p>
-</li>
-<li><p>我从未拥有过你一秒钟，心里却失去过你千万次 </p>
-</li>
-<li><p>总有一天 你会遇见一个好姑娘 她不要你有房子 不要你有车子 不要你有钻石 更不要你的钱 也不要你。 </p>
-</li>
-<li><p>遇见你</p>
-<p>我变得很低很低</p>
-<p>一直低到尘埃里去</p>
-<p>但我的心是欢喜的</p>
-<p>并且在那里开出一朵花来</p>
-</li>
-<li><p>一生会遇见两个人，一个惊艳了时光，一个温柔了岁月</p>
-</li>
-<li><p>一生待一人，一世一双人</p>
-</li>
-<li><p>那么多少轮回的眷恋才许得今生这一世姻缘！</p>
-</li>
-<li><p>怎么用一句话，写出一个悲情的有诗感的爱情故事？</p>
-<p>系统提示：你们有67个共同朋友，是否添加她为好友？</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/11/poetry/poetry-love/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-poetry/poetry-english" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/11/poetry/poetry-english/">优美的英文诗句</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/11/poetry/poetry-english/" class="archive-article-date">
-  	<time datetime="2018-05-11T02:59:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p><strong>I love three things in the world, the sun, the moon and you. The sun for day, the moon for the night, and you forever</strong></p>
-<p>浮世三千，吾爱有三。日，月与卿。日为朝，月为暮，卿为朝朝暮暮。</p>
-</li>
-<li><p><strong>Some of us get dipped in flat, some in satin, some in gloss. But every once in a while you find someone who’s iridescent, and when you do, nothing will ever compare.(怦然心动)</strong></p>
-<p>有人住高楼,有人在深沟,有人光万丈,有人一身锈,世人万千种,浮云莫去求,斯人若彩虹,遇上方知有</p>
-</li>
-<li><p>If he likes cake, he will not like you, even if you’re the best chocolate. But always remember, to be the best of yourself, the right person will like you. </p>
-<p>也对<br>自己是梧桐，凤凰才会来栖，自己是大海，百川才来汇聚<br>花香自有蝶舞来，日子没到强求又何必<br>做全世界最棒的巧克力，你自然会碰见来自四面八方的巧克力爱好者。</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">poetry</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/11/poetry/poetry-english/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1240,11 +1598,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1256,7 +1610,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1284,15 +1646,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">poetry</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1305,6 +1659,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>

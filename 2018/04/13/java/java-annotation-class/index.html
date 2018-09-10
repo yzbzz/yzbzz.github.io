@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="yzbzz.github.io">
   <title>Java 编译时注解(RetentionPolicy.CLASS) | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Blog">
+  <meta name="description" content="前言对于编译时注解RetentionPolicy.CLASS，我们需要自定义注解处理器，参照Java 注解处理器(Annotation Processor)。 定义编译时注解1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950@AutoService(Processor">
 <meta name="keywords" content="java,Annotation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 编译时注解(RetentionPolicy.CLASS)">
 <meta property="og:url" content="yzbzz.github.io/2018/04/13/java/java-annotation-class/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
-<meta property="og:description" content="Blog">
+<meta property="og:description" content="前言对于编译时注解RetentionPolicy.CLASS，我们需要自定义注解处理器，参照Java 注解处理器(Annotation Processor)。 定义编译时注解1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950@AutoService(Processor">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-28T05:55:08.732Z">
+<meta property="og:updated_time" content="2018-09-07T08:41:31.672Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 编译时注解(RetentionPolicy.CLASS)">
-<meta name="twitter:description" content="Blog">
+<meta name="twitter:description" content="前言对于编译时注解RetentionPolicy.CLASS，我们需要自定义注解处理器，参照Java 注解处理器(Annotation Processor)。 定义编译时注解1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950@AutoService(Processor">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
   
@@ -211,7 +211,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于编译时注解<code>RetentionPolicy.CLASS</code>，我们需要自定义注解处理器，参照<a href="/2018/04/18/java/java-annotations-processor/">Java 注解处理器(Annotation Processor)</a>。</p>
+<h3 id="定义编译时注解"><a href="#定义编译时注解" class="headerlink" title="定义编译时注解"></a>定义编译时注解</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AutoService</span>(Processor.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IRouterProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Messager messager;</span><br><span class="line">	<span class="keyword">private</span> Elements elementUtils;</span><br><span class="line">	<span class="keyword">private</span> Filer filer;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment processingEnvironment)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.init(processingEnvironment);</span><br><span class="line">		messager = processingEnv.getMessager();</span><br><span class="line">		elementUtils = processingEnv.getElementUtils();</span><br><span class="line">        <span class="comment">// 支持通过注解处理器创建新文件</span></span><br><span class="line">		filer = processingEnv.getFiler();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedAnnotationTypes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Set&lt;String&gt; types = <span class="keyword">new</span> LinkedHashSet&lt;&gt;();</span><br><span class="line">		types.add(IRouter.class.getCanonicalName());</span><br><span class="line">		<span class="keyword">return</span> types;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> SourceVersion.latestSupported();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annotations,</span></span></span><br><span class="line"><span class="function"><span class="params">			RoundEnvironment roundEnv)</span> </span>&#123;</span><br><span class="line">		Set&lt;? extends Element&gt; routerElements = roundEnv.getElementsAnnotatedWith(IRouter.class);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">null</span> != routerElements &amp;&amp; !routerElements.isEmpty()) &#123;</span><br><span class="line">				parseRoutes(routerElements);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">parseRoutes</span><span class="params">(Set&lt;? extends Element&gt; routerElements)</span></span></span><br><span class="line"><span class="function">			<span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (Element element : routerElements) &#123;</span><br><span class="line">			TypeElement typeElement = (TypeElement) element.getEnclosingElement();</span><br><span class="line">			TypeMirror mirror = element.asType();</span><br><span class="line">			ElementKind kind = element.getKind();</span><br><span class="line">			Name name = element.getSimpleName();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -470,11 +472,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -486,7 +484,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hole</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -514,15 +520,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hole</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">poetry</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -535,6 +533,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>
