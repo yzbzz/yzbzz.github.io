@@ -191,6 +191,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-study/study-gitlab" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/11/study/study-gitlab/">study-gitlab</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/11/study/study-gitlab/" class="archive-article-date">
+  	<time datetime="2018-09-11T03:28:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="备份与还原"><a href="#备份与还原" class="headerlink" title="备份与还原"></a>备份与还原</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-rake gitlab:backup:create</span><br></pre></td></tr></table></figure>
+<p>发果出现下面的提示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Errno::EACCES: Permission denied @ dir_s_mkdir - /var/opt/gitlab/backups</span><br></pre></td></tr></table></figure>
+<p>表明没有执行<code>mkdir</code>的权限 </p>
+<p>先使用<code>ls -al</code>命令查看<code>backups</code>文件夹的权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drwx------   2 root          root       4096 Sep 11 11:04 backups</span><br></pre></td></tr></table></figure>
+<p>判断是执行实际操作的gitlab相关用户：git，没有足够的权限。依次执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost_xx.xx.xx.xxx gitlab]<span class="comment"># mkdir /var/opt/gitlab/backups</span></span><br><span class="line">[root@localhost_xx.xx.xx.xxx gitlab]<span class="comment"># mkdir /var/opt/gitlab/backups</span></span><br><span class="line">[root@localhost_xx.xx.xx.xxx gitlab]<span class="comment"># mkdir /var/opt/gitlab/backups</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果之前使用了 <em>rm -rf backups</em> 命令移除整个backups文件夹，所以需要再次mkdir。如果该文件夹已经存在，就不需要mkdir了</p>
+</blockquote>
+<p>以上命令执行完成后，再次 <em>ls -al</em>，发现backups的权限已经发生改变了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drwx------   2 git          root       4096 Sep 11 11:04 backups</span><br></pre></td></tr></table></figure>
+<p>再次执行backup或者restore，已经可以正常运行，问题解决。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/11/study/study-gitlab/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-java/java-annotations-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1387,127 +1463,6 @@
 
 
   
-    <article id="post-poetry/poetry-heart" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/11/poetry/poetry-heart/">心灵鸡汤</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/11/poetry/poetry-heart/" class="archive-article-date">
-  	<time datetime="2018-05-11T03:17:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>不在乎有的，不惦记没的，不害怕失去的，不追求强扭的。对得到适可而止，对失去心无畏惧 </p>
-</li>
-<li><p>喷泉之所以漂亮是因为她有了压力；瀑布之所以壮观是因为她没有了退路；水之所以能穿石是因为永远在坚持 </p>
-</li>
-<li><p>只要你真正努力过，再惨也不过是大器晚成</p>
-</li>
-<li><p>人最怕一生碌碌无为，还说平凡难能可贵</p>
-</li>
-<li><p>因果不虚，你昨天偷过的懒，总有一天会变成一记重重的耳光，打在你的脸上 </p>
-</li>
-<li><p>有钱虽不意味着你想干什么就能干什么，但可以让你不想做什么就不做什么 </p>
-</li>
-<li><p>不管我们活成了什么样子，优秀也好，平庸也罢，高贵也好，卑贱也罢，富裕也好，贫穷也罢，总会有人喜欢你，也总会有人不喜欢你。</p>
-</li>
-<li><p>没有钱，你拿什么维持你的亲情，稳固你的爱情，联络你的友情，靠嘴说吗，别闹了，大家都挺忙的！</p>
-</li>
-<li><p>宁愿浪费3分钟或2个小时换来一句“不过如此”，也别让快进和剧透造成一点“早知当初”。</p>
-</li>
-<li><p>因果不虚，你昨天偷过的懒，总有一天会变成一记重重的耳光，打在你的脸上</p>
-</li>
-<li><p>你安逸到无法改变，成为所谓“佛系青年”</p>
-</li>
-<li><p>比你好看的人还比你优秀，比你优秀的人还比你努力，努力用几个月的时间做足了你一年都做不了的准备</p>
-</li>
-<li><p>在没有人看到的地方去努力，坚持早起、坚持学习、坚持运动，不断学习新技能，努力遇见更好的自己。</p>
-</li>
-<li><p>世界有2件事最难：一是把自己的知识装进别人的脑袋；二是把别人的钱装进自己的口袋 </p>
-</li>
-<li><p>你之所以即使疲劳了，也不肯睡觉，是因为你没有勇气结束这一天，也没有勇气迎接新的一天</p>
-</li>
-<li><p>在为浪费时间而后悔和自责时，你依然在浪费时间。</p>
-</li>
-<li><p>哪有什么岁月静好，只是有人为你默默承受 </p>
-</li>
-<li><p>当你开始变优秀的时候，连世界都会忍不住想要跟你做朋友。那些曾经想也不敢想的资源会尽数朝你倾过来，那些做梦也想不到的际遇会如雨后春笋般出现在你身旁。</p>
-</li>
-<li><p>上帝给你的所有东西都是明码标价的，现在你浪费青春换来的片刻安逸，未来要用半辈子的辛苦劳作去偿还。 </p>
-</li>
-<li><p>正如我常说的，人生是一个积分，你的选择影响的绝不仅仅是你自己，还有你的孩子。今天安逸的选择或许让你的人生某个阶段更加舒适，但是往往也意味着你给孩子设置了一个本可以没有的屏障 </p>
-</li>
-<li><p>我怕自己成功的速度赶不上父母老去的速度，或者父母已经老了而我还没有成功</p>
-</li>
-<li><p>不是急于求成，也不是踟蹰不前，只是朝着一个方向，慢慢地往前走着。世上没有白走的路，每走一步都算数。</p>
-</li>
-<li><p>目标设到月球，即使失败，也能落到众星之间。</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">poetry</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/11/poetry/poetry-heart/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1609,11 +1564,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1633,6 +1588,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -1641,15 +1600,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1657,11 +1608,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1673,7 +1620,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
             
             <div class="clearfix"></div>
