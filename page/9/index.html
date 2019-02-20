@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="yzbzz.github.io">
   <title>Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -36,7 +36,7 @@
   
 
 </head>
-
+</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -57,6 +57,8 @@
 			<ul>
 			
 				<li><a href="/tags/android">Android</a></li>
+	        
+				<li><a href="/tags/flutter">Flutter</a></li>
 	        
 				<li><a href="/tags/ios">IOS</a></li>
 	        
@@ -140,6 +142,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -160,21 +164,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/tags/android">Android</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/android">Android</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/ios">IOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/flutter">Flutter</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/java">Java</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/ios">IOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/fe">FE前端</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/java">Java</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/read">读书笔记</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/fe">FE前端</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/blog">博客地址</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/read">读书笔记</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/study">安装配置</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/blog">博客地址</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/hole">踩过的坑</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/study">安装配置</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/tags/hole">踩过的坑</a></li>
 		        
 				</ul>
 			</nav>
@@ -190,6 +196,418 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-android/android-context" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/21/android/android-context/">android-context</a>
+    </h1>
+  
+
+        
+        <a href="/2016/05/21/android/android-context/" class="archive-article-date">
+  	<time datetime="2016-05-21T10:53:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Context的能力"><a href="#Context的能力" class="headerlink" title="Context的能力"></a>Context的能力</h2><p>Context能做的通用操作决定于这个context最初来源于哪里。下表所列的是，在应用中常见的会收到context对象，以及对应的每种情况，它可以用于哪些地方：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Application</th>
+<th>Activity</th>
+<th>Service</th>
+<th>ContentProvider</th>
+<th>BroadcaseReceiver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>显示Dialog</td>
+<td>NO</td>
+<td>YEA</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>启动Activity</td>
+<td>NO1</td>
+<td>YES</td>
+<td>NO1</td>
+<td>NO1</td>
+<td>NO1</td>
+</tr>
+<tr>
+<td>Layout Inflation</td>
+<td>NO2</td>
+<td>YES</td>
+<td>NO2</td>
+<td>NO2</td>
+<td>NO2</td>
+</tr>
+<tr>
+<td>启动Service</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>绑定Service</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>发送Broadcast</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>注册BroadcastReceiver</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO3</td>
+</tr>
+<tr>
+<td>加载Resource</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+</tbody>
+</table>
+<p>需要注意的是：</p>
+<ul>
+<li>NO1：表示这些类的确可以开始一个Activity，但是它需要创建一个新的task。这可能会满足一些特定的需求，但是在你的应用中会创建一个不标准的回退栈（back stack），这通常是不推荐的或者不是最好的实践</li>
+<li>NO2：表示这些类去layout inflate是合法的，但是会使用系统默认的主题，如果你自定义了某些样式，可能不会被使用</li>
+<li>NO3：表示在receiver为null时允许，在4.2或以上的版本中，用于获取黏性广播的当前值。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>对于UI相关的方法，都不建议或者不可使用Application，都应该使用Activity作为Context来处理。另外需要注意Context引用的持有，防止内存泄漏。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/05/21/android/android-context/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Swift/swift-basic" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/21/Swift/swift-basic/">Swift初见</a>
+    </h1>
+  
+
+        
+        <a href="/2016/05/21/Swift/swift-basic/" class="archive-article-date">
+  	<time datetime="2016-05-21T09:48:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><blockquote>
+<p>本文摘至：《The Swift Programming Language》</p>
+</blockquote>
+<p>Swift是一种新的编程语言，用于编写ios，OS X和watch OS应用程序。Swift结合了C和Objective-C的优点并且不受C兼容性的限制。Swift采用安全的编程模式并添加了很多新特性，这将使编程更简单，更灵活，也更有趣。Swift是基于成熟而且倍受喜爱的Cocoa和Cocoa Touch框架，它的降临将重新定义软件开发。</p>
+<blockquote>
+<p>使用Playground编写Swift，可以实现查看。打开Xcode，创建一个Playground文件(File –&gt; New –&gt; Playground)。</p>
+<p>Tips:  把鼠标放在Playground的右边区域，会有个小眼睛的图标和一个小白圈，点击有惊喜</p>
+</blockquote>
+<p><img src="/img/swift/swift-playground.png" alt="swift-playground"></p>
+        
+          <a class="article-more-a" href="/2016/05/21/Swift/swift-basic/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/05/21/Swift/swift-basic/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java/java8-stream" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/19/java/java8-stream/">Stream</a>
+    </h1>
+  
+
+        
+        <a href="/2016/05/19/java/java8-stream/" class="archive-article-date">
+  	<time datetime="2016-05-19T06:52:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>本篇会介绍Steam类中的一组方法，每个方法都对应集合上的一种操作</p>
+<h2 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h2><p>定义一个集合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; numbers = Arrays.asList(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);</span><br></pre></td></tr></table></figure>
+<p>外部迭代</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用for循环</span></span><br><span class="line"><span class="keyword">for</span> (String number : numbers) &#123;</span><br><span class="line">    System.out.println(number);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 迭代器</span></span><br><span class="line">Iterator&lt;String&gt; iterator = numbers.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">    String number = iterator.next();</span><br><span class="line">    System.out.println(number);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>内部迭代（Stream）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numbers.stream().forEach(action -&gt; System.out.println(action));</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2016/05/19/java/java8-stream/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">stream</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/05/19/java/java8-stream/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java/java8-lambda" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/19/java/java8-lambda/">Lambda 表达式</a>
+    </h1>
+  
+
+        
+        <a href="/2016/05/19/java/java8-lambda/" class="archive-article-date">
+  	<time datetime="2016-05-19T06:18:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Java 8 的最大变化是引入了Lambda表达式 —— 一种紧凑的、传递行为的方式，接下来就了解一下什么是Lambda表达式。</p>
+<blockquote>
+<p>为什么要叫这个名字呢？这多年前，在计算机出现之前，有位名叫<code>Alonzo Church</code>的逻辑学家，他想要证明什么样的数学函数是可以有效计算的(奇怪的是，当时已经存在了许多已知的函数，但是没有人知道怎么去计算它们的值)。他使用希腊字母的<code>lambda(𝛌)</code>来标记参数 。为什么使用<code>𝛌</code>?难道Church没有其它拉丁字母可用了吗？事实上经典的《数学原理》中使用”^”符号表示自由变量，这启发Church使用大写的<code>lambda &quot;Λ&quot;</code>来表示参数。但是最终，他选择换回到小写版本。于是从那时起，还有参数变量的表达式都被称为lambda表达式。</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2016/05/19/java/java8-lambda/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">lambda</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/05/19/java/java8-lambda/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-android/android-animation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -406,7 +824,7 @@
       
 
       
-    </div>
+    </p></div>
     <div class="article-info article-info-index">
       
       
@@ -482,7 +900,7 @@
       
 
       
-    </div>
+    </p></div>
     <div class="article-info article-info-index">
       
       
@@ -534,7 +952,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Yzbzz
+    		&copy; 2019 Yzbzz
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -621,11 +1039,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -637,7 +1059,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -657,6 +1079,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
@@ -665,11 +1091,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">music</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -677,15 +1103,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color1">music</a>
               </li>
             
             <div class="clearfix"></div>
@@ -693,7 +1115,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

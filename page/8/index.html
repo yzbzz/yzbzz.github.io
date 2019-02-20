@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="yzbzz.github.io">
   <title>Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -36,7 +36,7 @@
   
 
 </head>
-
+</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -57,6 +57,8 @@
 			<ul>
 			
 				<li><a href="/tags/android">Android</a></li>
+	        
+				<li><a href="/tags/flutter">Flutter</a></li>
 	        
 				<li><a href="/tags/ios">IOS</a></li>
 	        
@@ -140,6 +142,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -160,21 +164,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/tags/android">Android</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/android">Android</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/ios">IOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/flutter">Flutter</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/java">Java</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/ios">IOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/fe">FE前端</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/java">Java</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/read">读书笔记</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/fe">FE前端</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/blog">博客地址</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/read">读书笔记</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/study">安装配置</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/blog">博客地址</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/hole">踩过的坑</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/study">安装配置</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/tags/hole">踩过的坑</a></li>
 		        
 				</ul>
 			</nav>
@@ -190,6 +196,379 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-fe/react-native-flex" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/29/fe/react-native-flex/">react-native-flex</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/29/fe/react-native-flex/" class="archive-article-date">
+  	<time datetime="2016-08-29T07:18:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="使用Flexbox布局"><a href="#使用Flexbox布局" class="headerlink" title="使用Flexbox布局"></a>使用Flexbox布局</h3><p>我们在React Native中使用flexbox规则来指定某个组件的子元素的布局。Flexbox可以在不同屏幕尺寸上提供一致的布局结构。</p>
+<p>一般来说，使用<code>flexDirection</code>、<code>alignItems</code>、<code>justifyContent</code>三个样式属性就已经能满足大多数布局要求。</p>
+<h4 id="Flex-Direction"><a href="#Flex-Direction" class="headerlink" title="Flex Direction"></a>Flex Direction</h4><p>在组件的<code>style</code>中指定<code>flexDirection</code>可以决定布局的<strong>主轴</strong>。子元素是应该沿着<strong>水平轴</strong>(row)方向排列，还是沿着<strong>竖直轴</strong>(column)方向排列呢？默认值是<strong>竖直轴</strong>(column)方向。</p>
+<h4 id="Justify-Content"><a href="#Justify-Content" class="headerlink" title="Justify Content"></a>Justify Content</h4><p>在组件的style中指定<code>justifyContent</code>可以决定其子元素沿着<strong>主轴</strong>的<strong>排列方式</strong>。子元素是应该靠近主轴的起始端还是末尾段分布呢？亦或应该均匀分布？对应的这些可选项有：<code>flex-start</code>、<code>center</code>、<code>flex-end</code>、<code>space-around</code>以及<code>space-between</code></p>
+<h4 id="Align-Items"><a href="#Align-Items" class="headerlink" title="Align Items"></a>Align Items</h4><p>在组件的style中指定<code>alignItems</code>可以决定其子元素沿着<strong>次轴</strong>（与主轴垂直的轴，比如若主轴方向为row，则次轴方向为column）的排列方式。子元素是应该靠近次轴的起始端还是末尾段分布呢？亦或应该均匀分布？对应的这些可选项有：<code>flex-start</code>、<code>center</code>、<code>flex-end</code>以及<code>stretch</code>。</p>
+<blockquote>
+<p>注意：要使stretch选项生效的话，子元素在次轴方向上不能有固定的尺寸</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">fe</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/08/29/fe/react-native-flex/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-fe/react-native-text" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/22/fe/react-native-text/">react-native-text</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/22/fe/react-native-text/" class="archive-article-date">
+  	<time datetime="2016-08-22T08:47:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h3><p>一个用于显示文本的React组件</p>
+<p><code>Text</code>支持嵌套、样式和触摸事件</p>
+<h3 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h3><hr>
+<p>accessible bool</p>
+<p>When set to true, indicates that the view is an accessibility element. The default value for a Text element is true.</p>
+<h2 id="See-the-Accessibility-guide-for-more-information"><a href="#See-the-Accessibility-guide-for-more-information" class="headerlink" title="See the Accessibility guide for more information."></a>See the Accessibility guide for more information.</h2><p>ellipsizeMode enum(‘head’, ‘middle’, ‘tail’, ‘clip’)</p>
+<p>This can be one of the following values:</p>
+<p>head - The line is displayed so that the end fits in the container and the missing text at the beginning of the line is indicated by an ellipsis glyph. e.g., “…wxyz”<br>middle - The line is displayed so that the beginning and end fit in the container and the missing text in the middle is indicated by an ellipsis glyph. “ab…yz”<br>tail - The line is displayed so that the beginning fits in the container and the missing text at the end of the line is indicated by an ellipsis glyph. e.g., “abcd…”<br>clip - Lines are not drawn past the edge of the text container.<br>The default is tail.</p>
+<p>numberOfLines must be set in conjunction with this prop.</p>
+<p>clip is working only for iOS<br>numberOfLines number</p>
+<p>Used to truncate the text with an ellipsis after computing the text layout, including line wrapping, such that the total number of lines does not exceed this number.</p>
+<p>This prop is commonly used with ellipsizeMode.</p>
+<p>onLayout function</p>
+<p>Invoked on mount and layout changes with</p>
+<p>{nativeEvent: {layout: {x, y, width, height}}}</p>
+<p>onLongPress function</p>
+<p>This function is called on long press.</p>
+<p>e.g., `onLongPress={this.increaseSize}&gt;``</p>
+<p>onPress function</p>
+<p>This function is called on press.</p>
+<p>e.g., `onPress={() =&gt; console.log(‘1st’)}``</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">fe</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/08/22/fe/react-native-text/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-fe/react-native-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/22/fe/react-native-view/">react-native-view</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/22/fe/react-native-view/" class="archive-article-date">
+  	<time datetime="2016-08-22T08:22:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>最基本的构建UI视图的容器，<code>View</code> 支持flexbox、style、一些触摸事件和访问性控制，<code>View</code>直接映射到<code>native</code>视图，不管在什么平台，不管它是UIView，<div>，android.view，等等…</div></p>
+<p><code>View</code>设计成嵌套其它视图，可以有0到任何类型的children</p>
+<blockquote>
+<p>View的设计初衷是和StyleSheet搭配使用，这样可以使代码更清晰并且获得更高的性能。尽管内联样式也同样可以使用</p>
+</blockquote>
+<h3 id="合成触摸事件"><a href="#合成触摸事件" class="headerlink" title="合成触摸事件"></a>合成触摸事件</h3><h3 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h3><h4 id="style"><a href="#style" class="headerlink" title="style"></a>style</h4><p><code>backfaceVisibility</code> ReactPropTypes.oneOf([‘visible’, ‘hidden’])<br><code>backgroundColor</code> color<br><code>borderBottomColor</code> color<br><code>borderBottomLeftRadius</code> ReactPropTypes.number<br><code>borderBottomRightRadius</code> ReactPropTypes.number<br><code>borderBottomWidth</code> ReactPropTypes.number<br><code>borderColor</code> color<br><code>borderLeftColor</code> color<br><code>borderLeftWidth</code> ReactPropTypes.number<br><code>borderRadius</code> ReactPropTypes.number<br><code>borderRightColor</code> color<br><code>borderRightWidth</code> ReactPropTypes.number<br><code>borderStyle</code> ReactPropTypes.oneOf([‘solid’, ‘dotted’, ‘dashed’])<br><code>borderTopColor</code> color<br><code>borderTopLeftRadius</code> ReactPropTypes.number<br><code>borderTopRightRadius</code> ReactPropTypes.number<br><code>borderTopWidth</code> ReactPropTypes.number<br><code>borderWidth</code> ReactPropTypes.number<br><code>opacity</code> ReactPropTypes.number<br><code>overflow</code> ReactPropTypes.oneOf([‘visible’, ‘hidden’])</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">fe</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/08/22/fe/react-native-view/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/22/study/hexo/">hexo</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/22/study/hexo/" class="archive-article-date">
+  	<time datetime="2016-08-22T08:11:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h3><blockquote>
+<p>官网：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">https://hexo.io/zh-cn/</a></p>
+</blockquote>
+<p>主题：<a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a></p>
+<p>MARKDOWN EDITOR: <a href="https://typora.io" target="_blank" rel="noopener">typora</a></p>
+<h3 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<p>其它命令不确定，部署这个命令一定要用git bash，否则会提示</p>
+<p><code>Permission denied (publickey).</code></p>
+<p>推荐博客：</p>
+<p><a href="http://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html" target="_blank" rel="noopener">http://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html</a></p>
+<p><a href="https://smartbeng.github.io/2017/03/26/blogFinish/" target="_blank" rel="noopener">最适合新手的 GitHub + Hexo 「大话」博客搭建教程</a></p>
+<p><a href="http://liuqingwen.me/blog/2017/04/11/hexo-blog-creation-work-progress/" target="_blank" rel="noopener">新手搭建博客过程</a></p>
+<h3 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h3><ul>
+<li><p>安装Hexo</p>
+<p><code>sudo npm install -g hexo</code></p>
+</li>
+<li><p>初始化</p>
+<p><code>hexo init</code></p>
+</li>
+<li><p>生成静态页面</p>
+<p><code>hexo generate</code>(hexo g也可以)</p>
+</li>
+<li><p>本地启动</p>
+<p><code>hexo server</code></p>
+</li>
+<li><p>执行配置命令上传到github</p>
+<p><code>hexo deploy</code></p>
+</li>
+<li><p>新建文章</p>
+<p><code>hexo new &#39;postName&#39;</code></p>
+</li>
+<li><p>新建页面</p>
+<p><code>hexo new page &#39;pageName&#39;</code></p>
+</li>
+<li><p>查盾帮助</p>
+<p><code>hexo help</code></p>
+</li>
+<li><p>查看Hexo的版本</p>
+<p><code>hexo version</code></p>
+</li>
+<li><p>每次部署的步骤，可按以下三步来进行</p>
+<p>hexo clean</p>
+<p>hexo g</p>
+<p>hexo d</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/08/22/study/hexo/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-Swift/swift-life-cycle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -799,418 +1178,6 @@
 
 
   
-    <article id="post-android/android-context" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/21/android/android-context/">android-context</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/21/android/android-context/" class="archive-article-date">
-  	<time datetime="2016-05-21T10:53:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Context的能力"><a href="#Context的能力" class="headerlink" title="Context的能力"></a>Context的能力</h2><p>Context能做的通用操作决定于这个context最初来源于哪里。下表所列的是，在应用中常见的会收到context对象，以及对应的每种情况，它可以用于哪些地方：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Application</th>
-<th>Activity</th>
-<th>Service</th>
-<th>ContentProvider</th>
-<th>BroadcaseReceiver</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>显示Dialog</td>
-<td>NO</td>
-<td>YEA</td>
-<td>NO</td>
-<td>NO</td>
-<td>NO</td>
-</tr>
-<tr>
-<td>启动Activity</td>
-<td>NO1</td>
-<td>YES</td>
-<td>NO1</td>
-<td>NO1</td>
-<td>NO1</td>
-</tr>
-<tr>
-<td>Layout Inflation</td>
-<td>NO2</td>
-<td>YES</td>
-<td>NO2</td>
-<td>NO2</td>
-<td>NO2</td>
-</tr>
-<tr>
-<td>启动Service</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-</tr>
-<tr>
-<td>绑定Service</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-</tr>
-<tr>
-<td>发送Broadcast</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-</tr>
-<tr>
-<td>注册BroadcastReceiver</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO3</td>
-</tr>
-<tr>
-<td>加载Resource</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-</tr>
-</tbody>
-</table>
-<p>需要注意的是：</p>
-<ul>
-<li>NO1：表示这些类的确可以开始一个Activity，但是它需要创建一个新的task。这可能会满足一些特定的需求，但是在你的应用中会创建一个不标准的回退栈（back stack），这通常是不推荐的或者不是最好的实践</li>
-<li>NO2：表示这些类去layout inflate是合法的，但是会使用系统默认的主题，如果你自定义了某些样式，可能不会被使用</li>
-<li>NO3：表示在receiver为null时允许，在4.2或以上的版本中，用于获取黏性广播的当前值。</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>对于UI相关的方法，都不建议或者不可使用Application，都应该使用Activity作为Context来处理。另外需要注意Context引用的持有，防止内存泄漏。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/21/android/android-context/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Swift/swift-basic" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/21/Swift/swift-basic/">Swift初见</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/21/Swift/swift-basic/" class="archive-article-date">
-  	<time datetime="2016-05-21T09:48:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><blockquote>
-<p>本文摘至：《The Swift Programming Language》</p>
-</blockquote>
-<p>Swift是一种新的编程语言，用于编写ios，OS X和watch OS应用程序。Swift结合了C和Objective-C的优点并且不受C兼容性的限制。Swift采用安全的编程模式并添加了很多新特性，这将使编程更简单，更灵活，也更有趣。Swift是基于成熟而且倍受喜爱的Cocoa和Cocoa Touch框架，它的降临将重新定义软件开发。</p>
-<blockquote>
-<p>使用Playground编写Swift，可以实现查看。打开Xcode，创建一个Playground文件(File –&gt; New –&gt; Playground)。</p>
-<p>Tips:  把鼠标放在Playground的右边区域，会有个小眼睛的图标和一个小白圈，点击有惊喜</p>
-</blockquote>
-<p><img src="/img/swift/swift-playground.png" alt="swift-playground"></p>
-        
-          <a class="article-more-a" href="/2016/05/21/Swift/swift-basic/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/21/Swift/swift-basic/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-java/java8-stream" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/19/java/java8-stream/">Stream</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/19/java/java8-stream/" class="archive-article-date">
-  	<time datetime="2016-05-19T06:52:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>本篇会介绍Steam类中的一组方法，每个方法都对应集合上的一种操作</p>
-<h2 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h2><p>定义一个集合</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; numbers = Arrays.asList(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);</span><br></pre></td></tr></table></figure>
-<p>外部迭代</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用for循环</span></span><br><span class="line"><span class="keyword">for</span> (String number : numbers) &#123;</span><br><span class="line">    System.out.println(number);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 迭代器</span></span><br><span class="line">Iterator&lt;String&gt; iterator = numbers.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">    String number = iterator.next();</span><br><span class="line">    System.out.println(number);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>内部迭代（Stream）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numbers.stream().forEach(action -&gt; System.out.println(action));</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2016/05/19/java/java8-stream/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">stream</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/19/java/java8-stream/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-java/java8-lambda" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/19/java/java8-lambda/">Lambda 表达式</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/19/java/java8-lambda/" class="archive-article-date">
-  	<time datetime="2016-05-19T06:18:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Java 8 的最大变化是引入了Lambda表达式 —— 一种紧凑的、传递行为的方式，接下来就了解一下什么是Lambda表达式。</p>
-<blockquote>
-<p>为什么要叫这个名字呢？这多年前，在计算机出现之前，有位名叫<code>Alonzo Church</code>的逻辑学家，他想要证明什么样的数学函数是可以有效计算的(奇怪的是，当时已经存在了许多已知的函数，但是没有人知道怎么去计算它们的值)。他使用希腊字母的<code>lambda(𝛌)</code>来标记参数 。为什么使用<code>𝛌</code>?难道Church没有其它拉丁字母可用了吗？事实上经典的《数学原理》中使用”^”符号表示自由变量，这启发Church使用大写的<code>lambda &quot;Λ&quot;</code>来表示参数。但是最终，他选择换回到小写版本。于是从那时起，还有参数变量的表达式都被称为lambda表达式。</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2016/05/19/java/java8-lambda/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">lambda</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/19/java/java8-lambda/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -1225,7 +1192,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Yzbzz
+    		&copy; 2019 Yzbzz
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1312,11 +1279,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1328,7 +1299,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1348,6 +1319,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
@@ -1356,11 +1331,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">music</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1368,15 +1343,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color1">music</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1384,7 +1355,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

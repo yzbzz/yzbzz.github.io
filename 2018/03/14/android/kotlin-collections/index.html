@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="yzbzz.github.io">
   <title>Kotlin详解集合与操作符 | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
 <meta property="og:description" content="[TOC] 前言kotlin的集合分为不可变集合和可变集合 Kotlin 的 List&amp;lt;out T&amp;gt; 只提供只读操作如 size、get等的接口。和 Java 类似，它继承自 Collection&amp;lt;T&amp;gt; 进而继承自 Iterable&amp;lt;T&amp;gt;。改变 list 的方法是由 MutableList&amp;lt;T&amp;gt; 加入的。这一模式同样适用于 Set&amp;lt;out T&amp;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-09T06:16:30.011Z">
+<meta property="og:updated_time" content="2018-04-09T06:16:30.012Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin详解集合与操作符">
 <meta name="twitter:description" content="[TOC] 前言kotlin的集合分为不可变集合和可变集合 Kotlin 的 List&amp;lt;out T&amp;gt; 只提供只读操作如 size、get等的接口。和 Java 类似，它继承自 Collection&amp;lt;T&amp;gt; 进而继承自 Iterable&amp;lt;T&amp;gt;。改变 list 的方法是由 MutableList&amp;lt;T&amp;gt; 加入的。这一模式同样适用于 Set&amp;lt;out T&amp;">
@@ -38,7 +38,7 @@
   
 
 </head>
-
+</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -59,6 +59,8 @@
 			<ul>
 			
 				<li><a href="/tags/android">Android</a></li>
+	        
+				<li><a href="/tags/flutter">Flutter</a></li>
 	        
 				<li><a href="/tags/ios">IOS</a></li>
 	        
@@ -142,6 +144,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -162,21 +166,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/tags/android">Android</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/android">Android</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/ios">IOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/flutter">Flutter</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/java">Java</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/ios">IOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/fe">FE前端</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/java">Java</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/read">读书笔记</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/fe">FE前端</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/blog">博客地址</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/read">读书笔记</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/study">安装配置</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/blog">博客地址</a></li>
 		        
-					<li style="width: 12.5%"><a href="/tags/hole">踩过的坑</a></li>
+					<li style="width: 11.11111111111111%"><a href="/tags/study">安装配置</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/tags/hole">踩过的坑</a></li>
 		        
 				</ul>
 			</nav>
@@ -391,7 +397,7 @@
 <p><strong>plus</strong></p>
 <p>使用<code>+</code>号操作符把两个集合合并到一个集合中</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list + listOf(<span class="number">7</span>, <span class="number">8</span> ) <span class="comment">// listOf(1, 2, 3, 4, 5, 6, 7, 8)</span></span><br></pre></td></tr></table></figure>
-<p><strong>zip(返回值 List&lt;Pair<t, r="">&gt;)</t,></strong></p>
+<p><strong>zip(返回值 List&lt;Pair<t, r>&gt;)</t,></strong></p>
 <p>返回由<code>Pair</code>组成的List，每个<code>Pair</code>由两个集合中相同index的元素组成。这个返回的List的大小是由最小的那个集合决定</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">list.zip(listOf(<span class="number">7</span>, <span class="number">8</span>)) <span class="comment">// listOf(Pair(1, 7), Pair(2, 8))</span></span><br></pre></td></tr></table></figure>
 <p><strong>unzip</strong></p>
@@ -591,7 +597,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Yzbzz
+    		&copy; 2019 Yzbzz
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -678,11 +684,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color3">fe</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -694,7 +704,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">fe</a>
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -714,6 +724,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
@@ -722,11 +736,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">music</a>
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -734,15 +748,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">smile</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color1">music</a>
               </li>
             
             <div class="clearfix"></div>
@@ -750,7 +760,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:
