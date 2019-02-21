@@ -770,7 +770,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3>
+        <blockquote>
+<p>参考：<a href="https://book.flutterchina.club/chapter1/flutter_intro.html" target="_blank" rel="noopener">https://book.flutterchina.club/chapter1/flutter_intro.html</a></p>
+</blockquote>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Flutter是谷歌的移动UI框架，可以快速在iOS和Android上构建高质量的原生用户界面。 Flutter可以与现有的代码一起工作。在全世界，Flutter正在被越来越多的开发者和组织使用，并且Flutter是完全免费、开源的。</p>
+<p>它也是构建未来的Google Fuchsia应用的主要方式。</p>
+<h3 id="Flutter框架结构"><a href="#Flutter框架结构" class="headerlink" title="Flutter框架结构"></a>Flutter框架结构</h3><p><img src="/img/flutter/flutter_framework.png" alt="flutter_framework"></p>
+<p><img src="/img/flutter/flutter_widget.png" alt="flutter_widget"></p>
+<h3 id="Flutter-Framework"><a href="#Flutter-Framework" class="headerlink" title="Flutter Framework"></a>Flutter Framework</h3><p>这是一个纯 Dart实现的 SDK，它实现了一套基础库，自底向上，我们来简单介绍一下：</p>
+<ul>
+<li>底下两层（Foundation和Animation、Painting、Gestures）在Google的一些视频中被合并为一个dart UI层，对应的是Flutter中的<code>dart:ui</code>包，它是Flutter引擎暴露的底层UI库，提供动画、手势及绘制能力。</li>
+<li>Rendering层，这一层是一个抽象的布局层，它依赖于dart UI层，Rendering层会构建一个UI树，当UI树有变化时，会计算出有变化的部分，然后更新UI树，最终将UI树绘制到屏幕上，这个过程类似于React中的虚拟DOM。Rendering层可以说是Flutter UI框架最核心的部分，它除了确定每个UI元素的位置、大小之外还要进行坐标变换、绘制(调用底层dart:ui)。</li>
+<li>Widgets层是Flutter提供的的一套基础组件库，在基础组件库之上，Flutter还提供了 Material 和Cupertino两种视觉风格的组件库。而<strong>我们Flutter开发的大多数场景，只是和这两层打交道</strong>。</li>
+</ul>
+<h3 id="Flutter-Engine"><a href="#Flutter-Engine" class="headerlink" title="Flutter Engine"></a>Flutter Engine</h3><p>这是一个纯 C++实现的 SDK，其中包括了 Skia引擎、Dart运行时、文字排版引擎等。在代码调用 <code>dart:ui</code>库时，调用最终会走到Engine层，然后实现真正的绘制逻辑。</p>
+
       
 
       
@@ -1375,11 +1389,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1395,15 +1413,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hole</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1419,11 +1429,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+                <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1432,6 +1442,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
