@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="yzbzz.github.io">
   <title>git.md | Yzbzz&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="git命令查看分支 123456// 查看本地所有分支git branch// 查看远程所有分支git branch -r// 查看所有本地分支和远程分支git branch -a">
+  <meta name="description" content="git命令Git库迁移，从一个库迁移到另一个库 1234git clone --mirror &amp;lt;URL to my OLD repo location&amp;gt;cd &amp;lt;New directory where your OLD repo was cloned&amp;gt;git remote set-url origin &amp;lt;URL to my NEW repo location&amp;gt;gi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git.md">
 <meta property="og:url" content="yzbzz.github.io/2017/05/09/git-md/index.html">
 <meta property="og:site_name" content="Yzbzz&#39;s Blog">
-<meta property="og:description" content="git命令查看分支 123456// 查看本地所有分支git branch// 查看远程所有分支git branch -r// 查看所有本地分支和远程分支git branch -a">
+<meta property="og:description" content="git命令Git库迁移，从一个库迁移到另一个库 1234git clone --mirror &amp;lt;URL to my OLD repo location&amp;gt;cd &amp;lt;New directory where your OLD repo was cloned&amp;gt;git remote set-url origin &amp;lt;URL to my NEW repo location&amp;gt;gi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-26T09:30:50.815Z">
+<meta property="og:updated_time" content="2019-03-07T03:49:05.558Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git.md">
-<meta name="twitter:description" content="git命令查看分支 123456// 查看本地所有分支git branch// 查看远程所有分支git branch -r// 查看所有本地分支和远程分支git branch -a">
+<meta name="twitter:description" content="git命令Git库迁移，从一个库迁移到另一个库 1234git clone --mirror &amp;lt;URL to my OLD repo location&amp;gt;cd &amp;lt;New directory where your OLD repo was cloned&amp;gt;git remote set-url origin &amp;lt;URL to my NEW repo location&amp;gt;gi">
   
     <link rel="alternative" href="/atom.xml" title="Yzbzz&#39;s Blog" type="application/atom+xml">
   
@@ -216,7 +216,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="git命令"><a href="#git命令" class="headerlink" title="git命令"></a>git命令</h3><p><strong>查看分支</strong></p>
+        <h3 id="git命令"><a href="#git命令" class="headerlink" title="git命令"></a>git命令</h3><p><strong>Git库迁移，从一个库迁移到另一个库</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone --mirror &lt;URL to my OLD repo location&gt;</span><br><span class="line">cd &lt;New directory where your OLD repo was cloned&gt;</span><br><span class="line">git remote set-url origin &lt;URL to my NEW repo location&gt;</span><br><span class="line">git push -f origin</span><br></pre></td></tr></table></figure>
+<p><strong>添加子仓库</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git submodule add projectB.git projectB</span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;add module&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<p><strong>查看分支</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查看本地所有分支</span></span><br><span class="line">git branch</span><br><span class="line"><span class="comment">// 查看远程所有分支</span></span><br><span class="line">git branch -r</span><br><span class="line"><span class="comment">// 查看所有本地分支和远程分支</span></span><br><span class="line">git branch -a</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p><strong>创建/切换分支</strong></p>
@@ -509,6 +513,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">life</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -517,19 +529,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">life</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -537,15 +537,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">poetry</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">smile</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color1">smile</a>
               </li>
              
               <li class="article-tag-list-item">
