@@ -197,99 +197,488 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-android/android-interview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-av/av-basic-play2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/04/android/android-interview/">android-interview</a>
+      <a class="article-title" href="/2019/06/27/av/av-basic-play2/">音视频基础3</a>
     </h1>
   
 
         
-        <a href="/2018/06/04/android/android-interview/" class="archive-article-date">
-  	<time datetime="2018-06-04T06:29:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-04</time>
+        <a href="/2019/06/27/av/av-basic-play2/" class="archive-article-date">
+  	<time datetime="2019-06-27T07:10:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li><p>Android 启动模式</p>
-<p>standard，singleTop，singleTask，singleInstance</p>
+        <h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><p>ExoPlayer是一个Android应用层的媒体播放器，它提供了一套可替换Android MediaPlayer的API，可以播放本地或者是线上的音视频资源。ExoPlayer支持一些Android MediaPlayer不支持的特性，比如适配DASH和SmoothStreaming的播放。和MediaPlayer不同的是，ExoPlayer很容易自定义和扩展，并且它可以通过应用商店的应用程序更新来直接更新。</p>
+<p>现在在Android设备上播放视频和音乐的应用是一个很热门的应用，Android框架提供的MediaPlayer可以使用很少的代码量快速的实现播放音视频的功能，而且它也提供了底层的API比如MediaCodec、AudioTrack和MediaDrm,它们同样可以创建自定义媒体播放器，而ExoPlayer是建立在底层音视频API之上的开源的应用级媒体播放器。</p>
+<p>项目地址：<a href="https://github.com/google/ExoPlayer" target="_blank" rel="noopener">https://github.com/google/ExoPlayer</a></p>
+<p>ExoPlayer系列文章：<a href="https://medium.com/google-exoplayer" target="_blank" rel="noopener">https://medium.com/google-exoplayer</a></p>
+<p>ExoPlayer开发文档：<a href="https://exoplayer.dev/" target="_blank" rel="noopener">https://exoplayer.dev/</a></p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>对于Android内置的MediaPlayer来说，ExoPlayer有以下几个优点：</p>
+<ol>
+<li>支持DASH和SmoothStreaming这两种数据格式的资源，而MediaPlayer对这两种数据格式都不支持。它还支持其它格式的数据资源，比如MP4, M4A, FMP4, WebM, MKV, MP3, Ogg, WAV, MPEG-TS, MPEG-PS, FLV and ADTS (AAC)等</li>
+<li>支持高级的HLS特性，比如能正确的处理#EXT-X-DISCONTINUITY标签</li>
+<li>无缝连接，合并和循环播放多媒体的能力</li>
+<li>和应用一起更新播放器（ExoPlayer）,因为ExoPlayer是一个集成到应用APK里面的库，你可以决定你所想使用的ExoPlayer版本，并且可以随着应用的更新把ExoPlayer更新到一个最新的版本。</li>
+<li>较少的关于设备的特殊问题，并且在不同的Android版本和设备上很少会有不同的表现。</li>
+<li>在Android4.4(API level 19)以及更高的版本上支持Widevine通用加密</li>
+<li>为了符合你的开发需求，播放器支持自定义和扩展。其实ExoPlayer为此专门做了设计，并且允许很多组件可以被自定义的实现类替换。</li>
+<li>使用官方的扩展功能可以很快的集成一些第三方的库，比如IMA扩展功能通过使用互动媒体广告SDK可以很容易地将视频内容货币化（变现）</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>比如音频在Android设备上的播放，ExoPlayer会比MediaPlayer消耗更多的电量。更多细节请参考文章：<a href="https://link.juejin.im/?target=https%3A%2F%2Fexoplayer.dev%2Fbattery-consumption.html" target="_blank" rel="noopener">Battery consumption page</a></li>
+</ol>
+<h1 id="二、ExoPlayer-使用"><a href="#二、ExoPlayer-使用" class="headerlink" title="二、ExoPlayer 使用"></a>二、ExoPlayer 使用</h1><h3 id="1-把ExoPlayer作为一个依赖添加到你的项目"><a href="#1-把ExoPlayer作为一个依赖添加到你的项目" class="headerlink" title="1.把ExoPlayer作为一个依赖添加到你的项目"></a>1.把ExoPlayer作为一个依赖添加到你的项目</h3><p>添加仓库 第一步就是确保你在工程根目录的build.gradle文件里添加了Google和JCenter仓库:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">     google()</span><br><span class="line">     jcenter()</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>添加ExoPlayer模块 在你的app module 里面的build.gradle文件夹里添加一个ExoPlayer依赖。</p>
+<p>下面是ExoPlayer的全量包的依赖方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;com.google.android.exoplayer:exoplayer:2.X.X&apos;</span><br></pre></td></tr></table></figure>
+<p>上面的2.x.x是选择的版本。</p>
+<p>你也可以只依赖你想要的模块，来代替全量包。比如当你的app想要播放DASH格式的内容的时候，可以只依赖Core,DASH和UI模块的库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;com.google.android.exoplayer:exoplayer-core:2.X.X&apos;</span><br><span class="line">implementation &apos;com.google.android.exoplayer:exoplayer-dash:2.X.X&apos;</span><br><span class="line">implementation &apos;com.google.android.exoplayer:exoplayer-ui:2.X.X&apos;</span><br></pre></td></tr></table></figure>
+<p>下面列举了可使用的模块库，添加一个ExoPlayer全量的依赖库等同于把下面所有的依赖库都分别添加进去。</p>
+<ol>
+<li>exoplayer-core: 核心功能（必须的）.</li>
+<li>exoplayer-dash: 支持DASH内容.</li>
+<li>exoplayer-hls: 支持HLS内容.</li>
+<li>exoplayer-smoothstreaming: 支持SmoothStreaming内容.</li>
+<li>exoplayer-ui: ExoPlayer所使用的UI组件和资源.</li>
+</ol>
+<p>除了这些模块库之外，ExoPlayer还有很多可以提供额外功能的依赖于第三方库的扩展模块，可以参考<a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fgoogle%2FExoPlayer%2Ftree%2Frelease-v2%2Fextensions%2F" target="_blank" rel="noopener">extensions directory</a>来了解更多信息</p>
+<h3 id="2-打开对-java-8-的支持"><a href="#2-打开对-java-8-的支持" class="headerlink" title="2. 打开对 java 8 的支持"></a>2. 打开对 java 8 的支持</h3><p>如果还没有设置支持java8,那么你需要在所有依赖ExoPlayer的build.gradle文件里打开对java8的支持，通过在Android域中添加以下代码即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">compileOptions &#123;</span><br><span class="line">   targetCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>记住如果你想在你的代码里用java8的特性，你需要添加下面额外的设置：</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// For Java compilers:</span><br><span class="line"> compileOptions &#123;</span><br><span class="line">   sourceCompatibility JavaVersion.VERSION_1_8</span><br><span class="line"> &#125;</span><br><span class="line"> // For Kotlin compilers:</span><br><span class="line"> kotlinOptions &#123;</span><br><span class="line">   jvmTarget = JavaVersion.VERSION_1_8</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h3 id="3-创建一个播放器"><a href="#3-创建一个播放器" class="headerlink" title="3. 创建一个播放器"></a>3. 创建一个播放器</h3><p>你可以使用ExoPlayerFactory创建一个ExoPlayer对象。为了不同的需求，这个工厂类提供了一系列方法来创建ExoPlayer实例，但是在大多数情况下，使用ExoPlayerFactory.newSimpleInstance方法就可以了。这些方法会返回SimpleExoPlayer类型的对象，它继承自ExoPlayer，并且添加了一些额外的高级的播放器功能。下面的代码展示了怎么创建一个SimpleExoPlayer对象的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(context);</span><br></pre></td></tr></table></figure>
+<p>应用里面的某个线程一定可以访问ExoPlayer对象，在大多数情况下它一般是应用的主线程，并且只有在应用的主线程里才能使用ExoPlayer的UI组件和IMA扩展。</p>
+<p>能够访问ExoPlayer对象的线程可以通过创建播放器实例的时候传入一个Looper被明确的指定，如果没有指定Looper,那么创建player的线程的Looper会被使用，或者这个线程也没有Looper,那么应用的主线程的Looper会被使用。在所有的情况下，能够访问播放器的线程的Looer能够通过Player.getApplicationLooper获取到。</p>
+<h3 id="4-把这个播放器实例附着到一个View上"><a href="#4-把这个播放器实例附着到一个View上" class="headerlink" title="4. 把这个播放器实例附着到一个View上"></a>4. 把这个播放器实例附着到一个View上</h3><p>ExoPlayer库提供了一个PlayerView，它封装了一个PlayerControlView和一个能够渲染视频的Surface。一个PlayerView可以被加入到应用的布局文件中去。可以像这样把一个player绑定到一个View上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 绑定播放器到View上</span><br><span class="line">playerView.setPlayer(player);</span><br></pre></td></tr></table></figure>
+<p>如果你需要更加精确的控制播放器和渲染视频的Surface,你可以使用SimpleExoPlayer的setVideoSurfaceView、setVideoTextureView、setVideoSurfaceHolder和setVideoSurface方法分别的设置播放器的属性SurfaceView、TextureView、SurfaceHolder和Surface。你还可以把PlayerControlView来当成一个单独的组件使用，或者实现自定义的播放控制类来和播放器进行直接交互。在播放的时候，setTextOutput和setId3Output可以被用来接收字幕和ID3元数据输出。</p>
+<h3 id="5-准备播放器资源"><a href="#5-准备播放器资源" class="headerlink" title="5. 准备播放器资源"></a>5. 准备播放器资源</h3><p>在ExoPlayer里每一种媒体资源都是被MediaSource来代表的。如果想播放一种媒体资源，你首先要为它创建相应的MediaSource对象，然后把这个对象传递给ExoPlayer.prepare方法。ExoPlayer库提供了多种MediaSource的实现类，比如代表DASH资源的DashMediaSource,代表SmoothStreaming资源的SsMediaSource，代表HLS资源的HlsMediaSource和代表一般的多媒体文件的ExtractorMediaSource。下面的代码展示了如何为播放MP4文件的播放器准备适合的MediaSource。</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//创建一个DataSource对象，通过它来下载多媒体数据</span><br><span class="line">DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,</span><br><span class="line">Util.getUserAgent(context, &quot;yourApplicationName&quot;));</span><br><span class="line">//这是一个代表将要被播放的媒体的MediaSource</span><br><span class="line">MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)</span><br><span class="line">    .createMediaSource(mp4VideoUri);</span><br><span class="line">//使用资源准备播放器</span><br><span class="line">player.prepare(videoSource);</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h3 id="6-控制播放器"><a href="#6-控制播放器" class="headerlink" title="6. 控制播放器"></a>6. 控制播放器</h3><p>一旦播放器准备就绪，就可以调用player的方法进行播放了，例如调用setPlayWhenReady可以开始和暂停播放。不同的seekTo方法可以在媒体资源里进行搜索，setRepeatMode控制了多媒体如何循环播放，setShuffleModeEnabled控制了是否打乱播放列表，setPlaybackParameters用来调整播放的速度和音调。</p>
+<p>如果player和PlayerView或者是PlayerControlView进行绑定了，那么用户和这些控件的交互将会调用player相对应的方法。</p>
+<h3 id="7-监听播放器事件"><a href="#7-监听播放器事件" class="headerlink" title="7. 监听播放器事件"></a>7. 监听播放器事件</h3><p>改变播放状态或者是播放错误的事件将会被注册的Player.EventListener对象接收，很容易我们就可以注册一个接收这种事件的监听。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 添加一个监听来接收播放器事件.</span><br><span class="line">player.addListener(eventListener);</span><br></pre></td></tr></table></figure>
+<p>如果你只是对一部分事件感兴趣，那么你可以继承Player.DefaultEventListener而不是实现Player.EventListener，这样会让你只实现你想要的方法。</p>
+<p>当使用SimpleExoPlayer的时候，也可以给player设置一些额外的监听。比如addVideoListener方法允许你获取到视频渲染相关的事件，它可以帮助你调整UI布局（渲染视频的Surface的长宽比）。addAnalyticsListener方法允许你接收更加详细的事件，它有助于你分析一些东西。</p>
+<h3 id="8-释放播放器"><a href="#8-释放播放器" class="headerlink" title="8. 释放播放器"></a>8. 释放播放器</h3><p>当不在需要播放的时候释放掉播放器是非常重要的，以便释放掉有限的资源比如视频解码器供其它应用使用。释放掉播放器可以通过调用ExoPlayer.release实现。</p>
+<h3 id="9-MediaSource-播放资源"><a href="#9-MediaSource-播放资源" class="headerlink" title="9. MediaSource(播放资源)"></a>9. MediaSource(播放资源)</h3><p>在ExoPlayer里每一种媒体资源都是被MediaSource来代表的。ExoPlayer库提供了多种MediaSource的实现类，比如代表DASH资源的DashMediaSource,代表SmoothStreaming资源的SsMediaSource，代表HLS资源的HlsMediaSource和代表一般的多媒体文件的ExtractorMediaSource。你可以参考<a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fgoogle%2FExoPlayer%2Ftree%2Frelease-v2%2Fdemos%2Fmain" target="_blank" rel="noopener">main demo app</a>的PlayerActivity类看一下怎么实例化这四种MediaSource。</p>
+<p>除了上面所描述的MediaSource实现类之外，ExoPlayer也提供了ConcatenatingMediaSource,ClippingMediaSource,LoopingMediaSource和MergingMediaSource。通过组合这些MediaSource的实现类可以实现更加复杂的播放功能。一些常用的使用功能会在下面描述。需要注意的是下面描述的是以视频播放为示例的，但是它们同样适用于音频的播放，以及适用任何所支持的媒体类型的播放。</p>
+<h3 id="10-Playlists（播放列表）"><a href="#10-Playlists（播放列表）" class="headerlink" title="10. Playlists（播放列表）"></a>10. Playlists（播放列表）</h3><p>使用ConcatenatingMediaSource支持播放列表，它可以连续的播放多种MediaSource资源。下面的例子展示了怎么实现由两个videos组成的playlists。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MediaSource firstSource = new ExtractorMediaSource.Factory(...).createMediaSource(firstVideoUri);</span><br><span class="line">MediaSource secondSource = new ExtractorMediaSource.Factory(...).createMediaSource(secondVideoUri);</span><br><span class="line">//先播放第一个视频，再播放第二个视频</span><br><span class="line">ConcatenatingMediaSource concatenatedSource = new ConcatenatingMediaSource(firstSource, secondSource);</span><br></pre></td></tr></table></figure>
+<p>连接资源的转换是无缝的。这种连接不要求是相同格式的资源（例如可以把包含480P H264视频文件和包含720P VP9的视频文件很好地连接在一起）。它们甚至可以是不同的类型（比如可以将一个视频和一个纯音频流很好地连接在一起）。并且在一个连接里一个类型的MediaSource可以被多次使用。</p>
+<p>在一个ConcatenatingMediaSource里可以通过添加，删除和移动MediaSource动态地修改播放列表。同样在播放视频之前或者是正在播放的过程中可以通过调用相应的ConcatenatingMediaSource方法动态修改播放列表。播放器会正确地自动处理这些动态修改。例如正在播放的MediaSource被移动了，播放不会中断并且播放完成后会自动播放它后面的一个MediaSource资源。如果正在播放的MediaSource被删除了，播放器会自动移动到第一个存在的后继者去播放，如果没有后继者的话，播放器将会转到结束的状态。</p>
+<h3 id="11-Clipping-a-video-剪辑视频"><a href="#11-Clipping-a-video-剪辑视频" class="headerlink" title="11. Clipping a video(剪辑视频)"></a>11. Clipping a video(剪辑视频)</h3><p>ClippingMediaSource可以被用来剪辑视频，这样可以只播放它的一部分。下面的例子展示了怎么剪辑了一个视频，从第5s开始播放，到第10s结束播放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MediaSource videoSource = new ExtractorMediaSource.Factory(...).createMediaSource(videoUri);</span><br><span class="line"> // 从第5s开始剪辑到第10s</span><br><span class="line"> ClippingMediaSource clippingSource = new ClippingMediaSource(videoSource, /* startPositionUs= */ 5_000_000, /* endPositionUs= */ 10_000_000);</span><br></pre></td></tr></table></figure>
+<p>如果只是从资源的开始进行剪辑，那么结束的位置可以被设置为C.TIME_END_OF_SOURCE。为了只剪辑到特定的持续时间，有一个构造函数可以接收一个durationUs参数。</p>
+<p>当从一个视频文件的开始进行剪辑的时候，如果可能的话，尽量把开始位置和关键帧对齐。如果开始位置没有和关键帧对齐，那么在开始播放之前播放器需要解码然后丢弃掉前一个关键帧到开始位置之间的数据，这样使 在开始播放的时候，这将会产生一小段延迟,包括当播放器将ClippingMediaSource作为播放列表的一部分播放或循环播放时。</p>
+<h3 id="12-Looping-a-video-视频循环播放"><a href="#12-Looping-a-video-视频循环播放" class="headerlink" title="12. Looping a video(视频循环播放)"></a>12. Looping a video(视频循环播放)</h3><p>如果想无限循环播放，最好使用ExoPlayer.setRepeatMode而不是LoopingMediaSource。</p>
+<p>使用LoopingMediaSource一个视频可以被无缝的循环一定次数。下面的例子展示了怎么播放一个视频两次：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MediaSource source = new ExtractorMediaSource.Factory(...).createMediaSource(videoUri);</span><br><span class="line">// Plays the video twice.</span><br><span class="line">LoopingMediaSource loopingSource = new LoopingMediaSource(source, 2);</span><br></pre></td></tr></table></figure>
+<h3 id="13-Side-loading-a-subtitle-file-侧载一个字幕文件"><a href="#13-Side-loading-a-subtitle-file-侧载一个字幕文件" class="headerlink" title="13. Side-loading a subtitle file(侧载一个字幕文件)"></a>13. Side-loading a subtitle file(侧载一个字幕文件)</h3><p>给一个视频文件和一个分开的字幕文件，MergingMediaSource可以用来把它们合并成一个单独的资源来播放。</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 创建一个视频的 MediaSource.</span><br><span class="line">MediaSource videoSource = new ExtractorMediaSource.Factory(...).createMediaSource(videoUri);</span><br><span class="line">// 创建一个字幕的 MediaSource.</span><br><span class="line">Format subtitleFormat = Format.createTextSampleFormat(id, // 一个轨道的标志，可以为空</span><br><span class="line">    MimeTypes.APPLICATION_SUBRIP, // The mime type. Must be set correctly.</span><br><span class="line">    selectionFlags, // 轨道的选择标志</span><br><span class="line">    language); // 字幕的语言，可以为空</span><br><span class="line">MediaSource subtitleSource = new SingleSampleMediaSource.Factory(...) .createMediaSource(subtitleUri, subtitleFormat, C.TIME_UNSET);</span><br><span class="line">// 播放带有字幕的视频</span><br><span class="line">MergingMediaSource mergedSource = new MergingMediaSource(videoSource, subtitleSource);</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h4 id="14-高级组合"><a href="#14-高级组合" class="headerlink" title="14. 高级组合"></a>14. 高级组合</h4><p>为了更多高级的功能有可能更进一步地合并组合的MediaSource。假如有两个视频A和B，下面的例子展示了怎么一起使用LoopingMediaSource和ConcatenatingMediaSource来播放A、A、B序列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MediaSource firstSource = new ExtractorMediaSource.Factory(...).createMediaSource(firstVideoUri);</span><br><span class="line">MediaSource secondSource = new ExtractorMediaSource.Factory(...).createMediaSource(secondVideoUri);</span><br><span class="line">// 播放第一个视频两次</span><br><span class="line">LoopingMediaSource firstSourceTwice = new LoopingMediaSource(firstSource, 2);</span><br><span class="line">// 播放第一个视频两次，然后再播放第二个视频</span><br><span class="line">ConcatenatingMediaSource concatenatedSource = new ConcatenatingMediaSource(firstSourceTwice, secondSource);</span><br></pre></td></tr></table></figure>
+<p>下面这个例子也可以实现这个效果，这说明了不止有一种方法来实现相同的效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MediaSource firstSource = new ExtractorMediaSource.Builder(firstVideoUri, ...).build();</span><br><span class="line"> MediaSource secondSource = new ExtractorMediaSource.Builder(secondVideoUri, ...).build();</span><br><span class="line"> // 播放第一个视频两次，然后再播放第二个视频</span><br><span class="line"> ConcatenatingMediaSource concatenatedSource = new ConcatenatingMediaSource(firstSource, firstSource, secondSource);</span><br></pre></td></tr></table></figure>
+<h3 id="15-轨道选择"><a href="#15-轨道选择" class="headerlink" title="15. 轨道选择"></a>15. 轨道选择</h3><p>轨道选择决定了哪一个可用的媒体轨道可以被播放器的渲染器播放。轨道选择由TrackSelector负责，无论什么时候创建一个ExoPlayer实例，都要给它提供一个TrackSelector对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DefaultTrackSelector trackSelector = new DefaultTrackSelector();</span><br><span class="line">SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);</span><br></pre></td></tr></table></figure>
+<p>DefaultTrackSelector是一个灵活的TrackSelector，适合更多使用场景。当使用一个DefaultTrackSelector的时候，通过修改它的参数可以控制哪一个tracks被它选择，这种选择可以在播放前完成。例如下面的代码告诉选择器将视频轨道限制为SD，并且如果音频轨道只有一个就选择一个德语的音频轨道。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trackSelector.setParameters(trackSelector.buildUponParameters().setMaxVideoSizeSd().setPreferredAudioLanguage(&quot;deu&quot;));</span><br></pre></td></tr></table></figure>
+<p>这是一个基于约束的轨道选择的例子，在这个例子中，在不知道实际可用轨道的情况下指定约束。可以使用参数指定许多不同类型的约束。参数还可以用来从可用的轨道中选择特定的轨道。有关详细信息，请参阅<a href="https://link.juejin.im/?target=https%3A%2F%2Fexoplayer.dev%2Fdoc%2Freference%2Fcom%2Fgoogle%2Fandroid%2Fexoplayer2%2Ftrackselection%2FDefaultTrackSelector.html" target="_blank" rel="noopener">DefaultTrackSelector</a>、<a href="https://link.juejin.im/?target=https%3A%2F%2Fexoplayer.dev%2Fdoc%2Freference%2Fcom%2Fgoogle%2Fandroid%2Fexoplayer2%2Ftrackselection%2FDefaultTrackSelector.Parameters.html" target="_blank" rel="noopener">Parameters</a>和ParametersBuilder<a href="https://link.juejin.im/?target=https%3A%2F%2Fexoplayer.dev%2Fdoc%2Freference%2Fcom%2Fgoogle%2Fandroid%2Fexoplayer2%2Ftrackselection%2FDefaultTrackSelector.ParametersBuilder.html" target="_blank" rel="noopener">ParametersBuilder</a>文档。</p>
+<h3 id="16-发送消息给组件"><a href="#16-发送消息给组件" class="headerlink" title="16. 发送消息给组件"></a>16. 发送消息给组件</h3><p>可以向ExoPlayer组件发送消息。这些消息可以使用createMessage创建，然后使用PlayerMessage.send发送。默认情况下，消息会尽快在播放线程上传递，但是这是可以自定义的通过设置另一个回调线程(使用PlayerMessage.setHandler)或指定一个传递消息的播放位置(使用PlayerMessage.setPosition)。通过ExoPlayer发送消息可以确保操作的执行顺序与在播放器上执行的任何其他操作一致。</p>
+<p>大多数ExoPlayer的开箱即用渲染器都支持在播放期间更改配置的消息。例如，音频渲染器接受消息来设置音量，而视频渲染器接受消息来设置Surface。这些消息应当在播放线程上传递，以确保线程安全。</p>
+<h3 id="17-自定义播放器"><a href="#17-自定义播放器" class="headerlink" title="17.自定义播放器"></a>17.自定义播放器</h3><p>与Android的MediaPlayer相比，ExoPlayer的主要优势之一是能够自定义和扩展播放器，以更好地适应开发人员的用例。ExoPlayer库是专门为此而设计的，它定义了许多接口和抽象基类，可以使应用程序开发人员能够轻松替换库提供的默认实现。下面是一些用于构建自定义组件的用例:</p>
+<p>Renderer——您可能想要实现一个自定义Renderer来处理库默认不支持的媒体类型。</p>
+<p>TrackSelector——实现自定义TrackSelector允许应用程序开发人员更改MediaSource暴露tracks的方式。它会被每个可用的渲染器选择使用。</p>
+<p>LoadControl—实现自定义LoadControl允许应用程序开发人员更改播放器的缓冲策略。</p>
+<p>Extractor——如果您需要支持目前该库不支持的容器格式，请考虑实现一个定制的Extractor类，然后可以将其与ExtractorMediaSource一起用于播放该类型的媒体。</p>
+<p>MediaSource——如果您希望以自定义的方式获取媒体样本以提供给渲染程序，或者希望实现自定义的MediaSource组合行为，那么实现自定义的MediaSource类可能是最好的选择。</p>
+<p>DataSource——ExoPlayer的upstream包已经包含了许多不同用例的DataSource实现。您可能希望实现自己的DataSource，以另一种方式加载数据，例如通过自定义协议、使用自定义HTTP堆栈或从自定义持久缓存加载数据。</p>
+<p>在构建自定义组件时，我们建议如下:</p>
+<p>如果自定义组件需要向应用程序报告事件，我们建议使用与现有ExoPlayer组件相同的模型，其中事件监听器和Handler一起传递给组件的构造函数。</p>
+<p>我们建议自定义组件使用与现有ExoPlayer组件相同的模型，以允许应用程序在播放期间进行重新配置，如<a href="https://link.juejin.im/?target=https%3A%2F%2Fexoplayer.dev%2Fguide.html%23sending-messages-to-components" target="_blank" rel="noopener">Sending messages to components</a>所说的。为此，您应该实现一个ExoPlayerComponent并在其handleMessage方法中接收配置更改。您的应用程序应该通过调用外部播放器的sendMessages和blockingSendMessages方法来传递配置更改。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">av</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/27/av/av-basic-play2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-av/av-basic-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/27/av/av-basic-3/">Android 音视频开发(三)：使用 AudioTrack 播放PCM音频</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/27/av/av-basic-3/" class="archive-article-date">
+  	<time datetime="2019-06-27T07:09:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、AudioTrack-基本使用"><a href="#一、AudioTrack-基本使用" class="headerlink" title="一、AudioTrack 基本使用"></a>一、AudioTrack 基本使用</h1><p>AudioTrack 类可以完成Android平台上音频数据的输出任务。AudioTrack有两种数据加载模式（MODE_STREAM和MODE_STATIC），对应的是数据加载模式和音频流类型， 对应着两种完全不同的使用场景。</p>
+<ul>
+<li>MODE_STREAM：在这种模式下，通过write一次次把音频数据写到AudioTrack中。这和平时通过write系统调用往文件中写数据类似，但这种工作方式每次都需要把数据从用户提供的Buffer中拷贝到AudioTrack内部的Buffer中，这在一定程度上会使引入延时。为解决这一问题，AudioTrack就引入了第二种模式。</li>
+<li>MODE_STATIC：这种模式下，在play之前只需要把所有数据通过一次write调用传递到AudioTrack中的内部缓冲区，后续就不必再传递数据了。这种模式适用于像铃声这种内存占用量较小，延时要求较高的文件。但它也有一个缺点，就是一次write的数据不能太多，否则系统无法分配足够的内存来存储全部数据。</li>
+</ul>
+<h3 id="1-1-MODE-STATIC模式"><a href="#1-1-MODE-STATIC模式" class="headerlink" title="1.1 MODE_STATIC模式"></a>1.1 MODE_STATIC模式</h3><p>MODE_STATIC模式输出音频的方式如下（<strong>注意：如果采用STATIC模式，须先调用write写数据，然后再调用play。</strong>）：</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">public class AudioTrackPlayerDemoActivity extends Activity implements</span><br><span class="line">        OnClickListener &#123;</span><br><span class="line"></span><br><span class="line">    private static final String TAG = &quot;AudioTrackPlayerDemoActivity&quot;;</span><br><span class="line">    private Button button;</span><br><span class="line">    private byte[] audioData;</span><br><span class="line">    private AudioTrack audioTrack;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        super.setContentView(R.layout.main);</span><br><span class="line">        this.button = (Button) super.findViewById(R.id.play);</span><br><span class="line">        this.button.setOnClickListener(this);</span><br><span class="line">        this.button.setEnabled(false);</span><br><span class="line">        new AsyncTask&lt;Void, Void, Void&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            protected Void doInBackground(Void... params) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    InputStream in = getResources().openRawResource(R.raw.ding);</span><br><span class="line">                    try &#123;</span><br><span class="line">                        ByteArrayOutputStream out = new ByteArrayOutputStream(</span><br><span class="line">                                264848);</span><br><span class="line">                        for (int b; (b = in.read()) != -1;) &#123;</span><br><span class="line">                            out.write(b);</span><br><span class="line">                        &#125;</span><br><span class="line">                        Log.d(TAG, &quot;Got the data&quot;);</span><br><span class="line">                        audioData = out.toByteArray();</span><br><span class="line">                    &#125; finally &#123;</span><br><span class="line">                        in.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; catch (IOException e) &#123;</span><br><span class="line">                    Log.wtf(TAG, &quot;Failed to read&quot;, e);</span><br><span class="line">                &#125;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            protected void onPostExecute(Void v) &#123;</span><br><span class="line">                Log.d(TAG, &quot;Creating track...&quot;);</span><br><span class="line">                button.setEnabled(true);</span><br><span class="line">                Log.d(TAG, &quot;Enabled button&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.execute();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void onClick(View view) &#123;</span><br><span class="line">        this.button.setEnabled(false);</span><br><span class="line">        this.releaseAudioTrack();</span><br><span class="line">        this.audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,</span><br><span class="line">                AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT,</span><br><span class="line">                audioData.length, AudioTrack.MODE_STATIC);</span><br><span class="line">        Log.d(TAG, &quot;Writing audio data...&quot;);</span><br><span class="line">        this.audioTrack.write(audioData, 0, audioData.length);</span><br><span class="line">        Log.d(TAG, &quot;Starting playback&quot;);</span><br><span class="line">        audioTrack.play();</span><br><span class="line">        Log.d(TAG, &quot;Playing&quot;);</span><br><span class="line">        this.button.setEnabled(true);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void releaseAudioTrack() &#123;</span><br><span class="line">        if (this.audioTrack != null) &#123;</span><br><span class="line">            Log.d(TAG, &quot;Stopping&quot;);</span><br><span class="line">            audioTrack.stop();</span><br><span class="line">            Log.d(TAG, &quot;Releasing&quot;);</span><br><span class="line">            audioTrack.release();</span><br><span class="line">            Log.d(TAG, &quot;Nulling&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void onPause() &#123;</span><br><span class="line">        super.onPause();</span><br><span class="line">        this.releaseAudioTrack();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h3 id="1-2-MODE-STREAM模式"><a href="#1-2-MODE-STREAM模式" class="headerlink" title="1.2 MODE_STREAM模式"></a>1.2 MODE_STREAM模式</h3><p>MODE_STREAM 模式输出音频的方式如下：</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">byte[] tempBuffer = new byte[bufferSize];</span><br><span class="line">int readCount = 0;</span><br><span class="line">while (dis.available() &gt; 0) &#123;</span><br><span class="line">    readCount = dis.read(tempBuffer);</span><br><span class="line">    if (readCount == AudioTrack.ERROR_INVALID_OPERATION || readCount == AudioTrack.ERROR_BAD_VALUE) &#123;</span><br><span class="line">        continue;</span><br><span class="line">    &#125;</span><br><span class="line">    if (readCount != 0 &amp;&amp; readCount != -1) &#123;</span><br><span class="line">        audioTrack.play();</span><br><span class="line">        audioTrack.write(tempBuffer, 0, readCount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h1 id="二、AudioTrack-详解"><a href="#二、AudioTrack-详解" class="headerlink" title="二、AudioTrack 详解"></a>二、AudioTrack 详解</h1><h3 id="2-1-音频流的类型"><a href="#2-1-音频流的类型" class="headerlink" title="2.1  音频流的类型"></a>2.1  音频流的类型</h3><p>在AudioTrack构造函数中，会接触到AudioManager.STREAM_MUSIC这个参数。它的含义与Android系统对音频流的管理和分类有关。</p>
+<p>Android将系统的声音分为好几种流类型，下面是几个常见的：</p>
+<p>·  STREAM_ALARM：警告声</p>
+<p>·  STREAM_MUSIC：音乐声，例如music等</p>
+<p>·  STREAM_RING：铃声</p>
+<p>·  STREAM_SYSTEM：系统声音，例如低电提示音，锁屏音等</p>
+<p>·  STREAM_VOCIE_CALL：通话声</p>
+<p>注意：上面这些类型的划分和音频数据本身并没有关系。例如MUSIC和RING类型都可以是某首MP3歌曲。另外，声音流类型的选择没有固定的标准，例如，铃声预览中的铃声可以设置为MUSIC类型。音频流类型的划分和Audio系统对音频的管理策略有关。</p>
+<h3 id="2-2-Buffer分配和Frame的概念"><a href="#2-2-Buffer分配和Frame的概念" class="headerlink" title="2.2 Buffer分配和Frame的概念"></a><strong>2.2 Buffer分配和Frame的概念</strong></h3><p>在计算Buffer分配的大小的时候，我们经常用到的一个方法就是：getMinBufferSize。这个函数决定了应用层分配多大的数据Buffer。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AudioTrack.getMinBufferSize(8000,//每秒8K个采样点                              </span><br><span class="line">　　      AudioFormat.CHANNEL_CONFIGURATION_STEREO,//双声道                  </span><br><span class="line">        AudioFormat.ENCODING_PCM_16BIT);</span><br></pre></td></tr></table></figure>
+<p>从AudioTrack.getMinBufferSize开始追溯代码，可以发现在底层的代码中有一个很重要的概念：Frame（帧）。Frame是一个单位，用来描述数据量的多少。1单位的Frame等于1个采样点的字节数×声道数（比如PCM16，双声道的1个Frame等于2×2=4字节）。1个采样点只针对一个声道，而实际上可能会有一或多个声道。由于不能用一个独立的单位来表示全部声道一次采样的数据量，也就引出了Frame的概念。Frame的大小，就是一个采样点的字节数×声道数。另外，在目前的声卡驱动程序中，其内部缓冲区也是采用Frame作为单位来分配和管理的。</p>
+<p>下面是追溯到的native层的方法：</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// minBufCount表示缓冲区的最少个数，它以Frame作为单位</span><br><span class="line">  uint32_t minBufCount = afLatency / ((1000 *afFrameCount)/afSamplingRate);</span><br><span class="line">   if(minBufCount &lt; 2) minBufCount = 2;//至少要两个缓冲</span><br><span class="line"></span><br><span class="line">  //计算最小帧个数</span><br><span class="line">  uint32_tminFrameCount =               </span><br><span class="line">        (afFrameCount*sampleRateInHertz*minBufCount)/afSamplingRate;</span><br><span class="line"> //下面根据最小的FrameCount计算最小的缓冲大小   </span><br><span class="line">  intminBuffSize = minFrameCount //计算方法完全符合我们前面关于Frame的介绍</span><br><span class="line">          * (audioFormat == javaAudioTrackFields.PCM16 ? 2 : 1)</span><br><span class="line">          * nbChannels;</span><br><span class="line"></span><br><span class="line">   returnminBuffSize;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p>getMinBufSize会综合考虑硬件的情况（诸如是否支持采样率，硬件本身的延迟情况等）后，得出一个最小缓冲区的大小。一般我们分配的缓冲大小会是它的整数倍。</p>
+<h3 id="2-3-AudioTrack构造过程"><a href="#2-3-AudioTrack构造过程" class="headerlink" title="2.3 AudioTrack构造过程"></a>2.3 AudioTrack构造过程</h3><p>每一个音频流对应着一个AudioTrack类的一个实例，每个AudioTrack会在创建时注册到 AudioFlinger中，由AudioFlinger把所有的AudioTrack进行混合（Mixer），然后输送到AudioHardware中进行播放，目前Android同时最多可以创建32个音频流，也就是说，Mixer最多会同时处理32个AudioTrack的数据流。 </p>
+<p><img src="https://images2017.cnblogs.com/blog/682616/201709/682616-20170903144420968-1755275961.png" alt="img"></p>
+<h1 id="三、-AudioTrack-与-MediaPlayer-的对比"><a href="#三、-AudioTrack-与-MediaPlayer-的对比" class="headerlink" title="三、 AudioTrack 与 MediaPlayer 的对比"></a>三、 AudioTrack 与 MediaPlayer 的对比</h1><p>播放声音可以用MediaPlayer和AudioTrack，两者都提供了Java API供应用开发者使用。虽然都可以播放声音，但两者还是有很大的区别的。</p>
+<h3 id="3-1-区别"><a href="#3-1-区别" class="headerlink" title="3.1 区别"></a>3.1 区别</h3><p>其中最大的区别是MediaPlayer可以播放多种格式的声音文件，例如MP3，AAC，WAV，OGG，MIDI等。MediaPlayer会在framework层创建对应的音频解码器。而AudioTrack只能播放已经解码的PCM流，如果对比支持的文件格式的话则是AudioTrack只支持wav格式的音频文件，因为wav格式的音频文件大部分都是PCM流。AudioTrack不创建解码器，所以只能播放不需要解码的wav文件。</p>
+<h3 id="3-2-联系"><a href="#3-2-联系" class="headerlink" title="3.2 联系"></a>3.2 联系</h3><p>MediaPlayer在framework层还是会创建AudioTrack，把解码后的PCM数流传递给AudioTrack，AudioTrack再传递给AudioFlinger进行混音，然后才传递给硬件播放,所以是MediaPlayer包含了AudioTrack。</p>
+<h3 id="3-3-SoundPool"><a href="#3-3-SoundPool" class="headerlink" title="3.3 SoundPool"></a>3.3 SoundPool</h3><p>在接触Android音频播放API的时候，发现SoundPool也可以用于播放音频。下面是三者的使用场景：MediaPlayer 更加适合在后台长时间播放本地音乐文件或者在线的流式资源; SoundPool 则适合播放比较短的音频片段，比如游戏声音、按键声、铃声片段等等，它可以同时播放多个音频; 而 AudioTrack 则更接近底层，提供了非常强大的控制能力，支持低延迟播放，适合流媒体和VoIP语音电话等场景。</p>
+<h1 id="四、源码"><a href="#四、源码" class="headerlink" title="四、源码"></a>四、源码</h1><p><a href="https://github.com/renhui/AudioDemo" target="_blank" rel="noopener">https://github.com/renhui/AudioDemo </a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">av</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/27/av/av-basic-3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-av/av-basic-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/27/av/av-basic-2/">Android 音视频开发(二)：使用 AudioRecord 采集音频PCM并保存到文件</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/27/av/av-basic-2/" class="archive-article-date">
+  	<time datetime="2019-06-27T07:06:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、AudioRecord-API详解"><a href="#一、AudioRecord-API详解" class="headerlink" title="一、AudioRecord API详解"></a><strong>一、AudioRecord API详解</strong></h1><p>AudioRecord是Android系统提供的用于实现录音的功能类。</p>
+<p>要想了解这个类的具体的说明和用法，我们可以去看一下官方的文档：</p>
+<p>实现Android录音的流程为：</p>
+<ol>
+<li>构造一个AudioRecord对象，其中需要的最小录音缓存buffer大小可以通过<em>getMinBufferSize</em>方法得到。如果buffer容量过小，将导致对象构造的失败。</li>
+<li>初始化一个buffer，该buffer大于等于AudioRecord对象用于写声音数据的buffer大小。</li>
+<li>开始录音</li>
+<li>创建一个数据流，一边从AudioRecord中读取声音数据到初始化的buffer，一边将buffer中数据导入数据流。</li>
+<li>关闭数据流</li>
+<li>停止录音</li>
+</ol>
+<h1 id="二、使用-AudioRecord-实现录音，并生成wav"><a href="#二、使用-AudioRecord-实现录音，并生成wav" class="headerlink" title="二、使用 AudioRecord 实现录音，并生成wav"></a>二、使用 AudioRecord 实现录音，并生成wav</h1><h3 id="2-1-创建一个AudioRecord对象"><a href="#2-1-创建一个AudioRecord对象" class="headerlink" title="2.1  创建一个AudioRecord对象"></a>2.1  创建一个AudioRecord对象</h3><p>首先要声明一些全局的变量参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">private AudioRecord audioRecord = null;  // 声明 AudioRecord 对象</span><br><span class="line">private int recordBufSize = 0; // 声明recoordBufffer的大小字段</span><br></pre></td></tr></table></figure>
+<p>获取buffer的大小并创建AudioRecord：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void createAudioRecord() &#123;</span><br><span class="line">　　recordBufSize = AudioRecord.getMinBufferSize(frequency, channelConfiguration, EncodingBitRate);  //audioRecord能接受的最小的buffer大小</span><br><span class="line">   audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, frequency, channelConfiguration, EncodingBitRate, recordBufSize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-初始化一个buffer"><a href="#2-2-初始化一个buffer" class="headerlink" title="2.2  初始化一个buffer"></a>2.2  初始化一个buffer</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">byte data[] = new byte[recordBufSize];</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-开始录音"><a href="#2-3-开始录音" class="headerlink" title="2.3  开始录音"></a>2.3  开始录音</h3><p>audioRecord.startRecording();</p>
+<p>isRecording = true;</p>
+<h3 id="2-4-创建一个数据流，一边从AudioRecord中读取声音数据到初始化的buffer，一边将buffer中数据导入数据流。"><a href="#2-4-创建一个数据流，一边从AudioRecord中读取声音数据到初始化的buffer，一边将buffer中数据导入数据流。" class="headerlink" title="2.4  创建一个数据流，一边从AudioRecord中读取声音数据到初始化的buffer，一边将buffer中数据导入数据流。"></a>2.4  创建一个数据流，一边从AudioRecord中读取声音数据到初始化的buffer，一边将buffer中数据导入数据流。</h3><p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">FileOutputStream os = null;</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">    os = new FileOutputStream(filename);</span><br><span class="line">&#125; catch (FileNotFoundException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">if (null != os) &#123;</span><br><span class="line">    while (isRecording) &#123;</span><br><span class="line">        read = audioRecord.read(data, 0, recordBufSize);</span><br><span class="line">　　　　  // 如果读取音频数据没有出现错误，就将数据写入到文件</span><br><span class="line">        if (AudioRecord.ERROR_INVALID_OPERATION != read) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                os.write(data);</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        os.close();</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h3 id="2-5-关闭数据流"><a href="#2-5-关闭数据流" class="headerlink" title="2.5 关闭数据流"></a>2.5 关闭数据流</h3><p>修改标志位：isRecording 为false，上面的while循环就自动停止了，数据流也就停止流动了，Stream也就被关闭了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">isRecording = false;</span><br></pre></td></tr></table></figure>
+<h3 id="2-6-停止录音"><a href="#2-6-停止录音" class="headerlink" title="2.6 停止录音"></a>2.6 停止录音</h3><p><strong>停止录音之后，注意要释放资源。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (null != audioRecord) &#123;</span><br><span class="line">　　audioRecord.stop();</span><br><span class="line">   audioRecord.release();</span><br><span class="line">　　audioRecord = null;</span><br><span class="line">   recordingThread = null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注：权限需求：<strong>WRITE_EXTERNAL_STORAGE、RECORD_AUDIO</strong> </p>
+<p>到现在基本的录音的流程就介绍完了。但是这时候，有人就提出问题来了：</p>
+<p><strong>1)、我按照流程，把音频数据都输出到文件里面了，停止录音后，打开此文件，发现不能播放，到底是为什么呢？</strong></p>
+<p><strong>答：按照流程走完了，数据是进去了，但是现在的文件里面的内容仅仅是最原始的音频数据，术语称为raw（中文解释是“原材料”或“未经处理的东西”），这时候，你让播放器去打开，它既不知道保存的格式是什么，又不知道如何进行解码操作。当然播放不了。</strong></p>
+<p><strong>2)、那如何才能在播放器中播放我录制的内容呢？</strong></p>
+<p><strong>答： 在文件的数据开头加入WAVE HEAD数据即可，也就是文件头。只有加上文件头部的数据，播放器才能正确的知道里面的内容到底是什么，进而能够正常的解析并播放里面的内容。具体的头文件的描述，在</strong><a href="http://mindtherobot.com/blog/580/android-audio-play-a-wav-file-on-an-audiotrack/" target="_blank" rel="noopener">Play a WAV file on an AudioTrack</a>里面可以进行了解。</p>
+<p>添加WAVE文件头的代码如下：</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line">public class PcmToWavUtil &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 缓存的音频大小</span><br><span class="line">     */</span><br><span class="line">    private int mBufferSize;</span><br><span class="line">    /**</span><br><span class="line">     * 采样率</span><br><span class="line">     */</span><br><span class="line">    private int mSampleRate;</span><br><span class="line">    /**</span><br><span class="line">     * 声道数</span><br><span class="line">     */</span><br><span class="line">    private int mChannel;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @param sampleRate sample rate、采样率</span><br><span class="line">     * @param channel channel、声道</span><br><span class="line">     * @param encoding Audio data format、音频格式</span><br><span class="line">     */</span><br><span class="line">    PcmToWavUtil(int sampleRate, int channel, int encoding) &#123;</span><br><span class="line">        this.mSampleRate = sampleRate;</span><br><span class="line">        this.mChannel = channel;</span><br><span class="line">        this.mBufferSize = AudioRecord.getMinBufferSize(mSampleRate, mChannel, encoding);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * pcm文件转wav文件</span><br><span class="line">     *</span><br><span class="line">     * @param inFilename 源文件路径</span><br><span class="line">     * @param outFilename 目标文件路径</span><br><span class="line">     */</span><br><span class="line">    public void pcmToWav(String inFilename, String outFilename) &#123;</span><br><span class="line">        FileInputStream in;</span><br><span class="line">        FileOutputStream out;</span><br><span class="line">        long totalAudioLen;</span><br><span class="line">        long totalDataLen;</span><br><span class="line">        long longSampleRate = mSampleRate;</span><br><span class="line">        int channels = mChannel == AudioFormat.CHANNEL_IN_MONO ? 1 : 2;</span><br><span class="line">        long byteRate = 16 * mSampleRate * channels / 8;</span><br><span class="line">        byte[] data = new byte[mBufferSize];</span><br><span class="line">        try &#123;</span><br><span class="line">            in = new FileInputStream(inFilename);</span><br><span class="line">            out = new FileOutputStream(outFilename);</span><br><span class="line">            totalAudioLen = in.getChannel().size();</span><br><span class="line">            totalDataLen = totalAudioLen + 36;</span><br><span class="line"></span><br><span class="line">            writeWaveFileHeader(out, totalAudioLen, totalDataLen,</span><br><span class="line">                longSampleRate, channels, byteRate);</span><br><span class="line">            while (in.read(data) != -1) &#123;</span><br><span class="line">                out.write(data);</span><br><span class="line">            &#125;</span><br><span class="line">            in.close();</span><br><span class="line">            out.close();</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 加入wav文件头</span><br><span class="line">     */</span><br><span class="line">    private void writeWaveFileHeader(FileOutputStream out, long totalAudioLen,</span><br><span class="line">                                     long totalDataLen, long longSampleRate, int channels, long byteRate)</span><br><span class="line">        throws IOException &#123;</span><br><span class="line">        byte[] header = new byte[44];</span><br><span class="line">        // RIFF/WAVE header</span><br><span class="line">        header[0] = &apos;R&apos;;</span><br><span class="line">        header[1] = &apos;I&apos;;</span><br><span class="line">        header[2] = &apos;F&apos;;</span><br><span class="line">        header[3] = &apos;F&apos;;</span><br><span class="line">        header[4] = (byte) (totalDataLen &amp; 0xff);</span><br><span class="line">        header[5] = (byte) ((totalDataLen &gt;&gt; 8) &amp; 0xff);</span><br><span class="line">        header[6] = (byte) ((totalDataLen &gt;&gt; 16) &amp; 0xff);</span><br><span class="line">        header[7] = (byte) ((totalDataLen &gt;&gt; 24) &amp; 0xff);</span><br><span class="line">        //WAVE</span><br><span class="line">        header[8] = &apos;W&apos;;</span><br><span class="line">        header[9] = &apos;A&apos;;</span><br><span class="line">        header[10] = &apos;V&apos;;</span><br><span class="line">        header[11] = &apos;E&apos;;</span><br><span class="line">        // &apos;fmt &apos; chunk</span><br><span class="line">        header[12] = &apos;f&apos;;</span><br><span class="line">        header[13] = &apos;m&apos;;</span><br><span class="line">        header[14] = &apos;t&apos;;</span><br><span class="line">        header[15] = &apos; &apos;;</span><br><span class="line">        // 4 bytes: size of &apos;fmt &apos; chunk</span><br><span class="line">        header[16] = 16;</span><br><span class="line">        header[17] = 0;</span><br><span class="line">        header[18] = 0;</span><br><span class="line">        header[19] = 0;</span><br><span class="line">        // format = 1</span><br><span class="line">        header[20] = 1;</span><br><span class="line">        header[21] = 0;</span><br><span class="line">        header[22] = (byte) channels;</span><br><span class="line">        header[23] = 0;</span><br><span class="line">        header[24] = (byte) (longSampleRate &amp; 0xff);</span><br><span class="line">        header[25] = (byte) ((longSampleRate &gt;&gt; 8) &amp; 0xff);</span><br><span class="line">        header[26] = (byte) ((longSampleRate &gt;&gt; 16) &amp; 0xff);</span><br><span class="line">        header[27] = (byte) ((longSampleRate &gt;&gt; 24) &amp; 0xff);</span><br><span class="line">        header[28] = (byte) (byteRate &amp; 0xff);</span><br><span class="line">        header[29] = (byte) ((byteRate &gt;&gt; 8) &amp; 0xff);</span><br><span class="line">        header[30] = (byte) ((byteRate &gt;&gt; 16) &amp; 0xff);</span><br><span class="line">        header[31] = (byte) ((byteRate &gt;&gt; 24) &amp; 0xff);</span><br><span class="line">        // block align</span><br><span class="line">        header[32] = (byte) (2 * 16 / 8);</span><br><span class="line">        header[33] = 0;</span><br><span class="line">        // bits per sample</span><br><span class="line">        header[34] = 16;</span><br><span class="line">        header[35] = 0;</span><br><span class="line">        //data</span><br><span class="line">        header[36] = &apos;d&apos;;</span><br><span class="line">        header[37] = &apos;a&apos;;</span><br><span class="line">        header[38] = &apos;t&apos;;</span><br><span class="line">        header[39] = &apos;a&apos;;</span><br><span class="line">        header[40] = (byte) (totalAudioLen &amp; 0xff);</span><br><span class="line">        header[41] = (byte) ((totalAudioLen &gt;&gt; 8) &amp; 0xff);</span><br><span class="line">        header[42] = (byte) ((totalAudioLen &gt;&gt; 16) &amp; 0xff);</span><br><span class="line">        header[43] = (byte) ((totalAudioLen &gt;&gt; 24) &amp; 0xff);</span><br><span class="line">        out.write(header, 0, 44);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h1 id="三、附言"><a href="#三、附言" class="headerlink" title="三、附言"></a>三、附言</h1><p>Android SDK 提供了两套音频采集的API，分别是：MediaRecorder 和 AudioRecord，前者是一个更加上层一点的API，它可以直接把手机麦克风录入的音频数据进行编码压缩（如AMR、MP3等）并存成文件，而后者则更接近底层，能够更加自由灵活地控制，可以得到原始的一帧帧PCM音频数据。如果想简单地做一个录音机，录制成音频文件，则推荐使用 MediaRecorder，而如果需要对音频做进一步的算法处理、或者采用第三方的编码库进行压缩、以及网络传输等应用，则建议使用 AudioRecord，其实 MediaRecorder 底层也是调用了 AudioRecord 与 Android Framework 层的 AudioFlinger 进行交互的。直播中实时采集音频自然是要用<code>AudioRecord</code>了。</p>
+<h1 id="四、源码"><a href="#四、源码" class="headerlink" title="四、源码"></a>四、源码</h1><p><a href="https://github.com/renhui/AudioDemo" target="_blank" rel="noopener">https://github.com/renhui/AudioDemo</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">av</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/27/av/av-basic-2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-av/av-basic-play1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/27/av/av-basic-play1/">Android 音视频开发(二)：使用 AudioRecord 采集音频PCM并保存到文件</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/27/av/av-basic-play1/" class="archive-article-date">
+  	<time datetime="2019-06-27T07:06:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 <a href="https://www.cnblogs.com/renhui/p/9267778.html" target="_blank" rel="noopener">Android 视频播放器 (一)：使用VideoView播放视频</a> 我们讲了一下如何使用VideoView播放视频，了解了基本的播放器的一些知识和内容。也知道VideoView内部封装的就是MediaPlayer，本文就介绍如何使用MediaPlayer播放视频。</p>
+<h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><p>MediaPlayer是Android中的一个多媒体播放类，其提供的API能满足简单的大部分音视频的播放需求。</p>
+<p>下面简单介绍一下MediaPlayer：</p>
+<ul>
+<li>MediaPlayer是使用Surface进行视频的展示的。</li>
+<li>MediaPlayer只支持mp4、avi、3gp格式的视频，支持格式相对单一。</li>
+<li>MediaPlayer可以播放网络视频，支持的网络视频的协议为：Http协议和RTSP协议两种。</li>
+</ul>
+<h1 id="二、MediaPlayer-使用方法"><a href="#二、MediaPlayer-使用方法" class="headerlink" title="二、MediaPlayer 使用方法"></a>二、MediaPlayer 使用方法</h1><p>MediaPlayer 的提供的方法如下：</p>
+<ul>
+<li>void setDataSource(String path) ：通过一个具体的路径来设置MediaPlayer的数据源，path可以是本地的一个路径，也可以是一个网络路径</li>
+<li>void setDataSource(Context context, Uri uri)： 通过给定的Uri来设置MediaPlayer的数据源，这里的Uri可以是网络路径或是一个ContentProvider的Uri。</li>
+<li>void setDataSource(MediaDataSource dataSource) ：通过提供的MediaDataSource来设置数据源</li>
+<li>void setDataSource(FileDescriptor fd)： 通过文件描述符FileDescriptor来设置数据源</li>
+<li>int getCurrentPosition() ：获取当前播放的位置</li>
+<li>int getAudioSessionId() ：返回音频的session ID</li>
+<li>int getDuration() ：得到文件的时间</li>
+<li>TrackInfo[] getTrackInfo() ：返回一个track信息的数组</li>
+<li>boolean isLooping ()： 是否循环播放</li>
+<li>boolean isPlaying()： 是否正在播放</li>
+<li>void pause () ：暂停</li>
+<li>void start () ：开始</li>
+<li>void stop () ： 停止</li>
+<li>void prepare()： 同步的方式装载流媒体文件。</li>
+<li>void prepareAsync()： 异步的方式装载流媒体文件。</li>
+<li>void reset()： 重置MediaPlayer至未初始化状态。</li>
+<li>void release ()： 回收流媒体资源。</li>
+<li>void seekTo(int msec)： 指定播放的位置（以毫秒为单位的时间）</li>
+<li>void setAudioStreamType(int streamtype) ：指定流媒体类型</li>
+<li>void setLooping(boolean looping) ：设置是否单曲循环</li>
+<li>void setNextMediaPlayer(MediaPlayer next) ： 当前这个MediaPlayer播放完毕后，MediaPlayer next开始播放</li>
+<li>void setWakeMode(Context context, int mode)：设置CPU唤醒的状态。</li>
+<li>setOnBufferingUpdateListener(MediaPlayer.OnBufferingUpdateListener listener) ：网络流媒体的缓冲变化时回调 </li>
+<li>setOnCompletionListener(MediaPlayer.OnCompletionListener listener) ：网络流媒体播放结束时回调</li>
+<li>setOnErrorListener(MediaPlayer.OnErrorListener listener) ：发生错误时回调 </li>
+<li>setOnPreparedListener(MediaPlayer.OnPreparedListener listener)：当装载流媒体完毕的时候回调。</li>
+</ul>
+<p>Android通过MediaPlayer控制播放器的状态的方式来控制媒体文件的播放，其中： </p>
+<ul>
+<li>prepare()和prepareAsync() 提供了同步和异步两种方式设置播放器进入prepare状态，需要注意的是，如果MediaPlayer实例是由create方法创建的，那么第一次启动播放前不需要再调用prepare（）了，因为create方法里已经调用过了。</li>
+<li>start()是真正启动文件播放的方法， </li>
+<li>pause()和stop()比较简单，起到暂停和停止播放的作用， </li>
+<li>seekTo()是定位方法，可以让播放器从指定的位置开始播放，需要注意的是该方法是个异步方法，也就是说该方法返回时并不意味着定位完成，尤其是播放的网络文件，真正定位完成时会触发OnSeekComplete.onSeekComplete()，如果需要是可以调用setOnSeekCompleteListener(OnSeekCompleteListener)设置监听器来处理的。 </li>
+<li>release()可以释放播放器占用的资源，一旦确定不再使用播放器时应当尽早调用它释放资源。 </li>
+<li>reset()可以使播放器从Error状态中恢复过来，重新会到Idle状态。</li>
+</ul>
+<p>使用MediaPlayer播放视频的步骤如下：</p>
+<ol>
+<li>创建MediaPlayer对象，并让它加载指定的视频文件；</li>
+<li>在界面布局文件中定义SurfaceView控件，或在程序中创建SurfaceView控件，并为SurfaceView的SurfaceHolder添加Callback监听器；</li>
+<li>调用MediaPlayer对象的setDisney(SurfaceHolder sh)方法将所播放的视频图像输出到指定的SurfaceView控制；</li>
+<li>调用MediaPlayer的start()、stop()、pause()方法来控制视频播放。</li>
+</ol>
+<p>下图是一个MediaPlayer对象被支持的播放控制操作驱动的声明周期和状态。其中，椭圆代表MediaPlayer可能驻留的状态，弧线表示驱动MediaPlayer在各个状态之间迁移的播放控制操作。这里有两种类型的弧线。由单箭头开始的弧线代表同步方法调用，而以双箭头开头的弧线代表异步方法调用。</p>
+<p><img src="https://images2018.cnblogs.com/blog/682616/201807/682616-20180707210703147-1545561806.png" alt="img"></p>
+<h1 id="三、使用MediaPlayer实现视频播放"><a href="#三、使用MediaPlayer实现视频播放" class="headerlink" title="三、使用MediaPlayer实现视频播放"></a>三、使用MediaPlayer实现视频播放</h1><p>下面我们将展示如何使用MediaPlayer播放香港卫视的视频流：</p>
+<h3 id="1-声明权限"><a href="#1-声明权限" class="headerlink" title="1. 声明权限"></a>1. 声明权限</h3><p>需要在AndroidManifest.xml添加权限。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-编写SurfaceView布局"><a href="#2-编写SurfaceView布局" class="headerlink" title="2. 编写SurfaceView布局"></a>2. 编写SurfaceView布局</h3><p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;android.support.constraint.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">    tools:context=&quot;.MainActivity&quot;&gt;</span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;&gt;</span><br><span class="line">        &lt;SurfaceView</span><br><span class="line">            android:id=&quot;@+id/surface_view&quot;</span><br><span class="line">            android:layout_width=&quot;match_parent&quot;</span><br><span class="line">            android:layout_height=&quot;195dp&quot; /&gt;</span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line">&lt;/android.support.constraint.ConstraintLayout&gt;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h3 id="3-编写播放视频代码"><a href="#3-编写播放视频代码" class="headerlink" title="3. 编写播放视频代码"></a>3. 编写播放视频代码</h3><p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback &#123;</span><br><span class="line"></span><br><span class="line">    SurfaceView surfaceView;</span><br><span class="line"></span><br><span class="line">    SurfaceHolder surfaceHolder;</span><br><span class="line"></span><br><span class="line">    MediaPlayer mediaPlayer;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        surfaceView = findViewById(R.id.surface_view);</span><br><span class="line"></span><br><span class="line">        surfaceHolder = surfaceView.getHolder();</span><br><span class="line"></span><br><span class="line">        surfaceHolder.addCallback(this);</span><br><span class="line"></span><br><span class="line">        mediaPlayer = new MediaPlayer();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            mediaPlayer.setDataSource(&quot;http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8&quot;);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onPrepared(MediaPlayer mp) &#123;</span><br><span class="line">                mp.start();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void surfaceCreated(SurfaceHolder holder) &#123;</span><br><span class="line">        Surface surface = holder.getSurface();</span><br><span class="line">        mediaPlayer.setSurface(surface);</span><br><span class="line">        mediaPlayer.prepareAsync();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void surfaceDestroyed(SurfaceHolder holder) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h1 id="四、MediaPlayer使用注意事项"><a href="#四、MediaPlayer使用注意事项" class="headerlink" title="四、MediaPlayer使用注意事项"></a>四、MediaPlayer使用注意事项</h1><ol>
+<li><p>在使用start()播放流媒体之前，需要装载流媒体资源。这里最好使用prepareAsync()用异步的方式装载流媒体资源。因为流媒体资源的装载是会消耗系统资源的，在一些硬件不理想的设备上，如果使用prepare()同步的方式装载资源，可能会造成UI界面的卡顿，这是非常影响用于体验的。因为推荐使用异步装载的方式，为了避免还没有装载完成就调用start()而报错的问题，需要绑定MediaPlayer.setOnPreparedListener()事件，它将在异步装载完成之后回调。异步装载还有一个好处就是避免装载超时引发ANR（(Application Not Responding）错误。</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mediaPlayer = new MediaPlayer();</span><br><span class="line">mediaPlayer.setDataSource(path);</span><br><span class="line">mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);</span><br><span class="line">// 通过异步的方式装载媒体资源</span><br><span class="line">mediaPlayer.prepareAsync();</span><br><span class="line">mediaPlayer.setOnPreparedListener(new OnPreparedListener() &#123;                    </span><br><span class="line">     @Override</span><br><span class="line">     public void onPrepared(MediaPlayer mp) &#123;</span><br><span class="line">          // 装载完毕回调</span><br><span class="line">          mediaPlayer.start();</span><br><span class="line">     &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 </li>
-<li><p>activity view window</p>
-</li>
-<li><p>context</p>
-</li>
-<li><p>Service的两种启动方式</p>
-</li>
-<li><p>Broadcast有几种</p>
-<p>有序广播，无序广播，粘性广播，本地广播</p>
-</li>
-<li><p>Broadcast注册方式与区别</p>
-<p>静态注册和动态注册</p>
-</li>
-<li><p>进程间通信的方式</p>
-</li>
-<li><p>进程基于哪些不同的状态</p>
-<p>foreground activity</p>
-<p>visible activity</p>
-<p>service process</p>
-<p>background activity</p>
-<p>empty process</p>
-</li>
-<li><p>加载大图片</p>
-</li>
-<li><p>ANR</p>
-</li>
-<li><p>Handler的原理</p>
-</li>
-<li><p>View的绘制流程</p>
-<p>onMeasure -&gt; onLayout -&gt; onDraw</p>
-</li>
-<li><p>View，ViewGroup事件分发</p>
-<p>dispatchTouchEvent</p>
-<p>onInterceptTouchEvent</p>
-<p>onTouchEvent</p>
-<p>requestDisallowInterceptTouchEvent</p>
-</li>
-<li><p>布局优化</p>
-<p>merge -&gt; include -&gt; viewstub</p>
-</li>
-<li><p>activity能获取view的宽高</p>
-</li>
-<li><p>Parcelable与Serializable的区别</p>
-</li>
-<li><p>RecyclerView</p>
-</li>
-<li><p>andriod动画</p>
-</li>
-<li><p>MVP ，MVC，MVVM</p>
-</li>
-<li><p>设计模式</p>
-</li>
-<li><p>HashMap和Hashtable有什么区别</p>
-</li>
-<li><p>Contentprovider</p>
-</li>
-<li><p>网络请求框架</p>
-</li>
-<li><p>注解与反射</p>
-</li>
-<li><p>sleep wait</p>
-</li>
-<li><p>不使用第三个变量，交换2个数</p>
-</li>
-<li><p>重载和重写</p>
-</li>
-<li><p>单例如何防止多线程</p>
-</li>
-<li><p>kotlin</p>
-</li>
+<li><p>使用完MediaPlayer需要回收资源。MediaPlayer是很消耗系统资源的，所以在使用完MediaPlayer，不要等待系统自动回收，最好是主动回收资源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (mediaPlayer != null &amp;&amp; mediaPlayer.isPlaying()) &#123;</span><br><span class="line">      mediaPlayer.stop();</span><br><span class="line">      mediaPlayer.release();</span><br><span class="line">      mediaPlayer = null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 
       
@@ -299,104 +688,12 @@
     <div class="article-info article-info-index">
       
       
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/04/android/android-interview/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-android/android-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/31/android/android-view/">android-view</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/31/android/android-view/" class="archive-article-date">
-  	<time datetime="2018-05-31T03:05:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <table>
-<thead>
-<tr>
-<th>chlidLayoutParams\parentSpecMode</th>
-<th>EXACTLY</th>
-<th>AT_MOST</th>
-<th>UNSPECIFIED</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>dp/px</td>
-<td>EXACTLY<br>childSize</td>
-<td>EXACTLY<br>childSize</td>
-<td>EXACTLY<br>childSize</td>
-</tr>
-<tr>
-<td>match_parent</td>
-<td>EXACTLY<br>parentSize</td>
-<td>AT_MOST<br>parentSize</td>
-<td>UNSPECIFIED<br>0</td>
-</tr>
-<tr>
-<td>wrap_content</td>
-<td>AT_MOST<br>parentSize</td>
-<td>AT_MOST<br>parentSize</td>
-<td>UNSPECIFIED<br>0</td>
-</tr>
-</tbody>
-</table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">av</a>
         		</li>
       		
 		</ul>
@@ -406,7 +703,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/31/android/android-view/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/06/27/av/av-basic-play1/">展开全文 >></a>
         </p>
       
 
@@ -436,586 +733,86 @@
 
 
   
-    <article id="post-smile/smile-programmer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-av/av-basic-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/11/smile/smile-programmer/">程序人生</a>
+      <a class="article-title" href="/2019/06/27/av/av-basic-1/">音视频基础1</a>
     </h1>
   
 
         
-        <a href="/2018/05/11/smile/smile-programmer/" class="archive-article-date">
-  	<time datetime="2018-05-11T03:33:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
+        <a href="/2019/06/27/av/av-basic-1/" class="archive-article-date">
+  	<time datetime="2019-06-27T07:05:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>两程序员聊天，程序员甲抱怨：“做程序员太辛苦了，我想换行……我该怎么办？”程序员乙：“敲一下回车。”</li>
-<li>我很奇怪客栈这个词，难道后入住的必须先退房吗？</li>
-<li>佛跳墙 GOD use VPN </li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">smile</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/11/smile/smile-programmer/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-poetry/poetry-zen" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/11/poetry/poetry-zen/">poetry-zen</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/11/poetry/poetry-zen/" class="archive-article-date">
-  	<time datetime="2018-05-11T03:32:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>八苦：生、老、病、死、怨憎会、爱别离、求不得、五阴盛 </p>
-<p>无论我走到哪里，那都是我该去的地方，经历一些我该经历的事，遇见我该遇见的人 </p>
-<blockquote>
-<p>1.人笨就要多花时间学习，努力提高绩点，别听别人瞎BB。　　</p>
-<p>2.人弱就要多花时间锻炼，努力提升体质，别跟别人瞎胡闹。</p>
-<p>　　3.人丑就要多花时间读书，努力提高内涵，别和别人瞎攀比。</p>
-<p>　　4.人蠢就要多花时间观察，努力修炼为人，别和别人瞎搅合。</p>
-<p>　　5.人傻就要多花时间请教，努力开阔眼界，别和别人瞎虚混。</p>
-</blockquote>
-<p>弟子问老师：“您能谈谈人类的奇怪之处吗？”老师答道：“他们急于成长，然后又哀叹失去的童年；他们以健康换取金钱，不久后又想用金钱恢复健康。他们对未来焦虑不已，却又无视现在的幸福。因此，他们既不活在当下，也不活在未来.他们活着仿佛从来不会死亡。临死前，又仿佛从未活过。” </p>
-<p>卦不可算尽，畏天道无常 </p>
-<p>情不敢至深，恐大梦一场 </p>
-<p>人生如茶，第一道苦如生命，第二道香如爱情，第三道淡如清风 </p>
-<p>听过很多道理，依然过不好这一生</p>
-<p>我们看不惯那么多人和事，却也没比别人好到哪去</p>
-<p>你所浪费的今天，是昨天死去的人奢望的明天；你所厌恶的现在，是未来的你回不去的曾经。人生短暂，珍惜当下</p>
-<p>人会长大三次。第一次是在发现自己不是世界中心的时候。第二次是在发现即使再怎么努力，终究还是有些事令人无能为力的时候。第三次是在，明知道有些事可能会无能为力，但还是会尽力争取的时候。 </p>
-<p>没有不可治愈的伤痛，没有不能结束的沉沦，<strong>所有失去的，会以另一种方式归来。</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">poetry</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/11/poetry/poetry-zen/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-smile/smile-global" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/11/smile/smile-global/">开心一刻</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/11/smile/smile-global/" class="archive-article-date">
-  	<time datetime="2018-05-11T03:28:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>天将降大任于斯人也，必先收其电脑，夺其手机，断其wifi，拒其看叨叨，使其焦躁无聊，百无聊赖，便可用心上班/读书！ (然后静坐、思过、锻炼 、读书、明智、开悟、精技……)</li>
-<li>我的兴趣爱好可分为静态和动态两种，静态就是睡觉，动态就是翻身 </li>
-<li>你打游戏时，别人在熬夜加班赶项目；你上班摸鱼时，别人在卖命拼酒陪客户；你晚上睡大觉时，别人在废寝忘食地工作；你跟女朋友出去旅游时，别人在通宵做商业计划书；这就是别人二十多岁猝死在工作岗位上而你皮肤好气色好精神好的原因。 </li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">smile</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/11/smile/smile-global/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-poetry/poetry-heart" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/11/poetry/poetry-heart/">心灵鸡汤</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/11/poetry/poetry-heart/" class="archive-article-date">
-  	<time datetime="2018-05-11T03:17:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>不在乎有的，不惦记没的，不害怕失去的，不追求强扭的。对得到适可而止，对失去心无畏惧 </p>
-</li>
-<li><p>喷泉之所以漂亮是因为她有了压力；瀑布之所以壮观是因为她没有了退路；水之所以能穿石是因为永远在坚持 </p>
-</li>
-<li><p>只要你真正努力过，再惨也不过是大器晚成</p>
-</li>
-<li><p>人最怕一生碌碌无为，还说平凡难能可贵</p>
-</li>
-<li><p>因果不虚，你昨天偷过的懒，总有一天会变成一记重重的耳光，打在你的脸上 </p>
-</li>
-<li><p>有钱虽不意味着你想干什么就能干什么，但可以让你不想做什么就不做什么 </p>
-</li>
-<li><p>不管我们活成了什么样子，优秀也好，平庸也罢，高贵也好，卑贱也罢，富裕也好，贫穷也罢，总会有人喜欢你，也总会有人不喜欢你。</p>
-</li>
-<li><p>没有钱，你拿什么维持你的亲情，稳固你的爱情，联络你的友情，靠嘴说吗，别闹了，大家都挺忙的！</p>
-</li>
-<li><p>宁愿浪费3分钟或2个小时换来一句“不过如此”，也别让快进和剧透造成一点“早知当初”。</p>
-</li>
-<li><p>因果不虚，你昨天偷过的懒，总有一天会变成一记重重的耳光，打在你的脸上</p>
-</li>
-<li><p>你安逸到无法改变，成为所谓“佛系青年”</p>
-</li>
-<li><p>比你好看的人还比你优秀，比你优秀的人还比你努力，努力用几个月的时间做足了你一年都做不了的准备</p>
-</li>
-<li><p>在没有人看到的地方去努力，坚持早起、坚持学习、坚持运动，不断学习新技能，努力遇见更好的自己。</p>
-</li>
-<li><p>世界有2件事最难：一是把自己的知识装进别人的脑袋；二是把别人的钱装进自己的口袋 </p>
-</li>
-<li><p>你之所以即使疲劳了，也不肯睡觉，是因为你没有勇气结束这一天，也没有勇气迎接新的一天</p>
-</li>
-<li><p>在为浪费时间而后悔和自责时，你依然在浪费时间。</p>
-</li>
-<li><p>哪有什么岁月静好，只是有人为你默默承受 </p>
-</li>
-<li><p>当你开始变优秀的时候，连世界都会忍不住想要跟你做朋友。那些曾经想也不敢想的资源会尽数朝你倾过来，那些做梦也想不到的际遇会如雨后春笋般出现在你身旁。</p>
-</li>
-<li><p>上帝给你的所有东西都是明码标价的，现在你浪费青春换来的片刻安逸，未来要用半辈子的辛苦劳作去偿还。 </p>
-</li>
-<li><p>正如我常说的，人生是一个积分，你的选择影响的绝不仅仅是你自己，还有你的孩子。今天安逸的选择或许让你的人生某个阶段更加舒适，但是往往也意味着你给孩子设置了一个本可以没有的屏障 </p>
-</li>
-<li><p>我怕自己成功的速度赶不上父母老去的速度，或者父母已经老了而我还没有成功</p>
-</li>
-<li><p>不是急于求成，也不是踟蹰不前，只是朝着一个方向，慢慢地往前走着。世上没有白走的路，每走一步都算数。</p>
-</li>
-<li><p>目标设到月球，即使失败，也能落到众星之间。</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">poetry</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/11/poetry/poetry-heart/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-poetry/poetry-love" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/11/poetry/poetry-love/">poetry-love</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/11/poetry/poetry-love/" class="archive-article-date">
-  	<time datetime="2018-05-11T03:13:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>如果今生我们注定擦肩而过，我能做的，惟有深深地祝福你，愿你永远快乐！然后收我所有的点点情意，期待下世再与你相逢…</p>
-</li>
-<li><p>就是这样一个普通女孩，一见不过尔尔，再见方觉有些可爱，最终经历千山万水走到她身边，才惊呼她魅力非凡</p>
-</li>
-<li><p>夜阑卧听风吹雨，铁马是你，冰河也是你  </p>
-</li>
-<li><p>月落乌啼霜满天，江枫似卿，渔火亦似卿。 </p>
-</li>
-<li><p>年年白发催人老，夜夜是你，青山也是你 </p>
-</li>
-<li><p>晓看天色暮看云，行也思君，坐也思君 </p>
-</li>
-<li><p>二斤黄酒加十年相思，才说出喜欢二字 </p>
-</li>
-<li><p>我从未拥有过你一秒钟，心里却失去过你千万次 </p>
-</li>
-<li><p>总有一天 你会遇见一个好姑娘 她不要你有房子 不要你有车子 不要你有钻石 更不要你的钱 也不要你。 </p>
-</li>
-<li><p>遇见你</p>
-<p>我变得很低很低</p>
-<p>一直低到尘埃里去</p>
-<p>但我的心是欢喜的</p>
-<p>并且在那里开出一朵花来</p>
-</li>
-<li><p>一生会遇见两个人，一个惊艳了时光，一个温柔了岁月</p>
-</li>
-<li><p>一生待一人，一世一双人</p>
-</li>
-<li><p>那么多少轮回的眷恋才许得今生这一世姻缘！</p>
-</li>
-<li><p>怎么用一句话，写出一个悲情的有诗感的爱情故事？</p>
-<p>系统提示：你们有67个共同朋友，是否添加她为好友？</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/11/poetry/poetry-love/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-poetry/poetry-english" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/11/poetry/poetry-english/">优美的英文诗句</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/11/poetry/poetry-english/" class="archive-article-date">
-  	<time datetime="2018-05-11T02:59:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p><strong>I love three things in the world, the sun, the moon and you. The sun for day, the moon for the night, and you forever</strong></p>
-<p>浮世三千，吾爱有三。日，月与卿。日为朝，月为暮，卿为朝朝暮暮。</p>
-</li>
-<li><p><strong>Some of us get dipped in flat, some in satin, some in gloss. But every once in a while you find someone who’s iridescent, and when you do, nothing will ever compare.(怦然心动)</strong></p>
-<p>有人住高楼,有人在深沟,有人光万丈,有人一身锈,世人万千种,浮云莫去求,斯人若彩虹,遇上方知有</p>
-</li>
-<li><p>If he likes cake, he will not like you, even if you’re the best chocolate. But always remember, to be the best of yourself, the right person will like you. </p>
-<p>也对<br>自己是梧桐，凤凰才会来栖，自己是大海，百川才来汇聚<br>花香自有蝶舞来，日子没到强求又何必<br>做全世界最棒的巧克力，你自然会碰见来自四面八方的巧克力爱好者。</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">poetry</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/11/poetry/poetry-english/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-java/java-reflection" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/27/java/java-reflection/">Java反射</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/27/java/java-reflection/" class="archive-article-date">
-  	<time datetime="2018-04-27T08:35:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在Java中，我们主要通过反射(Reflection)来在运行时来获取类或对象的相关信息</p>
+        <h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><p>作为Android开发，我们不可避免的会接触到视频播放，VideoView做为最简单的播放器，我们是不应该不会的。</p>
+<p>下面简单介绍一下VideoView：</p>
 <ul>
-<li>获取对象所属的类</li>
-<li>构造类的对象</li>
-<li>获取类的构造函数对象</li>
-<li>获取类的成员变量，包括<code>private</code> 修饰的变量</li>
-<li>调用类的方法，包括<code>private</code>修饰的方法</li>
+<li>VideoView是使用MediaPlayer来对视频文件进行控制的。</li>
+<li>VideoView只支持mp4、avi、3gp格式的视频，支持格式相对单一，VideoView支持的格式可以参考MediaPlayer。</li>
+<li>VideoView可以播放网络视频，支持的网络视频的协议为：Http协议和RTSP协议两种。</li>
 </ul>
-        
-          <a class="article-more-a" href="/2018/04/27/java/java-reflection/#more">more >></a>
-        
+<h1 id="二、VideoView常用方法"><a href="#二、VideoView常用方法" class="headerlink" title="二、VideoView常用方法"></a>二、VideoView常用方法</h1><p>Android VideoView类为我们提供了十分方便的视频播放API，其主要方法如下：</p>
+<ul>
+<li>setVideoPath：设置要播放的视频文件的位置</li>
+<li>start：开始或继续播放视频</li>
+<li>pause：暂停播放视频</li>
+<li>resume：将视频从头开始播放</li>
+<li>seekTo：从指定的位置开始播放视频</li>
+<li>isPlaying：判断当前是否正在播放视频</li>
+<li>getCurrentPosition：获取当前播放的位置</li>
+<li>getDuration：获取载入的视频文件的时长</li>
+<li>setVideoPath(String path)：以文件路径的方式设置VideoView播放的视频源</li>
+<li>setVideoURI(Uri uri)：以Uri的方式设置视频源，可以是网络Uri或本地Uri</li>
+<li>setMediaController(MediaController controller)：设置MediaController控制器</li>
+<li>setOnCompletionListener(MediaPlayer.onCompletionListener l)：监听播放完成的事件</li>
+<li>setOnErrorListener(MediaPlayer.OnErrorListener l)：监听播放发生错误时候的事件</li>
+<li>setOnPreparedListener(MediaPlayer.OnPreparedListener l)：监听视频装载完成的事件</li>
+</ul>
+<p>除了简单的操作和丰富的API以外，我们在装载视频时，无需进行编码，播放完成后也无需手动回收资源。</p>
+<p>除了播放视频，Media Controller类则为我们提供了一个悬浮的操作栏，包含了播放，暂停，快进，快退，上一个，下一个等功能键。甚至连拖动进度条至某处播放都已经实现。在使用前VideoView和MediController需要相互指定控件。其内置方法有如下：</p>
+<ul>
+<li><code>boolean isShowing：当前悬浮控制栏是否显示</code></li>
+<li><code>setMediaPlayer(MediaController.MediaPlayerControl player)：设置控制的组件</code></li>
+<li><code>setPrevNextListeners(View.OnClickListener next,View.OnClickListener prev)：设置上一个视频、下一个视频的切换事件。</code></li>
+</ul>
+<p>默认情况下，Media Controller悬浮显示3s后隐藏，触摸响应的VideoView呼出。默认上一个，下一个按钮隐藏。</p>
+<h1 id="三、使用VideoView实现视频播放"><a href="#三、使用VideoView实现视频播放" class="headerlink" title="三、使用VideoView实现视频播放"></a>三、使用VideoView实现视频播放</h1><p>下面我们将展示如何使用VideoView播放香港卫视的视频流：</p>
+<h3 id="1-声明权限"><a href="#1-声明权限" class="headerlink" title="1. 声明权限"></a><code>1. 声明权限</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">需要在AndroidManifest.xml添加两条权限。</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>两条权限分别为：网络访问权限、访问文件系统的权限。</p>
+<h3 id="2-编写VideoView布局"><a href="#2-编写VideoView布局" class="headerlink" title="2. 编写VideoView布局"></a>2. 编写VideoView布局</h3><p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;android.support.constraint.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">    tools:context=&quot;.MainActivity&quot;&gt;</span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;&gt;</span><br><span class="line">        &lt;VideoView</span><br><span class="line">            android:id=&quot;@+id/video_view&quot;</span><br><span class="line">            android:layout_width=&quot;match_parent&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot; /&gt;</span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line">&lt;/android.support.constraint.ConstraintLayout&gt;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<h3 id="3-编写播放视频代码"><a href="#3-编写播放视频代码" class="headerlink" title="3. 编写播放视频代码"></a>3. 编写播放视频代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">VideoView videoView = findViewById(R.id.video_view);</span><br><span class="line">videoView.setVideoPath(&quot;http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8&quot;);  // 香港卫视地址</span><br><span class="line">videoView.start();</span><br><span class="line">MediaController mediaController = new MediaController(this);</span><br><span class="line">videoView.setMediaController(mediaController);</span><br><span class="line">mediaController.setMediaPlayer(videoView);</span><br></pre></td></tr></table></figure>
+<h3 id="4-效果图"><a href="#4-效果图" class="headerlink" title="4. 效果图"></a>4. 效果图</h3><p><img src="https://images2018.cnblogs.com/blog/682616/201807/682616-20180705141057919-1429484402.png" alt="img"></p>
+<p>完成代码编写的工作后启动App应该就能够如上图的香港卫视的视频内容啦。是不是感觉很简单啊，那是因为VideoView封装了MediaPlayer和SurfaceView，所有的生命周期都包装好了，所以使用的时候当然就简单啦。下面我们就解析一下VideoView了解其背后的事情。</p>
+<h1 id="四、VideoView-播放状态说明"><a href="#四、VideoView-播放状态说明" class="headerlink" title="四、VideoView 播放状态说明"></a>四、VideoView 播放状态说明</h1><p>下面的代码是VideoView声明的播放器声明的状态：</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// all possible internal states</span><br><span class="line">private static final int STATE_ERROR = -1; </span><br><span class="line">private static final int STATE_IDLE = 0;    </span><br><span class="line">private static final int STATE_PREPARING = 1;　　</span><br><span class="line">private static final int STATE_PREPARED = 2; </span><br><span class="line">private static final int STATE_PLAYING = 3;</span><br><span class="line">private static final int STATE_PAUSED = 4;</span><br><span class="line">private static final int STATE_PLAYBACK_COMPLETED = 5;</span><br></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p>为什么会声明这些状态，这就不得不提到MediaPlayer的生命周期了，看下图，应该就稍微理解了吧：</p>
+<p><img src="https://images2018.cnblogs.com/blog/682616/201807/682616-20180705144120259-1126207665.png" alt="img"></p>
+<p>在这里我们先不具体针对这个图讲MediaPlayer的生命周期的内容。只是为了证明VideoView的状态的生命是有依据的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">private int mCurrentState = STATE_IDLE;</span><br><span class="line">private int mTargetState = STATE_IDLE;</span><br></pre></td></tr></table></figure>
+<p>上面的代码声明了两个状态变量，分别是当前的状态和目标状态。通过这两个变量结合上面提到的常量，我们可以很清楚的知道VideoView类就是围绕这这两个状态来进行相应的操作的。而我们处理一些回调也是基于这些状态之间的变化设计的，如：</p>
+<ul>
+<li>OnCompletionListener – STATE_PLAYBACK_COMPLETED</li>
+<li>OnPreparedListener – STATE_PREPARED</li>
+<li>OnErrorListener – STATE_ERROR</li>
+</ul>
+<h1 id="五、使用VideoView-可能遇到的问题及解决方案"><a href="#五、使用VideoView-可能遇到的问题及解决方案" class="headerlink" title="五、使用VideoView 可能遇到的问题及解决方案"></a>五、使用VideoView 可能遇到的问题及解决方案</h1><h3 id="1-视频播放时会有短暂的黑屏时间："><a href="#1-视频播放时会有短暂的黑屏时间：" class="headerlink" title="1. 视频播放时会有短暂的黑屏时间："></a>1. 视频播放时会有短暂的黑屏时间：</h3><h4 id="产生原因："><a href="#产生原因：" class="headerlink" title="产生原因："></a>产生原因：</h4><p>视频文件加载到内存中是需要时间，这个时间可能导入VideoView全黑。</p>
+<h4 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h4><p>(1)：给VideoView添加MediaPlayer.OnPreparedListener 监听事件，在其onPrepared(MediaPlayer mp) 方法回调中播放视频这个时候视频已经完成了加载。<br>(2)：在VideoView执行start() 方法时视频的预览图不是立即消失而是延迟几百毫秒之后消失，这是视频已经加载完成，当然体验上有些不好。</p>
+<h3 id="2-跳转到其他界面回来后视频播放区域黑屏："><a href="#2-跳转到其他界面回来后视频播放区域黑屏：" class="headerlink" title="2. 跳转到其他界面回来后视频播放区域黑屏："></a>2. 跳转到其他界面回来后视频播放区域黑屏：</h3><h4 id="产生原因：-1"><a href="#产生原因：-1" class="headerlink" title="产生原因："></a>产生原因：</h4><p>VideoView被回收掉，而自己没做VideoView的状态保存处理</p>
+<h4 id="解决方法：-1"><a href="#解决方法：-1" class="headerlink" title="解决方法："></a>解决方法：</h4><p>在VideoView所在的Activity或者Fragment的生命周期中处理VideoView视频播放和暂停。（查看VideoView的生命周期相关的方法）</p>
+
       
 
       
@@ -1028,7 +825,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">av</a>
         		</li>
       		
 		</ul>
@@ -1038,7 +835,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/27/java/java-reflection/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/06/27/av/av-basic-1/">展开全文 >></a>
         </p>
       
 
@@ -1068,30 +865,53 @@
 
 
   
-    <article id="post-java/java-annotations-processor" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-av/av-basic-play" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/18/java/java-annotations-processor/">Java 注解处理器(Annotation Processor)</a>
+      <a class="article-title" href="/2019/06/27/av/av-basic-play/">Android 音乐(音效)播放方式总结</a>
     </h1>
   
 
         
-        <a href="/2018/04/18/java/java-annotations-processor/" class="archive-article-date">
-  	<time datetime="2018-04-18T10:48:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
+        <a href="/2019/06/27/av/av-basic-play/" class="archive-article-date">
+  	<time datetime="2019-06-27T07:00:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>注解处理器(Annotation Processor Tool)是<code>javac</code>的一个工具，主要用于在编译时处理<code>编译时注解RetentionPolicy.CLASS）</code>。我们可以自定义注解处理器，获取我们自定义的注解信息，通过注解信息生成<code>java</code>文件(如： <a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">ButterKnife</a>)或进行其它的一些操作</p>
-        
-          <a class="article-more-a" href="/2018/04/18/java/java-annotations-processor/#more">more >></a>
-        
+        <h1 id="一、音效的分类"><a href="#一、音效的分类" class="headerlink" title="一、音效的分类"></a>一、音效的分类</h1><p>音效按照作用的不同，可以将音效分为即时音效和背景音乐。两种音效在Android中的实现技术是不同的。<br>主要的实现方式为：SoundPool、MediaPlayer。<br>区别在于，MediaPlayer会在播放音频的时候，会占用大量的系统资源，并且播放的时候，还需要缓冲，有较大的时延。但是SoundPool的机制是将声音资源加载到内存中，然后在需要播放的地方进行播放，几乎没有时延，但是也正是因为这样的机制，限制了加载的文件的大小，不然会出现加载失败或者内存占用过大的情况，原则上SoundPool播放的音效的长度不应该超过7S。</p>
+<p>所有如果需要实时播放短时间音效的话，可以使用SoundPool，如果需要播放背景音乐的话，建议使用MediaPlayer。</p>
+<h1 id="二、即时音效的播放—SoundPool"><a href="#二、即时音效的播放—SoundPool" class="headerlink" title="二、即时音效的播放—SoundPool"></a>二、即时音效的播放—SoundPool</h1><p>相关API文档地址：<a href="https://developer.android.com/reference/android/media/SoundPool.html" target="_blank" rel="noopener">https://developer.android.com/reference/android/media/SoundPool.html</a></p>
+<p>具体实现代码为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">public class SampleActivity extends Activity &#123;</span><br><span class="line">    SoundPool sp; // 声明SoundPool的引用</span><br><span class="line">    HashMap&lt;Integer, Integer&gt; hm; // 声明一个HashMap来存放声音文件</span><br><span class="line">    int currStreamId;// 当前正播放的streamId</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    // 重写onCreate方法</span><br><span class="line">    public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.main); // 设置layout</span><br><span class="line">        initSoundPool(); // 初始化声音池的方法</span><br><span class="line">        Button b1 = (Button) this.findViewById(R.id.Button01); // 获取播放按钮</span><br><span class="line">        b1.setOnClickListener // 为播放按钮添加监听器</span><br><span class="line">        (new OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                playSound(1, 0); // 播放1号声音资源，且播放一次</span><br><span class="line">                // 提示播放即时音效</span><br><span class="line">                Toast.makeText(getBaseContext(), &quot;播放即时音效&quot;, Toast.LENGTH_SHORT)</span><br><span class="line">                        .show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Button b2 = (Button) this.findViewById(R.id.Button02); // 获取停止按钮</span><br><span class="line">        b2.setOnClickListener // 为停止按钮添加监听器</span><br><span class="line">        (new OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                sp.stop(currStreamId); // 停止正在播放的某个声音</span><br><span class="line">                // 提示停止播放</span><br><span class="line">                Toast.makeText(getBaseContext(), &quot;停止播放即时音效&quot;, Toast.LENGTH_SHORT)</span><br><span class="line">                        .show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 初始化声音池的方法</span><br><span class="line">    public void initSoundPool() &#123;</span><br><span class="line">        sp = new SoundPool(4, AudioManager.STREAM_MUSIC, 0); // 创建SoundPool对象</span><br><span class="line">        hm = new HashMap&lt;Integer, Integer&gt;(); // 创建HashMap对象</span><br><span class="line">        hm.put(1, sp.load(this, R.raw.musictest, 1)); // 加载声音文件musictest并且设置为1号声音放入hm中</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 播放声音的方法</span><br><span class="line">    public void playSound(int sound, int loop) &#123; // 获取AudioManager引用</span><br><span class="line">        AudioManager am = (AudioManager) this</span><br><span class="line">                .getSystemService(Context.AUDIO_SERVICE);</span><br><span class="line">        // 获取当前音量</span><br><span class="line">        float streamVolumeCurrent = am</span><br><span class="line">                .getStreamVolume(AudioManager.STREAM_MUSIC);</span><br><span class="line">        // 获取系统最大音量</span><br><span class="line">        float streamVolumeMax = am</span><br><span class="line">                .getStreamMaxVolume(AudioManager.STREAM_MUSIC);</span><br><span class="line">        // 计算得到播放音量</span><br><span class="line">        float volume = streamVolumeCurrent / streamVolumeMax;</span><br><span class="line">        // 调用SoundPool的play方法来播放声音文件</span><br><span class="line">        currStreamId = sp.play(hm.get(sound), volume, volume, 1, loop, 1.0f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="三、背景音效的播放—MediaPlayer"><a href="#三、背景音效的播放—MediaPlayer" class="headerlink" title="三、背景音效的播放—MediaPlayer"></a>三、背景音效的播放—MediaPlayer</h1><p>因为SoundPool只适合播放不大于7秒的音效文件，限制较大。背景音乐一般用MediaPlayer来播放。想要很好的用MediaPlayer进行音/视频的播放，首先需要熟悉MediaPlayer的生命周期。这样不仅仅有利于开发人员开发出更加合理的代码，而且可以达到充分利用系统资源的目的。</p>
+<h3 id="MediaPlayer的生命周期"><a href="#MediaPlayer的生命周期" class="headerlink" title="MediaPlayer的生命周期"></a>MediaPlayer的生命周期</h3><p>MediaPlayer的生命周期包括10种状态，每种状态下可以调用相应的方法来实现音／视频文件的管理或播放。其各个状态及状态间的关系可以用一个简单的流程图来表示，如图所示：<br><img src="https://images2017.cnblogs.com/blog/682616/201712/682616-20171205193440988-940057059.png" alt="img"></p>
+<h3 id="Idle-状态"><a href="#Idle-状态" class="headerlink" title="Idle 状态"></a>Idle 状态</h3><p>使用new方法创建一个MediaPlayer对象或者调用了其reset方法时，改MediaPlayer对象处于Idle 状态。<br>但是通过两种方式进入的idle状态还是有些区别的，主要体现为：如果这个状态下调用了getDuration等方法，若通过reset进入idle状态的话会出发onErrorListener.onError,并且MediaPlayer会进入Error状态。如果是新创建的MediaPlayer对象，则不会触发onError，也不会进入Error状态</p>
+<h3 id="End-状态"><a href="#End-状态" class="headerlink" title="End 状态"></a>End 状态</h3><p>通过release方法可以进入End状态，只要MediaPlayer对象不再被使用了，就应当尽快将其通过release方法释放掉，以释放其占用的软、硬件资源，这其中有些资源是互斥的（相当于临界资源）。如果MediaPlayer进入了End状态，则不会再进入其他的任何状态了。</p>
+<h3 id="Initialized-状态"><a href="#Initialized-状态" class="headerlink" title="Initialized 状态"></a>Initialized 状态</h3><p>这个状态比较简单，MediaPlayer调 用 setDataSource方法就进入了 Initialized状态，表示此时要播放的文件已经设置好了。</p>
+<h3 id="Prepared-状态"><a href="#Prepared-状态" class="headerlink" title="Prepared 状态"></a>Prepared 状态</h3><p>初始化完成之后还需要通过调用prepare或 prepareAsync方法进行准备，这两个方法一个是同 步的，一个是异步的。只有进入了 Prepared状态，才表明MediaPlayer到目前为止都工作正常，可以进行音乐文件的播放。</p>
+<h3 id="Preparing-状态"><a href="#Preparing-状态" class="headerlink" title="Preparing 状态"></a>Preparing 状态</h3><p>这个状态比较容易理解，主要是与prepareAsync异步准备方法配合，如果异步准备完成，会触发OnPreparedListener.onPrepared，进而进入Prepared状态。</p>
+<h3 id="Started-状态"><a href="#Started-状态" class="headerlink" title="Started 状态"></a>Started 状态</h3><p>MediaPlayer准备完成后，通过调用start方法，将进入Started状态。所谓Started状态 ，也就是播放中状态，开发中可以使用isPlaying方法测试MediaPlayer是否处于Started状态。 如果播放完毕，而又设置了循环播放，则 MediaPlayer仍然会处于Started状态。类似的，如果在该状态下MediaPlayer调用了 seekTo或 者 start方法均可以让MediaPlayer停 留 在 Started状态。</p>
+<h3 id="Pause-状态"><a href="#Pause-状态" class="headerlink" title="Pause 状态"></a>Pause 状态</h3><p>Started状态下调用pause方法可以暂停播放，从而进入到Pause状态。MediaPlayer暂停后再次调用start方法则可以继续进行播放，并转到Started状态。暂停状态可以调用seekTo方法，这是不会改变状态的。</p>
+<h3 id="Stop状态"><a href="#Stop状态" class="headerlink" title="Stop状态"></a>Stop状态</h3><p>Started或Paused状态下均可以调用stop方法停止播放并进入Stop状态，而处于Stop状态的MediaPlayer想要重新播放，需要通过调用prepareAsync或prepare方法返回到先前的Prepared状态重新开始才可以。</p>
+<h3 id="Play-backCompleted-状态"><a href="#Play-backCompleted-状态" class="headerlink" title="Play backCompleted 状态"></a>Play backCompleted 状态</h3><p>文件正常播放完毕，而又没有设置循环播放的话就进入该状态,并会触发OnCompletionListener 接口中的onCompletion方法。此时可以调用start方法重新从头播放文件，也可以调用stop方法停 止播放，或者调用seekTo方法来重新定位播放位置。</p>
+<h3 id="Error状态"><a href="#Error状态" class="headerlink" title="Error状态"></a>Error状态</h3><p>由于某种原因 MediaPlayer出现了错误，则会触发OnErrorListener.onError回调方法，此时MediaPlayer即进入Error状态。及时捕捉并妥善处理这些错误是很重要的，这可以帮助应用程序及 时释放相关的软、硬件资源，也可以改善用户体验。如 果 MediaPlayer进入了 Error状态，可以通过调用reset方法来恢复，使得 MediaPlayer重新返 回 到 Idle状态。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从上述对生命周期的总结介绍可以看出，某些情况发生的时候，MediaPlayer会回调特定监听接口中的事件处理方法。如果在开发中希望使用回调，则需要先向MediaPlayer注册实现了指定监听接口的监听器。</p>
+<h3 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h3><p>从上述也可以看到，Ijkplayer和这个在方法名定义上，非常类似，目前看，生命周期这块的控制基本上也是和MediaPlayer一样的。或许这也就是为什么，现在播放器大家用Ijkplayer这么多的原因了。</p>
+<h1 id="四、音量控制—AudioManager"><a href="#四、音量控制—AudioManager" class="headerlink" title="四、音量控制—AudioManager"></a>四、音量控制—AudioManager</h1><p>AudioManager类在Android系统中主要用来进行音/视频播放时的音量控制，使用时的基本步骤如下所列。</p>
+<blockquote>
+<ul>
+<li>首先可以调用Activity对象的getSystemService(Context.AUDIO_SERVICE)方法获取AudioManager对象。</li>
+<li>然后再调用AudioManager类中的相关方法进行音量控制。</li>
+</ul>
+</blockquote>
+
       
 
       
@@ -1104,11 +924,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Annotation</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">av</a>
         		</li>
       		
 		</ul>
@@ -1118,7 +934,404 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/18/java/java-annotations-processor/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/06/27/av/av-basic-play/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-flutter/flutter-widgets" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/19/flutter/flutter-widgets/">flutter-widgets</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/19/flutter/flutter-widgets/" class="archive-article-date">
+  	<time datetime="2019-03-19T08:44:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>TextField</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">TextField &#123;</span><br><span class="line">  controller: controller,</span><br><span class="line">  focusNode: focusNode,</span><br><span class="line">  decoration: inputDecoration,</span><br><span class="line">  keyboardType: textInputType,</span><br><span class="line">  textInputAction: textInputAction,</span><br><span class="line">  maxLength: <span class="number">30</span>, <span class="comment">//最大长度，设置此项会让TextField右下角有一个输入数量的统计字符串</span></span><br><span class="line">  maxlines: <span class="number">1</span>, <span class="comment">//最大行数</span></span><br><span class="line">  autocorrect: <span class="keyword">true</span>, <span class="comment">//是否自动更正</span></span><br><span class="line">  autofocus: <span class="keyword">true</span>, <span class="comment">//是否自动对焦</span></span><br><span class="line">  obscureText: <span class="keyword">true</span>, <span class="comment">//是否是密码</span></span><br><span class="line">  textAlign: TextAlign.center, <span class="comment">//文本对齐方式</span></span><br><span class="line">  style: TextStyle(fontSize: <span class="number">30.0</span>, color: Colors.blue), <span class="comment">//输入文本的样式</span></span><br><span class="line">  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],<span class="comment">//允许的输入格式</span></span><br><span class="line">  onChanged: (text) &#123; <span class="comment">//内容改变回调</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'change $text'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  onSubmitted: (text) &#123; <span class="comment">//内容提交(按回车)的回调</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'submit $text'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  enabled: <span class="keyword">true</span>; <span class="comment">//是否禁用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">flutter</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/19/flutter/flutter-widgets/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-flutter/flutter-res" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/08/flutter/flutter-res/">Flutter学习</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/08/flutter/flutter-res/" class="archive-article-date">
+  	<time datetime="2019-03-08T10:05:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Flutter学习资源"><a href="#Flutter学习资源" class="headerlink" title="Flutter学习资源"></a>Flutter学习资源</h3><p>官方网站：<a href="https://flutter.dev/" target="_blank" rel="noopener">https://flutter.dev/</a></p>
+<p>中文网站：<a href="https://flutterchina.club/" target="_blank" rel="noopener">https://flutterchina.club/</a></p>
+<p>电子书：<a href="https://book.flutterchina.club/" target="_blank" rel="noopener">https://book.flutterchina.club/</a></p>
+<p>开源库地址：<a href="https://pub.dartlang.org/" target="_blank" rel="noopener">https://pub.dartlang.org/</a></p>
+<p>Flutter掘金社区：<a href="https://juejin.im/tag/Flutter" target="_blank" rel="noopener">https://juejin.im/tag/Flutter</a></p>
+<p>闲鱼社区：<a href="https://juejin.im/user/5ac2db47f265da2393774122" target="_blank" rel="noopener">https://juejin.im/user/5ac2db47f265da2393774122</a></p>
+<p>Dart学习网站：<a href="https://www.dartlang.org/" target="_blank" rel="noopener">https://www.dartlang.org/</a></p>
+<p>DartPad(在线编写Dart代码)：<a href="https://dartpad.dartlang.org/" target="_blank" rel="noopener">https://dartpad.dartlang.org/</a></p>
+<p>Flutter JSON TO Object: <a href="https://flutter.beer" target="_blank" rel="noopener">https://flutter.beer</a></p>
+<h3 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h3><p><strong>超完整的Flutter项目，功能丰富，适合学习和日常使用：</strong></p>
+<blockquote>
+<p><a href="https://github.com/CarGuo/GSYGithubAppFlutter" target="_blank" rel="noopener">https://github.com/CarGuo/GSYGithubAppFlutter</a></p>
+</blockquote>
+<p><strong>阿里开源的Flutter项目，flutter 开发者帮助 APP，包含 flutter 常用 140+ 组件的demo 演示与中文文档</strong></p>
+<blockquote>
+<p><a href="https://github.com/alibaba/flutter-go" target="_blank" rel="noopener">https://github.com/alibaba/flutter-go</a></p>
+</blockquote>
+<p><strong>高仿书旗小说 Flutter版</strong></p>
+<blockquote>
+<p><a href="https://github.com/huanxsd/flutter_shuqi" target="_blank" rel="noopener">https://github.com/huanxsd/flutter_shuqi</a></p>
+</blockquote>
+<p><strong>万物起源</strong></p>
+<blockquote>
+<p><a href="https://github.com/2d-inc/HistoryOfEverything" target="_blank" rel="noopener">https://github.com/2d-inc/HistoryOfEverything</a></p>
+</blockquote>
+<h3 id="第三方库"><a href="#第三方库" class="headerlink" title="第三方库"></a>第三方库</h3><p><strong>Rich Text Editor</strong></p>
+<blockquote>
+<p><a href="https://github.com/memspace/zefyr" target="_blank" rel="noopener">https://github.com/memspace/zefyr</a></p>
+</blockquote>
+<p><strong>传感器（官方提供。比如可以用来实现：摇一摇的功能）</strong></p>
+<blockquote>
+<p><a href="https://github.com/flutter/plugins/tree/master/packages/sensors" target="_blank" rel="noopener">https://github.com/flutter/plugins/tree/master/packages/sensors</a></p>
+</blockquote>
+<p><strong>国内支付/分享/OAuth。fluwx支持微信系列功能。</strong></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//pub.flutter-io.cn/packages/fluwx" target="_blank" rel="noopener">fluwx | Flutter Package</a></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//pub.flutter-io.cn/packages/tobias" target="_blank" rel="noopener">tobias | Flutter Package</a></p>
+<p><strong>拍照+选相册图片</strong></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//pub.flutter-io.cn/packages/image_picker" target="_blank" rel="noopener">image_picker | Flutter Package</a></p>
+<p><strong>SQLite数据库（注意无加密）</strong></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/tekartik/sqflite" target="_blank" rel="noopener">tekartik/sqflite</a></p>
+<p><strong>推送</strong></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//pub.flutter-io.cn/packages/flutter_local_notifications" target="_blank" rel="noopener">flutter_local_notifications | Flutter Package</a>（本地推送）</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/best-flutter/flutter_jpush" target="_blank" rel="noopener">best-flutter/flutter_jpush</a>（极光推送）</p>
+<p><strong>官方维护的plugins（存在packages目录了）</strong>：</p>
+<p><a href="https://github.com/flutter/plugins" target="_blank" rel="noopener">flutter/plugins</a></p>
+<p><strong>HTTP网络请求库</strong></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/flutterchina/dio" target="_blank" rel="noopener">flutterchina/dio</a></p>
+<p><strong>音频播放</strong></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/luanpotter/audioplayers" target="_blank" rel="noopener">luanpotter/audioplayers</a></p>
+<p><strong>高德地图</strong></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/OpenFlutter/amap_base_flutter" target="_blank" rel="noopener">OpenFlutter/amap_base_flutter</a></p>
+<p><strong>上拉刷新</strong></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/xuelongqy/flutter_easyrefresh" target="_blank" rel="noopener">xuelongqy/flutter_easyrefresh</a></p>
+<p><strong>依赖注入</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/google/inject.dart" target="_blank" rel="noopener">google/inject.dart</a></p>
+<p><strong>获取/管理联系人</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/fluttercommunity/flutter_contacts" target="_blank" rel="noopener">fluttercommunity/flutter_contacts</a></p>
+<p><strong>Awesome图标库</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/brianegan/font_awesome_flutter" target="_blank" rel="noopener">brianegan/font_awesome_flutter</a></p>
+<p><strong>Svg显示控件</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/dnfield/flutter_svg" target="_blank" rel="noopener">dnfield/flutter_svg</a></p>
+<p><strong>图表</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/google/charts" target="_blank" rel="noopener">google/charts</a><br><a href="https://link.zhihu.com/?target=https%3A//github.com/mzimmerm/flutter_charts" target="_blank" rel="noopener">mzimmerm/flutter_charts</a></p>
+<p><strong>“加载中”图标动画</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/jogboms/flutter_spinkit" target="_blank" rel="noopener">jogboms/flutter_spinkit</a></p>
+<p><strong>Skeleton页面加载占位符</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/hnvn/flutter_shimmer" target="_blank" rel="noopener">hnvn/flutter_shimmer</a></p>
+<p><strong>Staggered Grid View</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/letsar/flutter_staggered_grid_view" target="_blank" rel="noopener">letsar/flutter_staggered_grid_view</a></p>
+<p><strong>加密/解密Util库</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/leocavalcante/encrypt" target="_blank" rel="noopener">leocavalcante/encrypt</a></p>
+<p><strong>UDID</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/GigaDroid/flutter_udid" target="_blank" rel="noopener">GigaDroid/flutter_udid</a></p>
+<p><strong>Toast</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/GigaDroid/flutter_udid" target="_blank" rel="noopener">GigaDroid/flutter_udid</a></p>
+<p><strong>轮播图</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/best-flutter/flutter_swiper" target="_blank" rel="noopener">best-flutter/flutter_swiper</a></p>
+<p><strong>能内嵌图片的RichTextView</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/bytedance/RealRichText" target="_blank" rel="noopener">bytedance/RealRichText</a></p>
+<p><strong>自动调节Text大小</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/leisim/auto_size_text" target="_blank" rel="noopener">leisim/auto_size_text</a></p>
+<p><strong>带各种动画的Text</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/aagarwal1012/Animated-Text-Kit" target="_blank" rel="noopener">aagarwal1012/Animated-Text-Kit</a></p>
+<p><strong>屏幕适配工具</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/OpenFlutter/flutter_screenutil" target="_blank" rel="noopener">OpenFlutter/flutter_screenutil</a></p>
+<p><strong>城市三级联动选择器</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/hanxu317317/city_pickers" target="_blank" rel="noopener">hanxu317317/city_pickers</a></p>
+<p><strong>日期时间三级联动选择器</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/Realank/flutter_datetime_picker" target="_blank" rel="noopener">Realank/flutter_datetime_picker</a></p>
+<p><strong>PhotoView</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/renancaraujo/photo_view" target="_blank" rel="noopener">renancaraujo/photo_view</a></p>
+<p><strong>PDF阅读器</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/albo1337/flutter_full_pdf_viewer" target="_blank" rel="noopener">albo1337/flutter_full_pdf_viewer</a></p>
+<p><strong>多选图片</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/Sh1d0w/multi_image_picker" target="_blank" rel="noopener">Sh1d0w/multi_image_picker</a></p>
+<p><strong>QR二维码生成+识别</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/lukef/qr.flutter" target="_blank" rel="noopener">lukef/qr.flutter</a>（生成）<br><a href="https://link.zhihu.com/?target=https%3A//github.com/facundomedica/fast_qr_reader_view" target="_blank" rel="noopener">facundomedica/fast_qr_reader_vie</a>（识别）</p>
+<p><strong>搜索框自动提示</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/AbdulRahmanAlHamali/flutter_typeahead" target="_blank" rel="noopener">AbdulRahmanAlHamali/flutter_typeahead</a></p>
+<p><strong>Snackbar效果</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/AndreHaueisen/flushbar" target="_blank" rel="noopener">AndreHaueisen/flushbar</a></p>
+<p><strong>PIN输入框</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/LiewJunTung/pin_code_text_field" target="_blank" rel="noopener">LiewJunTung/pin_code_text_field</a></p>
+<p><strong>范围选择器</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/boeledi/RangeSlider" target="_blank" rel="noopener">boeledi/RangeSlider</a></p>
+<p><strong>可侧滑互动ListItem</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/letsar/flutter_slidable" target="_blank" rel="noopener">letsar/flutter_slidable</a></p>
+<p><strong>List拖放</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/Norbert515/flutter_list_drag_and_drop" target="_blank" rel="noopener">Norbert515/flutter_list_drag_and_drop</a></p>
+<p><strong>可“划掉”的View</strong><br><a href="https://link.zhihu.com/?target=https%3A//github.com/Ivaskuu/tinder_cards" target="_blank" rel="noopener">Ivaskuu/tinder_cards</a></p>
+<p><strong>WebView</strong></p>
+<blockquote>
+<p><a href="https://pub.flutter-io.cn/packages/webview_flutter" target="_blank" rel="noopener">https://pub.flutter-io.cn/packages/webview_flutter</a></p>
+</blockquote>
+<p><strong>这个是个Flutter精品开源项目/插件/教程等的集合，推荐收藏，方便了解每个领域的插件：<a href="https://link.zhihu.com/?target=https%3A//github.com/flutter/plugins" target="_blank" rel="noopener">flutter/plugins</a>这个是个Flutter精品开源项目/插件/教程等的集合，推荐收藏，方便了解每个领域的插件：</strong></p>
+<p><a href="https://github.com/Solido/awesome-flutter" target="_blank" rel="noopener">Solido/awesome-flutter</a></p>
+<h3 id="Flutter交流群"><a href="#Flutter交流群" class="headerlink" title="Flutter交流群"></a>Flutter交流群</h3><p>QQ：399314271、771482762</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">flutter</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/08/flutter/flutter-res/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-flutter/flutter-basic" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/20/flutter/flutter-basic/">flutter_basic</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/20/flutter/flutter-basic/" class="archive-article-date">
+  	<time datetime="2019-02-20T08:18:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><h3 id="StatelessWidget"><a href="#StatelessWidget" class="headerlink" title="StatelessWidget"></a>StatelessWidget</h3><h3 id="基础Widget"><a href="#基础Widget" class="headerlink" title="基础Widget"></a>基础Widget</h3><p><strong>Text</strong></p>
+<p>该<code>widget</code>可以让您创建一个带格式的文本</p>
+<p><strong>Row、Column</strong></p>
+<p>这些具有弹性空间的布局类Widget可让您在水平（Row）和垂直（Column）方向上创建灵活的布局。其设计是基于web开发中的Flexbox布局模型</p>
+<p><strong>Stack</strong></p>
+<p>取代线性布局 (类似Android中的FrameLayout相似)，<a href="https://docs.flutter.io/flutter/widgets/Stack-class.html" target="_blank" rel="noopener"><code>Stack</code></a>允许子 widget 堆叠， 你可以使用 <a href="https://docs.flutter.io/flutter/widgets/Positioned-class.html" target="_blank" rel="noopener"><code>Positioned</code></a> 来定位他们相对于<code>Stack</code>的上下左右四条边的位置。Stacks是基于Web开发中的绝对定位（absolute positioning )布局模型设计的。</p>
+<p><strong>Container</strong></p>
+<p><a href="https://docs.flutter.io/flutter/widgets/Container-class.html" target="_blank" rel="noopener"><code>Container</code></a> 可让您创建矩形视觉元素。container 可以装饰一个<a href="https://docs.flutter.io/flutter/painting/BoxDecoration-class.html" target="_blank" rel="noopener"><code>BoxDecoration</code></a>, 如 background、一个边框、或者一个阴影。 <a href="https://docs.flutter.io/flutter/widgets/Container-class.html" target="_blank" rel="noopener"><code>Container</code></a> 也可以具有边距（margins）、填充(padding)和应用于其大小的约束(constraints)。另外， <a href="https://docs.flutter.io/flutter/widgets/Container-class.html" target="_blank" rel="noopener"><code>Container</code></a>可以使用矩阵在三维空间中对其进行变换。</p>
+<h3 id="Material-widget"><a href="#Material-widget" class="headerlink" title="Material widget"></a>Material widget</h3><p>Flutter提供了一套丰富的Material widget，可帮助您构建遵循Material Design的应用程序。Material应用程序以<a href="https://docs.flutter.io/flutter/material/MaterialApp-class.html" target="_blank" rel="noopener"><code>MaterialApp</code></a> widget开始， 该widget在应用程序的根部创建了一些有用的widget，比如一个Theme，它配置了应用的主题。 是否使用<a href="https://docs.flutter.io/flutter/material/MaterialApp-class.html" target="_blank" rel="noopener"><code>MaterialApp</code></a>完全是可选的，但是使用它是一个很好的做法。在之前的示例中，我们已经使用过多个Material widget了，如：<code>Scaffold</code>、<code>AppBar</code>、<code>FlatButton</code>等。要使用Material widget，需要先引入它：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Cupertino-widget"><a href="#Cupertino-widget" class="headerlink" title="Cupertino widget"></a>Cupertino widget</h3><p>Flutter也提供了一套丰富的Cupertino风格的widget，尽管目前还没有Material widget那么丰富，但也在不断的完善中。值得一提的是在Material widget库中，有一些widget可以根据实际运行平台来切换表现风格，比如<code>MaterialPageRoute</code>，在路由切换时，如果是Android系统，它将会使用Android系统默认的页面切换动画(从底向上)，如果是iOS系统时，它会使用iOS系统默认的页面切换动画（从右向左）。由于在前面的示例中还没有Cupertino widget的示例，我们实现一个简单的Cupertino页面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//导入cupertino widget库</span><br><span class="line">import &apos;package:flutter/cupertino.dart&apos;;</span><br><span class="line"></span><br><span class="line">class CupertinoTestRoute extends StatelessWidget &#123;</span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return CupertinoPageScaffold(</span><br><span class="line">      navigationBar: CupertinoNavigationBar(</span><br><span class="line">        middle: Text(&quot;Cupertino Demo&quot;),</span><br><span class="line">      ),</span><br><span class="line">      child: Center(</span><br><span class="line">        child: CupertinoButton(</span><br><span class="line">            color: CupertinoColors.activeBlue,</span><br><span class="line">            child: Text(&quot;Press&quot;),</span><br><span class="line">            onPressed: () &#123;&#125;</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">flutter</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/20/flutter/flutter-basic/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hole/git-error" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/07/hole/git-error/">git-error</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/07/hole/git-error/" class="archive-article-date">
+  	<time datetime="2019-01-07T03:34:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>SSH: connect to host xxx prot 22: connection refused</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote rm origin</span><br><span class="line">git remote add origin http:<span class="comment">//xxx</span></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hole</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/07/hole/git-error/">展开全文 >></a>
         </p>
       
 
@@ -1150,7 +1363,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1162,7 +1375,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 Yzbzz
+    		&copy; 2021 Yzbzz
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1245,7 +1458,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">av</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1265,11 +1498,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1281,18 +1510,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">stanford</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">stream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">lambda</a>
               </li>
              
@@ -1301,15 +1518,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">read</a>
+                <a href="javascript:void(0)" class="js-tag color1">music</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">poetry</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
+                <a href="javascript:void(0)" class="js-tag color2">stream</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1317,7 +1530,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">music</a>
+                <a href="javascript:void(0)" class="js-tag color5">read</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">poetry</a>
               </li>
             
             <div class="clearfix"></div>
